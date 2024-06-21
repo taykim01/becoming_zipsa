@@ -4,8 +4,7 @@ import SignUpUseCase from "@/domain/use_case/auth/sign_up_use_case"
 export default function Page(){
     const signUp = async ()=>{
         const sign_up = new SignUpUseCase()
-        const response = await sign_up.signUp()
-        console.log(response)
+        await sign_up.signUp()
     }
     return ( 
     <div>
