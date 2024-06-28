@@ -1,8 +1,6 @@
 import { db } from "@/firebase";
 import { collection, doc, setDoc } from "firebase/firestore"
 
-
-
 export async function POST(request: Request): Promise<Response> {
     try {
         const {userID, catData} = await request.json() as {userID:string; catData:CatModel}
