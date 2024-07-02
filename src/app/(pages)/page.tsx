@@ -4,7 +4,7 @@ import Input from "@/lib/input"
 export default function Page() {
     return (
         <div className="bg-gray">
-            <Button.Default />
+            <Button.Default>버튼</Button.Default>
             <Input.Text
                 title="Title"
                 guide="Guide"

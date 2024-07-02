@@ -1,5 +1,5 @@
-import Default from "./default"
-import UserAction from "./user_action"
+import Default from "./types/default"
+import UserAction from "./types/user_action"
 
 const Button = {
     Default,
