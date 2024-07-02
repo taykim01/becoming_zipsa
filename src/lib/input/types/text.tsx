@@ -9,7 +9,8 @@ export default function Text(props: {
     guide?: string,
     onChange?: (value: string) => void,
     type?: "text" | "password" | "email",
-    onEnter?: () => any
+    onEnter?: () => any,
+    placeholder?: string
 }) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -27,9 +28,10 @@ export default function Text(props: {
         >
             <input
                 type={props.type || "text"}
-                className="p-5 border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none"
+                className="p-5 border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none placeholder-white-60"
                 onChange={handleChange}
                 onKeyDown={handleEnter}
+                placeholder={props.placeholder || ""}
             />
         </InputFrame>
     )

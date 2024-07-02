@@ -5,7 +5,7 @@ import Images from "@/lib/images"
 
 export default function Page() {
     return (
-        <Container.Start headerTitle="제목">
+        <Container.Start>
             <div className="relative flex flex-col gap-28 items-center pt-36 h-screen">
                 <div className="flex items-center justify-center w-full">
                     <div className="font-ohsquare text-black text-r45">집사가 되...</div>

@@ -6,7 +6,7 @@ export default function InputFrame(props: {
     children: ReactNode
 }) {
     return (
-        <div className="flex flex-col gap-2" style={{ maxWidth: 353 }}>
+        <div className="flex flex-col gap-2 w-full" style={{ maxWidth: 353 }}>
             <div className="flex justify-between items-center">
                 {props.title && <div className="text-pink-500 text-r18">{props.title}</div>}
                 {

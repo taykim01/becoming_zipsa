@@ -19,6 +19,7 @@ const config: Config = {
       'black': '#1b1b1b',
       'white': '#fff',
       'gray': '#f1f3f5',
+      'gray-dark': '#6D6D6D',
       'beige': '#FEE9D8',
       'gradient-1-70': '#fff',
       'gradient-1-90': '#fff',
@@ -34,6 +35,7 @@ const config: Config = {
       'white-20': 'rgba(255, 255, 255, 0.20)',
       'white-40': 'rgba(255, 255, 255, 0.40)',
       'white-50': 'rgba(255, 255, 255, 0.50)',
+      'white-60': 'rgba(255, 255, 255, 0.60)',
       'white-72': 'rgba(255, 255, 255, 0.72)',
       'white-80': 'rgba(255, 255, 255, 0.80)'
     },

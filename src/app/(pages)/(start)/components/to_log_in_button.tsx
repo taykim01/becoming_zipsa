@@ -7,7 +7,7 @@ export default function ToLogInButton() {
     const router = useRouter();
     return (
         <Button.Default
-            onClick={() => router.push("/log_in")}
-        >버튼</Button.Default>
+            onClick={() => router.push("/log-in")}
+        >시작</Button.Default>
     )
 }
