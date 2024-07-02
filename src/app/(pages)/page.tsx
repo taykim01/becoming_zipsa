@@ -1,5 +1,6 @@
 
 import Button from "@/lib/button"
+import ChatBox from "@/lib/chat_box"
 import Input from "@/lib/input"
 
 export default function Page() {
@@ -18,6 +19,8 @@ export default function Page() {
             <Button.UserAction
                 iconType="Cake"
             >버튼</Button.UserAction>
+            <ChatBox.UserChatBox>오키 밥줄게</ChatBox.UserChatBox>
+            <ChatBox.CatChatBox>고맙디</ChatBox.CatChatBox>
         </div>
     )
 }
