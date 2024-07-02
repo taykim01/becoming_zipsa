@@ -20,7 +20,7 @@ export default function Text(props: {
         >
             <input
                 type="text"
-                className="p-5 border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20"
+                className="p-5 border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none"
                 onChange={handleChange}
             />
         </InputFrame>
