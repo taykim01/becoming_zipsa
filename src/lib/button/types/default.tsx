@@ -9,7 +9,7 @@ export default function Default(props: {
                 flex items-center justify-center
                 bg-black text-white rounded-2xl
                 cursor-pointer overflow-hidden font-ohsquare
-                text-r20 p-5 w-full`}
+                text-r20 px-5 py-3 w-full`}
             style={{ maxWidth: 353 }}
         >
             {props.children}

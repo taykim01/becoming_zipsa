@@ -21,7 +21,7 @@ export default function MultiSelect(props: {
                 {props.items.map((item, i) => (
                     <div
                         key={i}
-                        className="p-5 flex-grow text-center border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none"
+                        className="px-5 py-3 flex-grow text-center border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none"
                         onClick={() => handleSelect(item)}
                     >
                         {item}
