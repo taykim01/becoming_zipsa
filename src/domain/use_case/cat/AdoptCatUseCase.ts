@@ -12,7 +12,6 @@ export default class AdoptCatUseCase {
         }
     }
 
-
     async adopt(userID:string, catData:CatModel): Promise<MyResponse> {
         try {
             const res = await fetch(`http://localhost:3000/api/v1/cat/create`, {
@@ -23,10 +22,10 @@ export default class AdoptCatUseCase {
                 })
             })
             const data = await res.json()
-            if (!data.success) return new MyResponse(false, "유저 데이터 생성에 실패했습니다.", {})
-            return new MyResponse(true, "유저 데이터 생성에 성공했습니다.", {})
+            if (!data.success) return new MyResponse(false, "고양이 데이터 생성에 실패했습니다.", {})
+            return new MyResponse(true, "고양이 데이터 생성에 성공했습니다.", {})
         } catch (error) {
-            return new MyResponse(false, "유저 데이터 생성에 실패했습니다.", String(error))
+            return new MyResponse(false, "고양이 데이터 생성에 실패했습니다.", String(error))
         }
     }
 }

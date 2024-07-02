@@ -7,9 +7,9 @@ interface CatModel {
     color : string;
     sex : string;
     catStatus:CatStatus;
-    catEvent : CatEvent;
     catChapter : CatChapter;
     catChat : CatChat[];
+    ntr : boolean;
 
 }
 //Cat Status : hunger, health, affection
@@ -18,12 +18,7 @@ type CatStatus = {
     health : number;
     affection : number;
 }
-//Cat Event : num of Friends, Neutered or not, disease
-type CatEvent = {
-    Friends : number;
-    NTR : boolean;
-    disease : number;
-}
+
 type CatChapter = "firstMeeting" | "baby" | "adolescence" | "adult" | "oldCat"
 
 type CatChat = {
