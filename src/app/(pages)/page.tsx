@@ -1,14 +1,11 @@
 import Button from "@/lib/button"
 import Input from "@/lib/input"
+import CatResponse from "@/lib/cat_response"
 
 export default function Page() {
     return (
         <div className="bg-gray">
-            <Button.Default>버튼</Button.Default>
-            <Input.Text
-                title="Title"
-                guide="Guide"
-            />
+            <CatResponse>랑이가 아파요ㅠㅠ</CatResponse>
         </div>
     )
 }
