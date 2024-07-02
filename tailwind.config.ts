@@ -31,7 +31,8 @@ const config: Config = {
       'white-20': 'rgba(255, 255, 255, 0.20)',
       'white-40': 'rgba(255, 255, 255, 0.40)',
       'white-50': 'rgba(255, 255, 255, 0.50)',
-      'white-72': 'rgba(255, 255, 255, 0.72)'
+      'white-72': 'rgba(255, 255, 255, 0.72)',
+      'white-80': 'rgba(255, 255, 255, 0.80)'
     },
     fontFamily: {
       'ohsquare': ['Cafe24Ohsquare', 'sans-serif'],
