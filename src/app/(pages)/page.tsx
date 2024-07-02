@@ -9,6 +9,7 @@ export default function Page() {
                 title="Title"
                 guide="Guide"
             />
+            <Button.UserAction />
         </div>
     )
 }
