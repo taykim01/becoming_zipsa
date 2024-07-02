@@ -1,3 +1,4 @@
+
 import Button from "@/lib/button"
 import Input from "@/lib/input"
 
@@ -14,7 +15,9 @@ export default function Page() {
                 guide="Guide"
                 items={["Item1", "Item2", "Item3"]}
             />
-            <Button.UserAction>버튼</Button.UserAction>
+            <Button.UserAction
+                iconType="Cake"
+            >버튼</Button.UserAction>
         </div>
     )
 }
