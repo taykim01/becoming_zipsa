@@ -2,6 +2,7 @@ import Badge from "@/lib/badge/badge"
 import Button from "@/lib/button"
 import Container from "@/lib/container"
 import Gauge from "@/lib/gauge"
+import ChatBox from "@/lib/chat_box"
 import Input from "@/lib/input"
 import CatResponse from "@/lib/cat_response"
 
@@ -25,6 +26,8 @@ export default function Page() {
             <Gauge max={50} title="애정도" />
             <CatResponse>랑이가 아파요ㅠㅠ</CatResponse>
             <Badge title="씩씩한 고양이"></Badge>
+            <ChatBox.UserChatBox>오키 밥줄게</ChatBox.UserChatBox>
+            <ChatBox.CatChatBox>고맙디</ChatBox.CatChatBox>
         </Container>
     )
 }
