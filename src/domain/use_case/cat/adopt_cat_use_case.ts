@@ -1,6 +1,4 @@
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import MyResponse from "../MyResponse"
-import { auth, provider } from "@/firebase"
 
 export default class AdoptCatUseCase {
     async verifyInput(): Promise<MyResponse> {
