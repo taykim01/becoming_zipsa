@@ -23,7 +23,9 @@ const config: Config = {
       'pink-main': '#fe8a8b',
       'pink-200': '#ff6c6d',
       'pink-500': '#9f4e4f',
+      'white-12': 'rgba(255, 255, 255, 0.12)',
       'white-15': 'rgba(255, 255, 255, 0.15)',
+      'white-50': 'rgba(255, 255, 255, 0.50)',
       'white-72': 'rgba(255, 255, 255, 0.72)'
     },
     fontFamily: {
