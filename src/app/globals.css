@@ -2,10 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+
 @font-face {
-  font-family: 'Cafe24 Ohsquare';
-  src: url('../fonts/Cafe24OhsquareAir-v2.0.woff2') format('woff2');
-  font-weight: 400;
+  font-family: 'Cafe24Ohsquare';
+  src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2001@1.1/Cafe24Ohsquare.woff') format('woff');
+  font-weight: normal;
   font-style: normal;
 }
 

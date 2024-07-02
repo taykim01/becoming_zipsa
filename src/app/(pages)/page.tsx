@@ -1,10 +1,11 @@
 
 import Button from "@/lib/button"
+import Container from "@/lib/container"
 import Input from "@/lib/input"
 
 export default function Page() {
     return (
-        <div className="bg-black">
+        <Container headerTitle="제목">
             <Button.Default>버튼</Button.Default>
             <Input.Text
                 title="Title"
@@ -18,6 +19,6 @@ export default function Page() {
             <Button.UserAction
                 iconType="Cake"
             >버튼</Button.UserAction>
-        </div>
+        </Container>
     )
 }

@@ -8,10 +8,11 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'app-gradient-2': 'linear-gradient(180deg, #D5F8FF 0.01%, #BEB4FF 119.88%)',
-        'app-gradient-3': 'linear-gradient(180deg, #FDCDD2 0.01%, #DDD1D2 32.38%, #BCD5D3 65.34%, #A2D8D3 90.51%, #85DBD4 119.88%)',
-        'app-gradient-0': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 89.13%, #909090 129.7%)',
-        'app-gauge-gradient': 'linear-gradient(90deg, rgba(186, 194, 154, 0.90) 0%, rgba(224, 163, 146, 0.95) 100.32%, #FE8A8B 179.14%)',
+        'gradient-0': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 89.13%, #909090 129.7%)',
+        'gradient-1': 'linear-gradient(180deg, rgba(254, 138, 139, 0.70) 0%, rgba(255, 146, 139, 0.70) 26%, rgba(254, 167, 137, 0.70) 51%, rgba(255, 195, 152, 0.70) 76.8%, rgba(253, 229, 157, 0.70) 100%)',
+        'gradient-2': 'linear-gradient(180deg, #D5F8FF 0.01%, #BEB4FF 119.88%)',
+        'gradient-3': 'linear-gradient(180deg, #FDCDD2 0.01%, #DDD1D2 32.38%, #BCD5D3 65.34%, #A2D8D3 90.51%, #85DBD4 119.88%)',
+        'gauge-gradient': 'linear-gradient(90deg, rgba(186, 194, 154, 0.90) 0%, rgba(224, 163, 146, 0.95) 100.32%, #FE8A8B 179.14%)',
       },
     },
     colors: {
@@ -25,11 +26,12 @@ const config: Config = {
       'pink-500': '#9f4e4f',
       'white-12': 'rgba(255, 255, 255, 0.12)',
       'white-15': 'rgba(255, 255, 255, 0.15)',
+      'white-20': 'rgba(255, 255, 255, 0.20)',
       'white-50': 'rgba(255, 255, 255, 0.50)',
       'white-72': 'rgba(255, 255, 255, 0.72)'
     },
     fontFamily: {
-      'ohsquare': ['Cafe24 Ohsquare', 'sans-serif'],
+      'ohsquare': ['Cafe24Ohsquare', 'sans-serif'],
       'fs-sb': ['Freesentation-6SemiBold', 'sans-serif'],
       'fs-m': ['Freesentation-5Medium', 'sans-serif'],
       'fs-r': ['Freesentation-4Regular', 'sans-serif'],
@@ -46,8 +48,8 @@ const config: Config = {
       'r14': ['14px', { lineHeight: '1.5' }],
       'm12': ['12px', { lineHeight: '1.5' }],
       'sb10': ['10px', { lineHeight: '1.5' }],
-      'r45': ['45px', { lineHeight: '1.5'}],
-      'r20': ['20px', { lineHeight: '1.5'}]
+      'r45': ['45px', { lineHeight: '1.5' }],
+      'r20': ['20px', { lineHeight: '1.5' }]
     },
   },
   plugins: [],
