@@ -1,6 +1,7 @@
 
 import Button from "@/lib/button"
 import Container from "@/lib/container"
+import Gauge from "@/lib/gauge"
 import Input from "@/lib/input"
 
 export default function Page() {
@@ -19,6 +20,7 @@ export default function Page() {
             <Button.UserAction
                 iconType="Cake"
             >버튼</Button.UserAction>
+            <Gauge max={50} title="애정도" />
         </Container>
     )
 }
