@@ -25,8 +25,10 @@ const config: Config = {
       'pink-500': '#9f4e4f',
       'white-12': 'rgba(255, 255, 255, 0.12)',
       'white-15': 'rgba(255, 255, 255, 0.15)',
+      'white-40': 'rgba(255, 255, 255, 0.40)',
       'white-50': 'rgba(255, 255, 255, 0.50)',
-      'white-72': 'rgba(255, 255, 255, 0.72)'
+      'white-72': 'rgba(255, 255, 255, 0.72)',
+      'white-80': 'rgba(255, 255, 255, 0.80)'
     },
     fontFamily: {
       'ohsquare': ['Cafe24 Ohsquare', 'sans-serif'],
