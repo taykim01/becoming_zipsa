@@ -1,16 +1,9 @@
-export default function Default(){ // parent
-    return(
-    <div>
-        <Child textFromParent="무지성"></Child>
-        <Child textFromParent="주영"></Child>
-    </div>
-    )
-}
-
-function Child(props: {textFromParent: string}){
-    return(
-    <div className="h-8">
-        {props.textFromParent}
-    </div>
-    )
+export default function Default() { 
+    return (
+        <div 
+            className="w-[353px] h-[60px] flex items-center justify-center bg-[#1B1B1B] text-white rounded-[16px] cursor-pointer overflow-hidden font-ohsquare text-r20" 
+        >
+            다음
+        </div>
+    );
 }
