@@ -1,17 +1,24 @@
 "use client"
 
-import { ChangeEvent } from "react";
+import { ChangeEvent, KeyboardEvent } from "react";
 import InputFrame from "./input_frame";
 
 
 export default function Text(props: {
     title?: string,
     guide?: string,
-    onChange?: (value: string) => void
+    onChange?: (value: string) => void,
+    type?: "text" | "password" | "email",
+    onEnter?: () => any
 }) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
         props.onChange && props.onChange(value);
+    }
+    const handleEnter = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            props.onEnter && props.onEnter();
+        }
     }
     return (
         <InputFrame
@@ -19,9 +26,10 @@ export default function Text(props: {
             guide={props.guide}
         >
             <input
-                type="text"
+                type={props.type || "text"}
                 className="p-5 border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none"
                 onChange={handleChange}
+                onKeyDown={handleEnter}
             />
         </InputFrame>
     )
