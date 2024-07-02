@@ -1,7 +1,7 @@
 "use client"
 
+import { useState } from "react";
 import InputFrame from "./input_frame";
-
 
 export default function MultiSelect(props: {
     title?: string,
@@ -9,7 +9,10 @@ export default function MultiSelect(props: {
     onSelect?: (value: string) => void,
     items: string[]
 }) {
+    const [selected, setSelected] = useState<string>("")
     const handleSelect = (item: (typeof props.items)[number]) => {
+        if (selected === item) setSelected("");
+        else setSelected(item);
         props.onSelect && props.onSelect(item);
     }
     return (
@@ -21,7 +24,10 @@ export default function MultiSelect(props: {
                 {props.items.map((item, i) => (
                     <div
                         key={i}
-                        className="px-5 py-3 flex-grow text-center border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none"
+                        className={`
+                                px-5 py-3 flex-grow text-center border border-white-72 bg-white-15 rounded-2xl w-full text-white focus:outline-none
+                                ${selected === item ? "bg-pink-15 text-pink-100 font-fs-sb text-sb20" : "font-fs-l text-l20"}
+                            `}
                         onClick={() => handleSelect(item)}
                     >
                         {item}

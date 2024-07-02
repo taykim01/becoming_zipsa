@@ -13,6 +13,8 @@ const config: Config = {
         'gradient-2': 'linear-gradient(180deg, #D5F8FF 0.01%, #BEB4FF 119.88%)',
         'gradient-3': 'linear-gradient(180deg, #FDCDD2 0.01%, #DDD1D2 32.38%, #BCD5D3 65.34%, #A2D8D3 90.51%, #85DBD4 119.88%)',
         'gradient-gauge': 'linear-gradient(90deg, rgba(186, 194, 154, 0.90) 0%, rgba(224, 163, 146, 0.95) 100.32%, #FE8A8B 179.14%)',
+        'gradient-start-1': 'linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(204, 250, 22, 0.20) 100%)',
+        'gradient-start-2': 'linear-gradient(180deg, rgba(255, 255, 255, 0.22) 0%, rgba(204, 250, 22, 0.20) 100%)',
       },
     },
     colors: {
@@ -29,7 +31,7 @@ const config: Config = {
       'pink-300': '#E3AE99',
       'pink-400': '#FF6C6D',
       'pink-500': '#9f4e4f',
-      'emerald-500' : '#9AB9B0',
+      'emerald-500': '#9AB9B0',
       'white-12': 'rgba(255, 255, 255, 0.12)',
       'white-15': 'rgba(255, 255, 255, 0.15)',
       'white-20': 'rgba(255, 255, 255, 0.20)',
@@ -37,7 +39,8 @@ const config: Config = {
       'white-50': 'rgba(255, 255, 255, 0.50)',
       'white-60': 'rgba(255, 255, 255, 0.60)',
       'white-72': 'rgba(255, 255, 255, 0.72)',
-      'white-80': 'rgba(255, 255, 255, 0.80)'
+      'white-80': 'rgba(255, 255, 255, 0.80)',
+      'pink-15': 'rgba(255, 187, 187, 0.15)'
     },
     fontFamily: {
       'ohsquare': ['Cafe24Ohsquare', 'sans-serif'],
