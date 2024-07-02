@@ -1,21 +1,8 @@
-"use client"
-import SignUpUseCase from "@/domain/use_case/auth/sign_up_use_case"
+import Button from "@/lib/button"
 
 export default function Page(){
-    const signUp = async ()=>{
-        const sign_up = new SignUpUseCase()
-        await sign_up.signUp()
-    }
     return ( 
     <div>
-        <button onClick={signUp}>
-            가입하기
-        </button>
-        <div className="font-ohsquare text-45 leading-150">
-            hello world
-        </div>
-        <div className="text-m22">
-            this is pretendard
-        </div>
+        <Button.Default />
     </div>)
 }
