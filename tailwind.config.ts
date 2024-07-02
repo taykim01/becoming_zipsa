@@ -2,38 +2,29 @@ import type { Config } from "tailwindcss";
 
 const config: Config = {
   content: [
-    "./src/pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
+    "./src/lib/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
   theme: {
     extend: {
       backgroundImage: {
-        "gradient-radial": "radial-gradient(var(--tw-gradient-stops))",
-        "gradient-conic":
-          "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
-        'main-linear': 'linear-gradient(266deg, #FF5656 2.28%, #FF8181 112.03%)',
+        'app-gradient-2': 'linear-gradient(180deg, #D5F8FF 0.01%, #BEB4FF 119.88%)',
+        'app-gradient-3': 'linear-gradient(180deg, #FDCDD2 0.01%, #DDD1D2 32.38%, #BCD5D3 65.34%, #A2D8D3 90.51%, #85DBD4 119.88%)',
+        'app-gradient-0': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 89.13%, #909090 129.7%)',
+        'app-gauge-gradient': 'linear-gradient(90deg, rgba(186, 194, 154, 0.90) 0%, rgba(224, 163, 146, 0.95) 100.32%, #FE8A8B 179.14%)',
       },
     },
     colors: {
-      gray: {
-        white: '#fff',
-        black: '#000',
-        50: '#f9fafb',
-      },
-      brand: {
-        50: '#fff3e0',
-      },
-      supplementary: {
-        blue: {
-          light: '#e6f2ff',
-          deep: '#0052cc',
-        },
-        red: {
-          light: '#ffe6e6',
-          deep: '#cc0000',
-        },
-      }
+      'app-black': '#1b1b1b',
+      'app-white': '#fff',
+      'app-gray': '#f1f3f5',
+      'app-gradient-1-70': '#fff',
+      'app-gradient-1-90': '#fff',
+      'app-pink-main': '#fe8a8b',
+      'app-pink-200': '#ff6c6d',
+    },
+    fontFamily: {
+      'ohsquare': ['Cafe24 Ohsquare', 'sans-serif'],
     },
     fontSize: {
       'm22': ['22px', { lineHeight: '1.5', fontWeight: 'medium' }],
@@ -46,6 +37,11 @@ const config: Config = {
       'r14': ['14px', { lineHeight: '1.5', fontWeight: 'regular'}],
       'm12': ['12px', { lineHeight: '1.5', fontWeight: 'medium'}],
       'sb10': ['10px', { lineHeight: '1.5', fontWeight: 'semibold'}],
+      '45': '45px',
+      '20': '20px'
+    },
+    lineHeight: {
+      '150': '1.5',
     },
   },
   plugins: [],

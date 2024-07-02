@@ -2,11 +2,11 @@ import localFont from "next/font/local";
 import type { Metadata } from "next";
 import "./globals.css";
 
-const pretendard = localFont({
-  src: "../fonts/PretendardVariable.woff2",
+const freesentation = localFont({
+  src: "../fonts/Freesentation.woff2",
   display: "swap",
   weight: "45 920",
-  variable: "--font-pretendard",
+  variable: "--font-freesentation",
 });
 
 export const metadata: Metadata = {
@@ -20,8 +20,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="kr" className={`${pretendard.variable}`}>
-      <body className={pretendard.className}>
+    <html lang="kr" className={`${freesentation.variable}`}>
+      <body className={freesentation.className}>
         {children}
       </body>
     </html>

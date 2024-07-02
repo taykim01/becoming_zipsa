@@ -11,5 +11,11 @@ export default function Page(){
         <button onClick={signUp}>
             가입하기
         </button>
+        <div className="font-ohsquare text-45 leading-150">
+            hello world
+        </div>
+        <div className="text-m22">
+            this is pretendard
+        </div>
     </div>)
 }
