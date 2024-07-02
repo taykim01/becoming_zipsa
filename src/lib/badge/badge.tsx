@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Images from "../images";
 
 export default function Badge(props: {
     title: "깨끗한 고양이" | "건강한 고양이" | "씩씩한 고양이"
@@ -6,17 +7,17 @@ export default function Badge(props: {
     const badgeColor = {
         "깨끗한 고양이": {
             color: "emerald-500",
-            img: "",
+            img: Images.paw,
             detail: "목욕 성공"
         },
         "건강한 고양이": {
             color: "pink-400",
-            img: "",
+            img: Images.kit,
             detail: "질병 극복"
         },
         "씩씩한 고양이": {
             color: "pink-100",
-            img: "",
+            img: Images.toy,
             detail: "중성화 완료"
         }
     }
