@@ -15,9 +15,9 @@ const config: Config = {
       },
     },
     colors: {
-      'app-black': '#1b1b1b',
-      'app-white': '#fff',
-      'app-gray': '#f1f3f5',
+      'black': '#1b1b1b',
+      'white': '#fff',
+      'gray': '#f1f3f5',
       'app-gradient-1-70': '#fff',
       'app-gradient-1-90': '#fff',
       'app-pink-main': '#fe8a8b',
