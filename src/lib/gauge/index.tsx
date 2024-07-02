@@ -19,7 +19,7 @@ function Indicator(props: {
 }
 
 export default function Gauge(props: {
-    max: number,
+    value: number,
     title: string
 }) {
     return (
@@ -27,13 +27,13 @@ export default function Gauge(props: {
             <div className="text-pink-500 text-r18">{props.title}</div>
             <div className="border-4 rounded-full border-white-40 relative">
                 <div className="absolute" style={{
-                    left: `${props.max}%`,
+                    left: `${props.value}%`,
                     top: "50%",
                     transform: "translate(-50%, -50%)"
                 }}>
-                    <Indicator value={props.max} />
+                    <Indicator value={props.value} />
                 </div>
-                <div className="h-3 w-full bg-gradient-gauge rounded-full" style={{ width: `${props.max}%` }} />
+                <div className="h-3 w-full bg-gradient-gauge rounded-full" style={{ width: `${props.value}%` }} />
             </div>
         </div>
     )

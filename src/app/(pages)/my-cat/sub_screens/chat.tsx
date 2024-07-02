@@ -1,8 +1,8 @@
 import Container from "@/lib/container";
 import Image from "next/image";
-import Components from "./components";
+import Input from "@/lib/input";
 
-export default function HomeScreen() {
+export default function ChatScreen() {
     return (
         <Container.Main headerTitle="내 고양이" badge>
             <div className="flex flex-col items-center relative w-full h-full gap-11 relative">
@@ -12,8 +12,7 @@ export default function HomeScreen() {
                     width={195}
                     height={195}
                 />
-                <Components.CatInfo />
-                <Components.GaugeGroup />
+                <Input.Message />
             </div>
         </Container.Main>
     )

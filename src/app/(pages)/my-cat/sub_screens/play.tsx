@@ -1,6 +1,6 @@
 import Container from "@/lib/container";
 import Image from "next/image";
-import Components from "./components";
+import Components from "../components";
 
 export default function HomeScreen() {
     return (
