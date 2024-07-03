@@ -39,7 +39,7 @@ export default class SignUpUseCase {
             if (!credential) return new MyResponse(true, "이미 인증된 사용자", response.user)
             const uid = response.user.uid
             this.userID = uid
-            sessionStorage.setItem('uid', JSON.stringify(uid));
+            sessionStorage.setItem('uid', uid);
             return new MyResponse(true, "인증에 성공했습니다.", uid)
         } catch (error) {
             return new MyResponse(false, "인증에 실패했습니다.", String(error))

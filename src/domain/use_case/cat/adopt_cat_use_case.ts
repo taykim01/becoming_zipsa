@@ -21,7 +21,7 @@ export default class AdoptCatUseCase {
                     health : 50,
                     affection : 50,
                 },
-                catChapter : "firstMeeting",
+                catChapter : "첫 만남",
                 catChat : [] as CatChat[],
                 neutered : false,
             

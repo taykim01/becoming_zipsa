@@ -9,7 +9,7 @@ export async function POST(request: Request): Promise<Response> {
             userID: string
         }
         const cats: CatModel[] = []
-        const colRef = collection(db, "users", userID, "cat")
+        const colRef = collection(db, "user", userID, "cat")
         const querySnapshot = await getDocs(colRef)
         querySnapshot.forEach((doc) => {
             cats.push(
@@ -24,7 +24,7 @@ export async function POST(request: Request): Promise<Response> {
             JSON.stringify({
                 success: true,
                 message: "고양이 생성 성공",
-                data: {catData, cats}
+                data: catData
             })
         )
     } catch (error) {

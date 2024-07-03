@@ -14,10 +14,10 @@ function SexSymbol(props: { sex: "수컷" | "암컷" }) {
 
 export default function CatInfo(props: {}) {
     const read_cat_use_case = new ReadCatUseCase()
+    
     const [catData, setCatData] = useState<CatModel>({} as CatModel)
     const readCatData = async()=>{
         const response = await read_cat_use_case.read()
-        console.log(response)
         if (!response.success) {
             alert(response.message)
             return

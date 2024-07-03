@@ -44,7 +44,7 @@ export default function Header(props: {
             <div className="flex justify-start flex-1">
                 {props.back && <BackButton onClick={() => history.back()} />}
             </div>
-            <div className="flex justify-center flex-1">
+            <div className="flex justify-center flex-1 items-center">
                 <div className="text-black font-ohsquare text-r20 flex-shrink-0">{props.children}</div>
             </div>
             <div className="flex justify-end flex-1">

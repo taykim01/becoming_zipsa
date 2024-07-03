@@ -4,32 +4,49 @@ import Button from "@/lib/button";
 import CatResponse from "@/lib/cat_response";
 import ChatBox from "@/lib/chat_box";
 import Input from "@/lib/input";
-import { Component, useState } from "react";
+import { useEffect, useState } from "react";
 import Components from ".";
+import ChatWithCatUseCase from "@/domain/use_case/cat/chat_with_cat_use_case";
+import ReadCatUseCase from "@/domain/use_case/cat/read_cat_use_case";
 
 interface Chat {
-    side: "user" | "cat"
-    message: string
+    who: "user" | "cat"
+    chat: string
 }
 
 export default function InteractionGroup() {
-    const sampleChat: Chat[] = [
-        { side: "cat", message: "애옹" },
-        { side: "user", message: "안녕" },
-        { side: "cat", message: "애옹" },
-        { side: "user", message: "배고파?" },
-        { side: "cat", message: "애옹" },
-        { side: "user", message: "놀아줄까?" },
-        { side: "cat", message: "애옹" },
-        { side: "user", message: "사진찍자" },
-    ]
+    const cat_with_chat_use_case = new ChatWithCatUseCase()
+    const read_cat_use_case = new ReadCatUseCase()
+
     const [buttonDetail, setButtonDetail] = useState(false)
     const [seeStatus, setSeeStatus] = useState(false)
-    const [chat, setChat] = useState<Chat[]>(sampleChat)
+    const [chat, setChat] = useState<Chat[]>([])
 
-    const sendChat = (message: string) => {
-        setChat([{ side: "cat", message: "애옹" }, { side: "user", message }, ...chat])
+    const [catData, setCatData] = useState<CatModel>({} as CatModel)
+    const readCatData = async () => {
+        const response = await read_cat_use_case.read()
+        if (!response.success) {
+            alert(response.message)
+            return
+        }
+        setCatData(response.data)
+        const catChat = response.data.catChat.reverse()
+        setChat(catChat)
     }
+
+    const sendChat = async (message: string) => {
+        const response = await cat_with_chat_use_case.chat(message)
+        if (!response.success) {
+            alert(response.message)
+            return
+        }
+        const catChat = response.data
+        setChat([{ who: "cat", chat: catChat }, { who: "user", chat: message }, ...chat])
+    }
+
+    useEffect(() => {
+        readCatData()
+    }, [])
 
     return (
         <div className="flex flex-col justify-between w-full items-center flex-grow">
@@ -38,20 +55,20 @@ export default function InteractionGroup() {
                 seeStatus
                     ? <div className="w-full flex-grow flex flex-col justify-between">
                         <Components.GaugeGroup />
-                        <Button.Default onClick={() => setSeeStatus(false)}>_____랑 놀기</Button.Default>
+                        <Button.Default onClick={() => setSeeStatus(false)}>{`${catData.catName}(이)랑 놀기`}</Button.Default>
                     </div>
                     : <>
                         {buttonDetail
-                            ? <CatResponse name="고양이">애옹</CatResponse>
+                            ? <CatResponse name={catData.catName}>애옹</CatResponse>
                             : <div className="flex flex-col gap-2 w-full flex-grow overflow-scroll" style={{ maxHeight: "28vh", flexDirection: "column-reverse" }}>
                                 {chat.map((chat, index) => {
-                                    if (chat.side === "user") return (
+                                    if (chat.who === "user") return (
                                         <div key={index} className="w-full flex justify-end">
-                                            <ChatBox.UserChatBox>{chat.message}</ChatBox.UserChatBox>
+                                            <ChatBox.UserChatBox>{chat.chat}</ChatBox.UserChatBox>
                                         </div>
                                     )
                                     else return (
-                                        <ChatBox.CatChatBox key={index}>{chat.message}</ChatBox.CatChatBox>
+                                        <ChatBox.CatChatBox key={index}>{chat.chat}</ChatBox.CatChatBox>
                                     )
                                 })}
                             </div>
@@ -77,7 +94,8 @@ export default function InteractionGroup() {
                                     </div>
                             }
                             {!buttonDetail && <Input.Message onSend={sendChat} />}
-                        </div></>
+                        </div>
+                    </>
             }
         </div>
     )

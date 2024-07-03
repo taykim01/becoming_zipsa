@@ -1,11 +1,30 @@
+"use client"
+
+import ReadCatUseCase from "@/domain/use_case/cat/read_cat_use_case";
 import Gauge from "@/lib/gauge";
+import { useState, useEffect } from "react";
 
 export default function GaugeGroup(props: {}) {
+    const read_cat_use_case = new ReadCatUseCase()
+    
+    const [catData, setCatData] = useState<CatModel>({} as CatModel)
+    const readCatData = async()=>{
+        const response = await read_cat_use_case.read()
+        if (!response.success) {
+            alert(response.message)
+            return
+        }
+        setCatData(response.data)
+    }
+    useEffect(()=>{
+        readCatData()
+    },[])
+
     return (
         <div className="flex flex-col gap-4 w-full">
-            <Gauge title="애정도" value={80} />
-            <Gauge title="배고픔" value={20} />
-            <Gauge title="체력" value={40} />
+            <Gauge title="애정도" value={catData?.catStatus?.affection} />
+            <Gauge title="배고픔" value={catData?.catStatus?.hunger} />
+            <Gauge title="체력" value={catData?.catStatus?.health} />
         </div>
     )
 }
