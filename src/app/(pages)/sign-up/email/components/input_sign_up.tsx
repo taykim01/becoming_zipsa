@@ -4,11 +4,11 @@ import Input from "@/lib/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
-import SignUpUseCase from "@/domain/use_case/auth/sign_up_use_case";
+import EmailSignUpUseCase from "@/domain/use_case/auth/email_sign_up_use_case";
 
 export default function InputSignUp() {
 
-    const sign_up_use_case = new SignUpUseCase()
+    const sign_up_use_case = new EmailSignUpUseCase()
     const router = useRouter()
     const [signUpData, setSignUpData] = useState({
         email: "",
@@ -43,11 +43,12 @@ export default function InputSignUp() {
             return
         }
         const signUpRes = await sign_up_use_case.signUp()
+        console.log(signUpRes)
         if (!signUpRes.success) {
             alert(signUpRes.message)
             return
         }
-        const createUserRes = await sign_up_use_case.createUser(signUpData.email, signUpData.password, signUpData.name)
+        const createUserRes = await sign_up_use_case.createUser() //signUpData.email, signUpData.password, signUpData.name
         console.log(createUserRes)
         if (!createUserRes.success) {
             alert(createUserRes.message)

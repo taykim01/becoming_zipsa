@@ -1,15 +1,19 @@
 "use client"
 
-import { useRouter } from "next/navigation";
+import Components from ".";
+import { useState } from "react";
 
 export default function SignUpButton() {
-    const router = useRouter();
+    const [popup, setPopup] = useState(false)
     return (
+        <>
         <div
             className="font-fs-r text-gray-dark text-r16"
-            onClick={() => router.push("/sign-up")}
+            onClick={()=> setPopup(true)}
         >
             회원가입하기
         </div>
+        <Components.SignUpPopup open={popup} onClose={() => setPopup(false)} />
+        </>
     )
 }
