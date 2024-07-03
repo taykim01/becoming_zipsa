@@ -1,7 +1,7 @@
 //고양이 모델 지정
 //1. 인터페이스
 interface CatModel {
-    catID : string;
+    id: string;
     userID : string;
     catName : string;
     color : string;
