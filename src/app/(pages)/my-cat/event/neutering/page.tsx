@@ -8,15 +8,15 @@ import Images from "@/lib/images";
 
 export default function Page() {
     return (
-        <Container.Main headerTitle="중성화" >
-            <div className="relative flex flex-col items-center">
-                <div className="pt-[135px] ">
-                    <CatResponse>내가 고자라니ㅠㅠ....</CatResponse>
+        <Container.Main headerTitle="중성화" bgClass="bg-gradient-3" badge back>
+            <div className="relative flex flex-col items-center flex-grow">
+                <div className="pt-[120px] ">
+                    <CatResponse>내가 고자라니 ㅠㅠ....</CatResponse>
                 </div>
-                <div className="pt-[96px]">
+                <div className="pt-[90px]">
                     <Image src={Images.toy} width={253} height={253} alt="toy" />
                 </div>
-                <div className="flex gap-3 pt-[110px] pd-[85px] w-full">
+                <div className="absolute bottom-10 w-full">
                     <Components.HospitalButton/>
                 </div>
             </div> 

@@ -8,15 +8,15 @@ import Images from "@/lib/images";
 
 export default function Page() {
     return (
-        <Container.Main headerTitle="목욕" >
+        <Container.Main headerTitle="목욕" bgClass="bg-gradient-2" badge back>
             <div className="relative flex flex-col items-center flex-grow">
-                <div className="pt-[135px] ">
+                <div className="pt-[120px] ">
                     <CatResponse>목욕할 시간이라니 ....</CatResponse>
                 </div>
                 <div className="pt-0">
                     <Image src={Images.bath} width={340} height={340} alt="bath" />
                 </div>
-                <div className="absolute bottom-0 w-full">
+                <div className="absolute bottom-10 w-full">
                     <Components.BathButton/>
                 </div>
             </div> 
