@@ -4,8 +4,11 @@ import Input from "@/lib/input";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
+import SignUpUseCase from "@/domain/use_case/auth/sign_up_use_case";
 
 export default function InputSignUp() {
+
+    const sign_up_use_case = new SignUpUseCase()
     const router = useRouter()
     const [signUpData, setSignUpData] = useState({
         email: "",
@@ -30,7 +33,27 @@ export default function InputSignUp() {
         setSignUpData({ ...signUpData, name })
     }
 
-    const signUp = () => {
+    const signUp = async () => {
+        // 1. 유효성 검사
+        //유효성 검사 통과하면 2. 실제 sign up 
+        //유효성 검사 실패하면 3. 모달 띄워주기
+        const verifyRes = await sign_up_use_case.verifyInput(signUpData.email, signUpData.password, signUpData.passwordCheck, signUpData.name)
+        if (!verifyRes.success) {
+            alert(verifyRes.message)
+            return
+        }
+        const signUpRes = await sign_up_use_case.signUp()
+        if (!signUpRes.success) {
+            alert(signUpRes.message)
+            return
+        }
+        const createUserRes = await sign_up_use_case.createUser(signUpData.email, signUpData.password, signUpData.name)
+        console.log(createUserRes)
+        if (!createUserRes.success) {
+            alert(createUserRes.message)
+            return
+        }
+        alert("회원가입에 성공했습니다.")
         router.push("/adopt-cat")
     }
 

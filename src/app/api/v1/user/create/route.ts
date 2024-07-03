@@ -4,20 +4,18 @@ import { collection, doc, setDoc } from "firebase/firestore"
 export async function POST(request: Request): Promise<Response> {
     try {
         const {
-            userID,
-            catData
+            userData
         } = await request.json() as {
-            userID: string;
-            catData: CatModel
+            userData: User
         }
-        const catRef = doc(collection(db, "user", userID, "cat"))
+        const userRef = doc(collection(db, "user"))
         await setDoc(
-            catRef, catData
+            userRef, userData
         )
         return new Response(
             JSON.stringify({
                 success: true,
-                message: "고양이 생성 성공",
+                message: "유저 생성 성공",
                 data: {}
             })
         )
@@ -25,8 +23,8 @@ export async function POST(request: Request): Promise<Response> {
         return new Response(
             JSON.stringify({
                 success: false,
-                message: "고양이 생성 실패",
-                data: {}
+                message: "유저 생성 실패",
+                data: String(error)
             })
         )
     }

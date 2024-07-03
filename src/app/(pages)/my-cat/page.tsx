@@ -1,6 +1,7 @@
 import Container from "@/lib/container";
 import Image from "next/image";
 import Components from "./components";
+import CheckSession from "@/utils/check_session";
 
 export default function Page() {
     return (
@@ -18,6 +19,7 @@ export default function Page() {
 
                 <Components.InteractionGroup />
             </div>
+            <CheckSession />
         </Container.Main>
     )
 }

@@ -3,7 +3,7 @@ import MyResponse from "../MyResponse"
 export default class InitiateEventUseCase {
 
     private events = {
-        adolescence:"ntr",
+        adolescence:"neutered",
         oldCat : "disease"
     }
     async initiate(chapter:"adolescence"|"oldCat" ): Promise<MyResponse> {
