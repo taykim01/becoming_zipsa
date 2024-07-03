@@ -6,6 +6,7 @@ import InputFrame from "./input_frame";
 export default function MultiSelect(props: {
     title?: string,
     guide?: string,
+    guideClick?: () => void,
     onSelect?: (value: string) => void,
     items: string[]
 }) {
@@ -19,6 +20,7 @@ export default function MultiSelect(props: {
         <InputFrame
             title={props.title}
             guide={props.guide}
+            guideClick={props.guideClick}
         >
             <div className="flex gap-2">
                 {props.items.map((item, i) => (
