@@ -1,5 +1,6 @@
 "use client"
 
+import CheckCatUseCase from "@/domain/use_case/cat/check_cat_use_case"
 import { useRouter } from "next/navigation"
 import { useEffect } from "react"
 
