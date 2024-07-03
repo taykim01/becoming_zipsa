@@ -20,10 +20,17 @@ export async function POST(request: Request): Promise<Response> {
             )
         })
         const catData = cats[0]
+        if (!catData) return new Response(
+            JSON.stringify({
+                success: false,
+                message: "고양이 읽기 실패",
+                data: "no_cat"
+            })
+        )
         return new Response(
             JSON.stringify({
                 success: true,
-                message: "고양이 생성 성공",
+                message: "고양이 읽기 성공",
                 data: catData
             })
         )
@@ -31,7 +38,7 @@ export async function POST(request: Request): Promise<Response> {
         return new Response(
             JSON.stringify({
                 success: false,
-                message: "고양이 생성 실패",
+                message: "고양이 읽기 실패",
                 data: String(error)
             })
         )
