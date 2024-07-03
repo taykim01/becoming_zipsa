@@ -1,7 +1,7 @@
 function SexSymbol(props: { sex: "수컷" | "암컷" }) {
     if (props.sex === "수컷") {
         return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
-            <path d="M6.75 14H11.25M9 10.25V16.25M9 10.25C11.071 10.25 12.75 8.57105 12.75 6.5C12.75 4.42893 11.071 2.75 9 2.75C6.92893 2.75 5.25 4.42893 5.25 6.5C5.25 8.57105 6.92893 10.25 9 10.25Z" stroke="#7E7E7E" stroke-width="1.125" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="M6.75 14H11.25M9 10.25V16.25M9 10.25C11.071 10.25 12.75 8.57105 12.75 6.5C12.75 4.42893 11.071 2.75 9 2.75C6.92893 2.75 5.25 4.42893 5.25 6.5C5.25 8.57105 6.92893 10.25 9 10.25Z" stroke="#7E7E7E" strokeWidth="1.125" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
     } else return
 }
