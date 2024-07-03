@@ -30,7 +30,7 @@ export default function Message(props: {
             <input
                 className={`
                         px-5 py-3 border border-white-72 bg-white-50
-                        rounded-2xl w-full font-fs-l text-gray-dark text-l16
+                        rounded-2xl w-full font-fs-l text-black text-l16
                         focus:outline-none placeholder-black-20
                     `}
                 onChange={handleChange}
