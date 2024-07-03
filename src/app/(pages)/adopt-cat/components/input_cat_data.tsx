@@ -1,5 +1,6 @@
 "use client"
 
+import AdoptCatUseCase from "@/domain/use_case/cat/adopt_cat_use_case"
 import Button from "@/lib/button"
 import Input from "@/lib/input"
 import Popup from "@/lib/popup"
@@ -8,16 +9,18 @@ import { useState } from "react"
 
 type CatData = {
     name: string,
-    type: string,
+    color: string,
     sex: string,
 }
 
 export default function InputCatData() {
+    const adopt_cat_use_case = new AdoptCatUseCase()
+
     const router = useRouter()
     const [personalityPopup, setPersonalityPopup] = useState<boolean>(false)
     const [catData, setCatData] = useState<CatData>({
         name: "",
-        type: "",
+        color: "",
         sex: "",
     })
 
@@ -25,16 +28,25 @@ export default function InputCatData() {
         setCatData({ ...catData, name })
     }
 
-    const setType = (type: CatData["type"]) => {
-        setCatData({ ...catData, type })
+    const setColor = (color: CatData["color"]) => {
+        setCatData({ ...catData, color })
     }
 
     const setSex = (sex: CatData["sex"]) => {
         setCatData({ ...catData, sex })
     }
 
-    const adoptCat = () => {
-        console.log(catData)
+    const adoptCat = async () => {
+        const response = await adopt_cat_use_case.adopt(
+            catData.name,
+            catData.color,
+            catData.sex
+        )
+        if (!response.success) {
+            alert(response.message)
+            return
+        }
+        alert("고양이 입양에 성공했습니다.")
         router.push("/my-cat")
     }
 
@@ -49,7 +61,7 @@ export default function InputCatData() {
                 />
                 <Input.MultiSelect
                     title="성격"
-                    onSelect={setType}
+                    onSelect={setColor}
                     guide="고양이별 성격 알아보기"
                     guideClick={() => setPersonalityPopup(true)}
                     items={["치즈냥이", "흰냥이", "깜냥이"]}

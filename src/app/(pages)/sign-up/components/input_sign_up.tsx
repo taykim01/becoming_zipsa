@@ -53,6 +53,7 @@ export default function InputSignUp() {
             alert(createUserRes.message)
             return
         }
+        alert("회원가입에 성공했습니다.")
         router.push("/adopt-cat")
     }
 

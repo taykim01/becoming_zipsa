@@ -3,7 +3,7 @@ import MyResponse from "../MyResponse";
 export default class CheckAuthSessionUseCase {
     async check():Promise<MyResponse>{
         try {
-            const cachedData = sessionStorage.getItem('scholarshipListModel')
+            const cachedData = sessionStorage.getItem('uid')
             if(!cachedData) return new MyResponse(false, "세션이 없습니다.", {})
             return new MyResponse(true, "인증에 성공했습니다.", cachedData)
         } catch (error) {

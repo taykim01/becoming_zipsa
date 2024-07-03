@@ -1,7 +1,7 @@
 //고양이 모델 지정
 //1. 인터페이스
 interface CatModel {
-    catID : string;
+    id?: string;
     userID : string;
     catName : string;
     color : string;
@@ -9,7 +9,7 @@ interface CatModel {
     catStatus:CatStatus;
     catChapter : CatChapter;
     catChat : CatChat[];
-    ntr : boolean;
+    neutered : boolean;
 
 }
 //Cat Status : hunger, health, affection
@@ -21,8 +21,6 @@ type CatStatus = {
 
 type CatChapter = "firstMeeting" | "baby" | "adolescence" | "adult" | "oldCat"
 
-type CatChat = {
-    uid : string;
-    userPrompt : string;
-    catResponse: string;
+type CatChat = { 
+    side: string , message: string
 }

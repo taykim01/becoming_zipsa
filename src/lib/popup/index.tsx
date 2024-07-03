@@ -26,8 +26,8 @@ export default function Popup(props: {
                     <div className="flex-1 flex justify-end">
                         <button className="ml-auto" onClick={props.onClose}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                <path d="M18 18L6 6" stroke="#1B1B1B" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                                <path d="M18 6L5.99997 18" stroke="#1B1B1B" strokeWidth="1.5" stroke-linecap="round" stroke-linejoin="round" />
+                                <path d="M18 18L6 6" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" stroke-linejoin="round" />
+                                <path d="M18 6L5.99997 18" stroke="#1B1B1B" strokeWidth="1.5" strokeLinecap="round" stroke-linejoin="round" />
                             </svg>
                         </button>
                     </div>
