@@ -7,6 +7,10 @@ export default class LogInUseCase {
         try {
             const response = await signInWithPopup(auth, provider);
             const credential = GoogleAuthProvider.credentialFromResult(response);
+            const uid = response.user.uid
+
+            sessionStorage.setItem('uid', JSON.stringify(uid));
+            
             if (!credential) return new MyResponse(true, "이미 인증된 사용자", response.user)
             return new MyResponse(true, "인증에 성공했습니다.", response.user)
         } catch (error) {
