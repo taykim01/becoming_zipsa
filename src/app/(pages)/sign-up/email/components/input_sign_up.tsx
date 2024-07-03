@@ -34,22 +34,17 @@ export default function InputSignUp() {
     }
 
     const signUp = async () => {
-        // 1. 유효성 검사
-        //유효성 검사 통과하면 2. 실제 sign up 
-        //유효성 검사 실패하면 3. 모달 띄워주기
         const verifyRes = await sign_up_use_case.verifyInput(signUpData.email, signUpData.password, signUpData.passwordCheck, signUpData.name)
         if (!verifyRes.success) {
             alert(verifyRes.message)
             return
         }
         const signUpRes = await sign_up_use_case.signUp()
-        console.log(signUpRes)
         if (!signUpRes.success) {
             alert(signUpRes.message)
             return
         }
-        const createUserRes = await sign_up_use_case.createUser() //signUpData.email, signUpData.password, signUpData.name
-        console.log(createUserRes)
+        const createUserRes = await sign_up_use_case.createUser()
         if (!createUserRes.success) {
             alert(createUserRes.message)
             return
@@ -69,12 +64,14 @@ export default function InputSignUp() {
                 />
                 <Input.Text
                     title="비밀번호"
+                    type="password"
                     placeholder="비밀번호를 입력해주세요."
                     onChange={setPassword}
                     onEnter={signUp}
                 />
                 <Input.Text
                     title="비밀번호 확인"
+                    type="password"
                     placeholder="비밀번호를 다시 입력해주세요."
                     onChange={setPasswordCheck}
                     onEnter={signUp}

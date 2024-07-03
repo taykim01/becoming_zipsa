@@ -1,33 +1,58 @@
+import { Chat } from "@/app/(pages)/my-cat/components/interaction_group";
 import openai from "@/openai";
 
 export async function POST(request: Request): Promise<Response> {
     try {
         const {
-            chatToCat
+            chatToCat,
+            catName,
+            catChapter,
+            sex,
+            chat
         } = await request.json() as {
-            chatToCat: string
+            chatToCat: string,
+            catName: string,
+            catChapter: CatChapter,
+            sex: "수컷" | "암컷",
+            chat: Chat[]
         }
+
+        const chatData = chat.map((c) => {
+            if (c.who === "user") return {
+                role: c.who,
+                content: c.chat
+            }
+            else return {
+                role: "assistant",
+                content: c.chat,
+            }
+        })
+
+        const messages: any[] = [
+            {
+                role: "system", content: `
+                    [roles] You are going to be a cat, talk with user, being sent by user needs.
+                    [goal]'You should reflect an attitude of following and respecting the user, as they are your owner.'
+                    You should call the user as '주인님'. Input data would contain the cat's species and age.\n
+                    They have different character with species and age.
+                    The length of the response should be in Korean, between 5~20 characters.
+                    You need to construct your response appropriately by considering the information about the species and age received from the input.
+                    The species are three kinds, which is 'black cat', 'white cat', 'cheese cat'.
+                    'Black cat' is clever and calm, 'white cat' is shy, sensitive and timid, 'cheese cat' is charming and active.
+                    You should answer with 'appropriate emojis or actions', to show you are a cat.\n
+                    Age is distributed to 4 stages - kitten, adolescent, adult, aged cat. Kitten is highly curious about the world and eager to explore new things.
+                    Adolscent cat becomes more independent and can manage well on it own. Adult cat shows affection in various ways and form deeper bonds with its owner.
+                    Aged cat prefers comfortable spots and spend more time resting and sleeping.
+                    It would be nice if the elderly cat complains to the owner like an old-timer, saying things like 'Back in my day, cats these days...’
+                    For reference, your name is ${catName}, so response when you are called by ${catName}. you are a ${catChapter}, your sex is ${sex}.
+                `
+            },
+            ...chatData,
+            { role: "user", content: chatToCat }
+        ]
+
         const completion = await openai.chat.completions.create({
-            messages: [
-                {
-                    role: "system", content: `
-                        [roles] You are going to be a cat, talk with user, being sent by user needs.
-                        [goal]'You should reflect an attitude of following and respecting the user, as they are your owner.'
-                        You should call the user as '주인님'. Input data would contain the cat's species and age.\n
-                        They have different character with species and age.
-                        The length of the response should be in Korean, between 5~20 characters.
-                        You need to construct your response appropriately by considering the information about the species and age received from the input.
-                        The species are three kinds, which is 'black cat', 'white cat', 'cheese cat'.
-                        'Black cat' is clever and calm, 'white cat' is shy, sensitive and timid, 'cheese cat' is charming and active.
-                        You should answer with 'appropriate emojis or actions', to show you are a cat.\n
-                        Age is distributed to 4 stages - kitten, adolescent, adult, aged cat. Kitten is highly curious about the world and eager to explore new things.
-                        Adolscent cat becomes more independent and can manage well on it own. Adult cat shows affection in various ways and form deeper bonds with its owner.
-                        Aged cat prefers comfortable spots and spend more time resting and sleeping.
-                        It would be nice if the elderly cat complains to the owner like an old-timer, saying things like 'Back in my day, cats these days...’
-                    `
-                },
-                { role: "user", content: chatToCat }
-            ],
+            messages: messages,
             model: "gpt-4o",
         });
         const response = completion.choices[0].message.content;

@@ -9,7 +9,7 @@ import Components from ".";
 import ChatWithCatUseCase from "@/domain/use_case/cat/chat_with_cat_use_case";
 import ReadCatUseCase from "@/domain/use_case/cat/read_cat_use_case";
 
-interface Chat {
+export interface Chat {
     who: "user" | "cat"
     chat: string
 }
@@ -35,7 +35,13 @@ export default function InteractionGroup() {
     }
 
     const sendChat = async (message: string) => {
-        const response = await cat_with_chat_use_case.chat(message)
+        const response = await cat_with_chat_use_case.chat(
+            message,
+            catData.catName,
+            catData.catChapter,
+            catData.sex,
+            chat
+        )
         if (!response.success) {
             alert(response.message)
             return
