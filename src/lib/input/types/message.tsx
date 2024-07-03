@@ -3,29 +3,43 @@
 import { useState } from "react";
 
 export default function Message(props: {
-
+    onSend: (message: string) => void
 }) {
     const [message, setMessage] = useState('');
+
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMessage(e.target.value);
     }
 
+    const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            sendMessage();
+        }
+    }
+
     const sendMessage = () => {
-        console.log(message);
-        setMessage('');
+        if (message.trim() !== '') {
+            props.onSend(message);
+            setMessage('');
+        }
     }
 
     return (
         <div className="flex gap-3">
             <input
-                className="px-5 py-3 border border-white-72 bg-white-50 rounded-2xl w-full font-fs-l text-white text-l16 focus:outline-none placeholder-white-60"
+                className={`
+                        px-5 py-3 border border-white-72 bg-white-50
+                        rounded-2xl w-full font-fs-l text-gray-dark text-l16
+                        focus:outline-none placeholder-black-20
+                    `}
                 onChange={handleChange}
-                onKeyDown={sendMessage}
+                onKeyPress={handleKeyPress}
                 value={message}
                 placeholder="대화하기"
             />
             <button
-                className="focus:outline-none rounded-2xl bg-black" style={{ width: '50px', height: '50px' }}
+                className="flex justify-center items-center focus:outline-none rounded-2xl bg-black flex-shrink-0" style={{ width: '50px', height: '50px' }}
                 onClick={sendMessage}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">

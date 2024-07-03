@@ -41,6 +41,7 @@ const config: Config = {
       'white-60': 'rgba(255, 255, 255, 0.60)',
       'white-72': 'rgba(255, 255, 255, 0.72)',
       'white-80': 'rgba(255, 255, 255, 0.80)',
+      'black-20': 'rgba(0, 0, 0, 0.20)',
       'pink-15': 'rgba(255, 187, 187, 0.15)'
     },
     fontFamily: {
@@ -60,6 +61,7 @@ const config: Config = {
       'r16': ['16px', { lineHeight: '1.5' }],
       'r14': ['14px', { lineHeight: '1.5' }],
       'm12': ['12px', { lineHeight: '1.5' }],
+      'l12': ['12px', { lineHeight: '1.5' }],
       'sb10': ['10px', { lineHeight: '1.5' }],
       'r45': ['45px', { lineHeight: '1.5' }],
       'r20': ['20px', { lineHeight: '1.5' }]
