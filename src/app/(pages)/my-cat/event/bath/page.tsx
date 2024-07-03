@@ -1,5 +1,5 @@
 import Button from "@/lib/button";
-import CatResponse from "@/lib/cat_response";
+// import CatResponse from "@/lib/cat_response";
 import Components from "./components"
 import Container from "@/lib/container";
 import Image from "next/image"
@@ -11,7 +11,7 @@ export default function Page() {
         <Container.Main headerTitle="목욕" bgClass="bg-gradient-2" badge back>
             <div className="relative flex flex-col items-center flex-grow">
                 <div className="pt-[120px] ">
-                    <CatResponse>목욕할 시간이라니 ....</CatResponse>
+                    {/* <CatResponse>목욕할 시간이라니 ....</CatResponse> */}
                 </div>
                 <div className="pt-0">
                     <Image src={Images.bath} width={340} height={340} alt="bath" />

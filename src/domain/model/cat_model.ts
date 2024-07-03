@@ -5,7 +5,7 @@ interface CatModel {
     userID : string;
     catName : string;
     color : string;
-    sex : string;
+    sex : "수컷" | "암컷";
     catStatus:CatStatus;
     catChapter : CatChapter;
     catChat : CatChat[];

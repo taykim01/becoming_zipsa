@@ -5,7 +5,7 @@ export default class AdoptCatUseCase {
     async adopt( 
         catName : string,
         color : string,
-        sex : string
+        sex : "수컷" | "암컷"
     ): Promise<MyResponse> {
         try {
             const userID = sessionStorage.getItem('uid')

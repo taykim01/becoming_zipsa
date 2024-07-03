@@ -8,7 +8,8 @@ export async function POST(request: Request): Promise<Response> {
         } = await request.json() as {
             userData: User
         }
-        const userRef = doc(collection(db, "user"))
+        const userID = userData.id
+        const userRef = doc(collection(db, "user"), userID)
         await setDoc(
             userRef, userData
         )

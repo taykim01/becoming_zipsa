@@ -30,14 +30,17 @@ export default class SignUpUseCase {
         }
     }
 
+    private userID: string = ""
+
     async signUp(): Promise<MyResponse> {
         try {
             const response = await signInWithPopup(auth, provider);
             const credential = GoogleAuthProvider.credentialFromResult(response);
             if (!credential) return new MyResponse(true, "이미 인증된 사용자", response.user)
             const uid = response.user.uid
+            this.userID = uid
             sessionStorage.setItem('uid', JSON.stringify(uid));
-            return new MyResponse(true, "인증에 성공했습니다.", response.user)
+            return new MyResponse(true, "인증에 성공했습니다.", uid)
         } catch (error) {
             return new MyResponse(false, "인증에 실패했습니다.", String(error))
         }
@@ -46,6 +49,7 @@ export default class SignUpUseCase {
     async createUser(email: string, password: string, name: string): Promise<MyResponse> {
         try {
             const userData: User = {
+                id: this.userID,
                 email: email,
                 password: password,
                 name: name,
