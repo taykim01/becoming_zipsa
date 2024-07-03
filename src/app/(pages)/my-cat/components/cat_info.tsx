@@ -1,3 +1,6 @@
+import ReadCatUseCase from "@/domain/use_case/cat/read_cat_use_case"
+import { useState } from "react"
+
 function SexSymbol(props: { sex: "수컷" | "암컷" }) {
     if (props.sex === "수컷") {
         return <svg xmlns="http://www.w3.org/2000/svg" width="18" height="19" viewBox="0 0 18 19" fill="none">
@@ -7,6 +10,8 @@ function SexSymbol(props: { sex: "수컷" | "암컷" }) {
 }
 
 export default function CatInfo(props: {}) {
+    const read_cat_use_case = new ReadCatUseCase()
+    const [catData, setCatData] = useState<CatModel >({} as CatModel)
     return (
         <div className="flex flex-col gap-2 items-center">
             <div className="flex gap-3 items-center">
