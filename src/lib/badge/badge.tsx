@@ -1,3 +1,4 @@
+"use client"
 import Image from "next/image";
 import Images from "../images";
 
@@ -23,9 +24,9 @@ export default function Badge(props: {
     }
 
     return (
-        <div className="inline-flex py-[7px] pr-[29px] pl-[9px] items-center gap-[124px] rounded-full bg-white-40">
-            <div className="flex w-[90px] h-[90px] py-[5px] px-[9px] justify-center items-center rounded-full bg-white-80">
-                <Image alt={props.title} src={badgeColor[props.title].img || ""} width={50} height={50} />
+        <div className="flex py-2 pr-7 pl-2 items-center justify-between gap-[124px] h-fit rounded-full bg-white-40">
+            <div className="flex w-24 h-24 justify-center items-center rounded-full overflow-hidden bg-white-80">
+                <Image alt={props.title} src={badgeColor[props.title].img || ""} width={60} height={60} />
             </div>
             <div className="inline-flex flex-col justify-items-center">
                 <div className={`text-sb20 text-${badgeColor[props.title].color} font-fs-sb`}>{props.title}</div>
