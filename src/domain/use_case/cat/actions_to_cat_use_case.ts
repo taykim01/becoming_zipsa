@@ -1,8 +1,21 @@
 import MyResponse from "../MyResponse"
 
 export default class ActionsToCatUseCase {
-    async applyAction(catAction: string, userID: string, catID: string): Promise<MyResponse> {
+    async applyAction(catAction: string): Promise<MyResponse> {
         try {
+            const userID = sessionStorage.getItem("uid")
+
+            const getCatIDRes = await fetch(`http://localhost:3000/api/v1/cat/get-id`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    userID
+                })
+            })
+            const getCatIDData = await getCatIDRes.json()
+            if(!getCatIDData.success) return new MyResponse(false, getCatIDData.message, {})
+            const catID = getCatIDData.data
+
             const catReadRes = await fetch(`http://localhost:3000/api/v1/cat/read`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
