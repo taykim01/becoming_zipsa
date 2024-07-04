@@ -42,7 +42,6 @@ export default function InputCatData() {
             catData.color,
             catData.sex as "수컷"|"암컷"
         )
-        console.log(response)
         if (!response.success) {
             alert(response.message)
             return
