@@ -20,7 +20,7 @@ export default function Popup(props: {
             }}
         >
             <div className="flex flex-col">
-                <div className="flex items-center bg-beige w-full h-fit p-4">
+                <div className="flex items-center bg-beige w-full h-fit p-5">
                     <div className="flex-1" />
                     <div className="flex-5 text-center text-black font-ohsquare text-n20">{props.title}</div>
                     <div className="flex-1 flex justify-end">
@@ -32,7 +32,9 @@ export default function Popup(props: {
                         </button>
                     </div>
                 </div>
-                {props.children}
+                <div className="p-5">
+                    {props.children}
+                </div>
             </div>
         </Drawer >
     )

@@ -8,7 +8,7 @@ export default function SignUpButton() {
     return (
         <>
             <div
-                className="font-fs-r text-gray-dark text-r16"
+                className="font-fs-r text-gray-dark text-r16 cursor-pointer"
                 onClick={() => setPopup(true)}
             >
                 회원가입하기

@@ -24,7 +24,7 @@ export default function SignUpPopup(props: {
             open={props.open}
             onClose={props.onClose}
         >
-            <div className="flex flex-col gap-3 p-5 pt-10">
+            <div className="flex flex-col gap-3 pt-10">
                 <Button.Default onClick={googleSignUp}>구글 회원가입</Button.Default>
                 <Button.Default onClick={() => router.push("/sign-up/email")}>이메일 회원가입</Button.Default>
             </div>

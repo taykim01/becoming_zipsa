@@ -80,8 +80,7 @@ export default function InputCatData() {
                 title="고양이별 성격 알아보기"
                 open={personalityPopup}
                 onClose={() => setPersonalityPopup(false)}>
-                
-                    <div className="flex flex-col gap-5 p-5 ">
+                    <div className="flex flex-col gap-5">
                         <CatListItem cat="치즈냥이" detail="활발함,응성받이, 소심"></CatListItem>
                         <CatListItem cat="깜냥이" detail="똑똑함, 얌전함"></CatListItem>
                         <CatListItem cat="흰냥이" detail="수줍음, 겁많음, 섬세함, 느긋함"></CatListItem>

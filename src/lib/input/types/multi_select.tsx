@@ -27,8 +27,8 @@ export default function MultiSelect(props: {
                     <div
                         key={i}
                         className={`
-                                px-5 py-3 flex-grow text-center border border-white-72 bg-white-15 rounded-2xl w-full text-white focus:outline-none
-                                ${selected === item ? "bg-pink-15 text-pink-100 font-fs-sb text-sb20" : "font-fs-l text-l20"}
+                                px-5 py-3 flex-grow text-center border rounded-2xl w-full focus:outline-none
+                                ${selected === item ? "bg-pink-50 text-pink-100 font-fs-sb text-sb20" : " border-white-72 bg-white-15 text-white font-fs-l text-l20"}
                             `}
                         onClick={() => handleSelect(item)}
                     >

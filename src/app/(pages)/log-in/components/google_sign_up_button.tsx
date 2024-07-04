@@ -21,7 +21,7 @@ export default function GoogleSignUpButton() {
     }
     return (
         <div
-            className="font-fs-r text-gray-dark text-r16"
+            className="font-fs-r text-gray-dark text-r16 cursor-pointer"
             onClick={googleLogIn}
         >
             구글 로그인하기
