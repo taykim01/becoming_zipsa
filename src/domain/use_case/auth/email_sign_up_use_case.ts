@@ -52,10 +52,10 @@ export default class EmailSignUpUseCase {
     async createUser(): Promise<MyResponse> {
         try {
             const userData: UserModel = {
-                id: this.userID,
                 email: this.email,
                 password: this.password,
                 name: this.name,
+                playTime: 0,
             }
             const res = await fetch(`${myUrl}/api/v1/user/create`, {
                 method: "POST",

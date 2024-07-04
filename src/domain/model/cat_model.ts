@@ -9,7 +9,7 @@ interface CatModel {
     catChat: CatChat[];
     neutered: boolean;
     birthday: Date;
-    badges: string[];
+    badges: Badges[];
 }
 
 type Badges = "깨끗한 고양이" | "건강한 고양이" | "씩씩한 고양이"

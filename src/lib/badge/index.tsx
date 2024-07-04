@@ -4,7 +4,7 @@ import Image from "next/image";
 import Images from "../images";
 
 export default function Badge(props: {
-    title: "깨끗한 고양이" | "건강한 고양이" | "씩씩한 고양이"
+    title: Badges
 }) {
     const badgeColor = {
         "깨끗한 고양이": {

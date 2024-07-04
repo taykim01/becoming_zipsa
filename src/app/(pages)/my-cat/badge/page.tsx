@@ -1,7 +1,7 @@
 import Container from "@/lib/container";
 import Image from "next/image";
 import InfoComponents from "../components";
-import Badge from "@/lib/badge";
+import Components from "./components";
 
 export default function Page() {
     return (
@@ -17,11 +17,7 @@ export default function Page() {
                 </div>
                 <div className="flex flex-col gap-10 w-full">
                     <InfoComponents.CatInfo></InfoComponents.CatInfo>
-                    <div className="flex flex-col gap-3 w-full">
-                        <Badge title="깨끗한 고양이"></Badge>
-                        <Badge title="건강한 고양이"></Badge>
-                        <Badge title="씩씩한 고양이"></Badge>
-                    </div>
+                    <Components.BadgeGroup />
                 </div>
 
             </div>

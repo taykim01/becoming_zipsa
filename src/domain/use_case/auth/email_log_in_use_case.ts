@@ -10,7 +10,6 @@ export default class EmailLogInUseCase {
         try {
             const response = await signInWithEmailAndPassword(auth, email, password)
             const uid = response.user.uid
-            console.log(uid)
 
             sessionStorage.setItem('uid', uid);
             return new MyResponse(true, "인증에 성공했습니다.", response.user)

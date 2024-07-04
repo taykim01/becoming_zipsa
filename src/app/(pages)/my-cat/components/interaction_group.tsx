@@ -93,12 +93,12 @@ export default function InteractionGroup() {
                                 {
                                     buttonDetail
                                         ? <div className="grid grid-cols-2 grid-rows-3 gap-4">
-                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("giveSnack",); setCatActionRes("giveSnack")}} iconType="Cake" textColor="black">간식주기</Button.UserAction>
-                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("giveFood",)}} iconType="Pipette" textColor="black">밥 주기</Button.UserAction>
-                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("pat",)}} iconType="Hand" textColor="black">쓰다듬기</Button.UserAction>
-                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("play",)}} iconType="Fish" textColor="black">사냥놀이</Button.UserAction>
-                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("brush",)}} iconType="Comb" textColor="black">빗어주기</Button.UserAction>
-                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("")}} iconType="Camera" textColor="black">사진찍기</Button.UserAction>
+                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("giveSnack",); setCatActionRes("giveSnack") }} iconType="Cake" textColor="black">간식주기</Button.UserAction>
+                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("giveFood",) }} iconType="Pipette" textColor="black">밥 주기</Button.UserAction>
+                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("pat",) }} iconType="Hand" textColor="black">쓰다듬기</Button.UserAction>
+                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("play",) }} iconType="Fish" textColor="black">사냥놀이</Button.UserAction>
+                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("brush",) }} iconType="Comb" textColor="black">빗어주기</Button.UserAction>
+                                            <Button.UserAction onClick={() => { actions_to_cat_use_case.applyAction("") }} iconType="Camera" textColor="black">사진찍기</Button.UserAction>
                                             <div />
                                             <Button.UserAction onClick={() => setButtonDetail(false)} iconType="Back" textColor="black">돌아가기</Button.UserAction>
                                         </div>
@@ -112,7 +112,7 @@ export default function InteractionGroup() {
                         </>
                 }
             </div>
-            {loading&&<Loading/>}
+            {loading && <Loading />}
         </>
     )
 }

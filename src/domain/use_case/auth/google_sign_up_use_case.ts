@@ -18,7 +18,6 @@ export default class GoogleSignUpUseCase {
     }
 
     private userID: string = ""
-    private email: string = ""
 
     async signUp(): Promise<MyResponse> {
         try {
@@ -42,9 +41,9 @@ export default class GoogleSignUpUseCase {
             const email = sessionStorage.getItem('email')
             if(!uid || !email) return new MyResponse(false, "이메일 혹은 아이디가 없습니다.", {})
             const userData: UserModel = {
-                id: uid,
                 email: email,
                 name: name,
+                playTime: 0,
             }
             const res = await fetch(`${myUrl}/api/v1/user/create`, {
                 method: "POST",
