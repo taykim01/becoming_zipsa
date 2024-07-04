@@ -7,11 +7,14 @@ import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import CheckCatUseCase from "@/domain/use_case/cat/check_cat_use_case";
 import EmailLogInUseCase from "@/domain/use_case/auth/email_log_in_use_case";
+import Loading from "@/lib/loading";
 
 export default function InputLogIn() {
     const router = useRouter()
     const check_cat_use_case = new CheckCatUseCase()
     const email_log_in_use_case = new EmailLogInUseCase()
+    const [loading, setLoading] = useState<boolean>(false)
+
 
     const [logInData, setLogInData] = useState({
         email: "",
@@ -27,14 +30,17 @@ export default function InputLogIn() {
     }
 
     const logIn = async () => {
+        setLoading(true)
         const response = await email_log_in_use_case.logIn(logInData.email, logInData.password)
         if (!response.success) {
             alert(response.message)
+            setLoading(false)
             return
         }
         const checkCatRes = await check_cat_use_case.check()
         if(checkCatRes.data === "no_cat") router.push("/adopt-cat")
         else router.push("/my-cat")
+        setLoading(false)
     }
 
     return (
@@ -65,6 +71,7 @@ export default function InputLogIn() {
             <div className="absolute bottom-10 w-full">
                 <Button.Default onClick={logIn}>로그인하기</Button.Default>
             </div>
+            {loading&&<Loading/>}
         </>
     )
 }

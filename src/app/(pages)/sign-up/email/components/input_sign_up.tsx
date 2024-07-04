@@ -5,6 +5,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import EmailSignUpUseCase from "@/domain/use_case/auth/email_sign_up_use_case";
+import Loading from "@/lib/loading";
 
 export default function InputSignUp() {
 
@@ -16,6 +17,8 @@ export default function InputSignUp() {
         passwordCheck: "",
         name: ""
     })
+        const [loading, setLoading] = useState<boolean>(false)
+    
 
     const setEmail = (email: string) => {
         setSignUpData({ ...signUpData, email })
@@ -34,26 +37,32 @@ export default function InputSignUp() {
     }
 
     const signUp = async () => {
+        setLoading(true)
         const verifyRes = await sign_up_use_case.verifyInput(signUpData.email, signUpData.password, signUpData.passwordCheck, signUpData.name)
         if (!verifyRes.success) {
             alert(verifyRes.message)
+            setLoading(false)
             return
         }
         const signUpRes = await sign_up_use_case.signUp()
         if (!signUpRes.success) {
             alert(signUpRes.message)
+            setLoading(false)
             return
         }
         const createUserRes = await sign_up_use_case.createUser()
         if (!createUserRes.success) {
             alert(createUserRes.message)
+            setLoading(false)
             return
         }
         alert("회원가입에 성공했습니다.")
         router.push("/adopt-cat")
+        setLoading(false)
     }
 
     return (
+        <>
         <div className="relative flex flex-col items-center w-full h-full">
             <div className="flex flex-col gap-5 w-full items-center h-full">
                 <Input.Text
@@ -87,5 +96,7 @@ export default function InputSignUp() {
                 <Button.Default onClick={signUp}>회원가입하기</Button.Default>
             </div>
         </div>
+        {loading&&<Loading/>}
+        </>
     )
 }
