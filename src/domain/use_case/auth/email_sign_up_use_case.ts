@@ -1,3 +1,4 @@
+import myUrl from "@/domain/my_url";
 import MyResponse from "../MyResponse"
 import { auth } from "@/firebase"
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -56,7 +57,7 @@ export default class EmailSignUpUseCase {
                 password: this.password,
                 name: this.name,
             }
-            const res = await fetch(`${url}/api/v1/user/create`, {
+            const res = await fetch(`${myUrl}/api/v1/user/create`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
