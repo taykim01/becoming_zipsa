@@ -1,13 +1,13 @@
 const Images = {
-    bath:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fbath.webp?alt=media&token=b665451b-2337-4ff4-bcf4-3b5f2493b054",
-    house:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fhouse.webp?alt=media&token=97b47792-efd2-4740-977e-a3ea64d42260",
-    paw: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fpaw.webp?alt=media&token=8ae49c42-9e0d-451a-bd84-3a4a2f4dede1",
+    bath:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fbath.webp?alt=media&token=59a8b117-ef8b-4441-ae0e-b899a8eb33d0",
+    house:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fhouse.png?alt=media&token=ba64b4e1-5070-4200-aa8d-f1bb621016b1",
     bin: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fbin.webp?alt=media&token=6f25aef3-a773-4942-a1bf-77c70017370c",
     tablet: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Ftablet.webp?alt=media&token=571b0038-8b4f-4c21-a6e5-7b3cdf4dfbba",
-    kit: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fkit.webp?alt=media&token=a5c82941-2439-4c4e-b85b-18670669977a",
-    toy: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Ftoy.webp?alt=media&token=7807813f-eb2d-426e-868b-8cf4cdc34fb9",
-    heart:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fheart.webp?alt=media&token=d1c88e1a-925b-45e5-9688-290682612f65",
-    medicine:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fmedicine.webp?alt=media&token=1b55d7c3-f86a-4983-927c-279fb592eca8",
+    kit: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fkit2.webp?alt=media&token=bbe7a78f-ac87-40f0-9ff9-7878ffa5e045",
+    toy: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Ftoy1.webp?alt=media&token=384ec213-c3ab-403f-9b8f-4d72a5f61d1d",
+    heart:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fheart1.webp?alt=media&token=9959c2b9-4ed5-4cb8-8a26-c01dc3dba25b",
+    medicine:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fmedicine.webp?alt=media&token=1cb82e58-e359-4239-8b80-8503691f78a0",
+    paw: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fpaw2.webp?alt=media&token=3a5df5c5-dc35-4893-90a9-1a0a1d94c69e",
 }
 
 export default Images;
