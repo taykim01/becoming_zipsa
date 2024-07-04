@@ -20,7 +20,7 @@ export default async function Page() {
 
                 <Components.InteractionGroup />
             </div>
-            <CheckSession />
+            <CheckSession alertNoSession />
         </Container.Main>
     )
 }
