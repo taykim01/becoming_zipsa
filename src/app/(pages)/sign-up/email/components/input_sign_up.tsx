@@ -52,6 +52,8 @@ export default function InputSignUp() {
         }
         const createUserRes = await sign_up_use_case.createUser()
         if (!createUserRes.success) {
+            await sign_up_use_case.deleteAuth()
+            console.log(createUserRes)
             alert(createUserRes.message)
             setLoading(false)
             return
@@ -77,6 +79,7 @@ export default function InputSignUp() {
                     placeholder="비밀번호를 입력해주세요."
                     onChange={setPassword}
                     onEnter={signUp}
+                    info="알파벳, 특수문자, 숫자 포함 6자 이상으로 구성해주세요."
                 />
                 <Input.Text
                     title="비밀번호 확인"

@@ -1,7 +1,7 @@
 import myUrl from "@/domain/my_url";
 import MyResponse from "../MyResponse"
 import { auth } from "@/firebase"
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, deleteUser } from "firebase/auth";
 
 
 export default class EmailSignUpUseCase {
@@ -45,7 +45,18 @@ export default class EmailSignUpUseCase {
 
             return new MyResponse(true, "인증에 성공했습니다.", this.userID)
         } catch (error) {
-            return new MyResponse(false, "인증에 실패했습니다2.", String(error))
+            return new MyResponse(false, "인증에 실패했습니다.", String(error))
+        }
+    }
+
+    async deleteAuth(): Promise<MyResponse> {
+        try {
+            const user = auth.currentUser
+            if(!user) return new MyResponse(false, "계정 삭제에 실패했습니다.", {})
+            await deleteUser(user)
+            return new MyResponse(true, "계정 삭제에 성공했습니다.", {})
+        } catch (error) {
+            return new MyResponse(false, "계정 삭제에 실패했습니다.", String(error))
         }
     }
 
@@ -53,22 +64,27 @@ export default class EmailSignUpUseCase {
         try {
             const userData: UserModel = {
                 email: this.email,
-                password: this.password,
                 name: this.name,
                 playTime: 0,
             }
+            const userID = this.userID
             const res = await fetch(`${myUrl}/api/v1/user/create`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ userData })
+                body: JSON.stringify({
+                    userData,
+                    userID
+                })
             })
             const data = await res.json()
-            if (!data.success) return new MyResponse(false, "유저 데이터 생성에 실패했습니다.1", {})
+            if (!data.success) return new MyResponse(false, "유저 데이터 생성에 실패했습니다.", {})
+
+            sessionStorage.setItem("uid", this.userID)
             return new MyResponse(true, "유저 데이터 생성에 성공했습니다.", data.data)
         } catch (error) {
-            return new MyResponse(false, "유저 데이터 생성에 실패했습니다.2", String(error))
+            return new MyResponse(false, "유저 데이터 생성에 실패했습니다.", String(error))
         }
     }
 }

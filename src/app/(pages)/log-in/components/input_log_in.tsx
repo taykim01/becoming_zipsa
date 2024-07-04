@@ -38,7 +38,7 @@ export default function InputLogIn() {
             return
         }
         const checkCatRes = await check_cat_use_case.check()
-        if(checkCatRes.data === "no_cat") router.push("/adopt-cat")
+        if (checkCatRes.data === "no_cat") router.push("/adopt-cat")
         else router.push("/my-cat")
         setLoading(false)
     }
@@ -61,17 +61,15 @@ export default function InputLogIn() {
                     />
                 </div>
                 <div className="flex items-center gap-3">
-                <Components.SignUpButton />
-
-                <div className="font-fs-r text-gray-dark text-r16">|</div>
-                <Components.GoogleSignUpButton />
-
+                    <Components.SignUpButton />
+                    <div className="font-fs-r text-gray-dark text-r16">|</div>
+                    <Components.GoogleSignUpButton />
                 </div>
             </div>
-            <div className="absolute bottom-10 w-full">
+            <div className="absolute bottom-5 w-full">
                 <Button.Default onClick={logIn}>로그인하기</Button.Default>
             </div>
-            {loading&&<Loading/>}
+            {loading && <Loading />}
         </>
     )
 }

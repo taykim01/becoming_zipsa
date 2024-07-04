@@ -43,7 +43,8 @@ const config: Config = {
       'white-80': 'rgba(255, 255, 255, 0.80)',
       'black-20': 'rgba(0, 0, 0, 0.20)',
       'pink-15': 'rgba(255, 187, 187, 0.15)',
-      'pink-60': 'rgba(245, 122, 135, 0.60)'
+      'pink-60': 'rgba(245, 122, 135, 0.60)',
+      'pink-80': 'rgba(245, 122, 135, 0.80)'
     },
     fontFamily: {
       'ohsquare': ['Cafe24Ohsquare', 'sans-serif'],

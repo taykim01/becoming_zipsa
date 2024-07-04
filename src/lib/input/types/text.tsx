@@ -10,7 +10,8 @@ export default function Text(props: {
     onChange?: (value: string) => void,
     type?: "text" | "password" | "email",
     onEnter?: () => any,
-    placeholder?: string
+    placeholder?: string,
+    info?: string
 }) {
     const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
         const value = e.target.value;
@@ -25,6 +26,7 @@ export default function Text(props: {
         <InputFrame
             title={props.title}
             guide={props.guide}
+            info={props.info}
         >
             <input
                 type={props.type || "text"}

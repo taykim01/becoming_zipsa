@@ -4,11 +4,12 @@ import { collection, doc, setDoc } from "firebase/firestore"
 export async function POST(request: Request): Promise<Response> {
     try {
         const {
-            userData
+            userData,
+            userID
         } = await request.json() as {
-            userData: UserModel
+            userData: UserModel,
+            userID: string
         }
-        const userID = userData.id
         const userRef = doc(collection(db, "user"), userID)
         await setDoc(
             userRef, userData

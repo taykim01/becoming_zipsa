@@ -47,16 +47,17 @@ export default class GoogleSignUpUseCase {
             }
             const res = await fetch(`${myUrl}/api/v1/user/create`, {
                 method: "POST",
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({userData})
+                headers: {'Content-Type': 'application/json',},
+                body: JSON.stringify({
+                    userData,
+                    userID: uid
+                })
             })
             const data = await res.json()
-            if (!data.success) return new MyResponse(false, "유저 데이터 생성에 실패했습니다.1", {})
+            if (!data.success) return new MyResponse(false, "유저 데이터 생성에 실패했습니다.", {})
             return new MyResponse(true, "유저 데이터 생성에 성공했습니다.", data.data)
         } catch (error) {
-            return new MyResponse(false, "유저 데이터 생성에 실패했습니다.2", String(error))
+            return new MyResponse(false, "유저 데이터 생성에 실패했습니다.", String(error))
         }
     }
 }

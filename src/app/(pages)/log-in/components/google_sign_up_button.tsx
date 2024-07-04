@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation"
 export default function GoogleSignUpButton() {
     const google_log_in_use_case = new GoogleLogInUseCase()
     const check_cat_use_case = new CheckCatUseCase()
+
     const router = useRouter()
     
     const googleLogIn = async () => {
@@ -19,6 +20,7 @@ export default function GoogleSignUpButton() {
         if (checkCatRes.data === "no_cat") router.push("/adopt-cat")
         else router.push("/my-cat")
     }
+
     return (
         <div
             className="font-fs-r text-gray-dark text-r16 cursor-pointer"

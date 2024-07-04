@@ -10,7 +10,7 @@ export default function Main(props:{
 }){
     const backgroundClass = props.bgClass || "bg-gradient-1";
     return (
-        <div className={`flex flex-col h-screen w-screen px-5 ${backgroundClass} pb-10`} style={{ maxWidth: 393, margin: "0 auto" }}>
+        <div className={`flex flex-col h-full w-screen px-5 ${backgroundClass} pb-5`} style={{ maxWidth: 393}}>
             <Header badge={props.badge} back={props.back}>{props.headerTitle}</Header>
             {props.children}
         </div>

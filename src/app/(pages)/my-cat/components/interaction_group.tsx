@@ -58,33 +58,36 @@ export default function InteractionGroup() {
         setChat([{ who: "cat", chat: catChat }, { who: "user", chat: message }, ...chat])
     }
 
+
     useEffect(() => {
         readCatData()
     }, [])
 
     return (
         <>
-            <div className="flex flex-col justify-between w-full items-center flex-grow">
+            <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-5">
                 {
                     seeStatus
-                        ? <div className="w-full flex-grow flex flex-col justify-between">
+                        ? <div className="w-full flex-grow flex flex-col justify-between gap-5">
                             <Components.GaugeGroup />
                             <Button.Default onClick={() => setSeeStatus(false)}>{`${catData.catName}(이)랑 놀기`}</Button.Default>
                         </div>
                         : <>
                             {buttonDetail
                                 ? <CatResponse name={catData.catName}>{catActionRes}</CatResponse>
-                                : <div className="flex flex-col gap-2 w-full flex-grow overflow-scroll" style={{ maxHeight: "28vh", flexDirection: "column-reverse" }}>
-                                    {chat.map((chat, index) => {
-                                        if (chat.who === "user") return (
-                                            <div key={index} className="w-full flex justify-end">
-                                                <ChatBox.UserChatBox>{chat.chat}</ChatBox.UserChatBox>
-                                            </div>
-                                        )
-                                        else return (
-                                            <ChatBox.CatChatBox key={index}>{chat.chat}</ChatBox.CatChatBox>
-                                        )
-                                    })}
+                                : <div className="relative w-full h-full">
+                                    <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
+                                        {chat.map((chat, index) => {
+                                            if (chat.who === "user") return (
+                                                <div key={index} className="w-full flex justify-end">
+                                                    <ChatBox.UserChatBox>{chat.chat}</ChatBox.UserChatBox>
+                                                </div>
+                                            )
+                                            else return (
+                                                <ChatBox.CatChatBox key={index}>{chat.chat}</ChatBox.CatChatBox>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
                             }
 

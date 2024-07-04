@@ -20,7 +20,7 @@ export default function SignUpPopup(props: {
     }
     return (
         <Popup
-            title="회원가입 어케할래"
+            title="회원가입 방법 선택하기"
             open={props.open}
             onClose={props.onClose}
         >

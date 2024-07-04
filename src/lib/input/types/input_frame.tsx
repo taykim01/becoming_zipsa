@@ -4,12 +4,13 @@ export default function InputFrame(props: {
     title?: string,
     guide?: string,
     guideClick?: () => void,
-    children: ReactNode
+    children: ReactNode,
+    info?: string
 }) {
     return (
         <div className="flex flex-col gap-2 w-full" style={{ maxWidth: 353 }}>
             <div className="flex justify-between items-center">
-                {props.title && <div className="text-pink-500 text-r18">{props.title}</div>}
+                {props.title && <div className="text-pink-500 fs-r text-r18">{props.title}</div>}
                 {
                     props.guide && <div className="flex gap-1 items-center" onClick={props.guideClick}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -22,6 +23,7 @@ export default function InputFrame(props: {
                 }
             </div>
             {props.children}
+            {props.info && <div className="text-pink-80 fs-l text-r14 text-right w-full">{props.info}</div>}
         </div>
     )
 }

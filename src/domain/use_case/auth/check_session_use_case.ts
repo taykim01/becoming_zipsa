@@ -1,6 +1,6 @@
 import MyResponse from "../MyResponse";
 
-export default class CheckAuthSessionUseCase {
+export default class CheckSessionUseCase {
     async check():Promise<MyResponse>{
         try {
             const cachedData = sessionStorage.getItem('uid')

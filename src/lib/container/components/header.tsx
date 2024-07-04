@@ -40,7 +40,7 @@ export default function Header(props: {
 }) {
     const router = useRouter()
     return (
-        <header className="flex justify-between py-10">
+        <header className="flex justify-between py-8">
             <div className="flex justify-start flex-1">
                 {props.back && <BackButton onClick={() => history.back()} />}
             </div>
