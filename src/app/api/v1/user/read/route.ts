@@ -14,7 +14,7 @@ export async function POST(request: Request): Promise<Response> {
         const userData = {
             ...docSnap.data(),
             id: docSnap.id
-        } as User
+        } as UserModel
         
         return new Response(
             JSON.stringify({

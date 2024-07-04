@@ -5,7 +5,7 @@ export default class AdoptCatUseCase {
 
     async adopt( 
         catName : string,
-        color : string,
+        color : CatType,
         sex : "수컷" | "암컷"
     ): Promise<MyResponse> {
         try {
@@ -25,7 +25,8 @@ export default class AdoptCatUseCase {
                 catChapter : "첫 만남",
                 catChat : [] as CatChat[],
                 neutered : false,
-            
+                birthday : new Date(),
+                badges : [] as Badges[]
             }
            
 

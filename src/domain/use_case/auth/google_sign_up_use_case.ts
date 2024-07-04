@@ -41,7 +41,7 @@ export default class GoogleSignUpUseCase {
             const uid = sessionStorage.getItem('uid')
             const email = sessionStorage.getItem('email')
             if(!uid || !email) return new MyResponse(false, "이메일 혹은 아이디가 없습니다.", {})
-            const userData: User = {
+            const userData: UserModel = {
                 id: uid,
                 email: email,
                 name: name,

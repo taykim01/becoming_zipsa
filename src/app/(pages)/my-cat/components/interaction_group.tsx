@@ -39,6 +39,7 @@ export default function InteractionGroup() {
     }
 
     const sendChat = async (message: string) => {
+        setChat([{ who: "user", chat: message }, ...chat])
         const response = await cat_with_chat_use_case.chat(
             message,
             catData.catName,

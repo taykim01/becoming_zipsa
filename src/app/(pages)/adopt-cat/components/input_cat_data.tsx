@@ -39,8 +39,8 @@ export default function InputCatData() {
     const adoptCat = async () => {
         const response = await adopt_cat_use_case.adopt(
             catData.name,
-            catData.color,
-            catData.sex as "수컷"|"암컷"
+            catData.color as CatType,
+            catData.sex as Sex
         )
         if (!response.success) {
             alert(response.message)

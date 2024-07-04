@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  max-width: 393px;
+  margin: 0 auto;
+}
 
 @font-face {
   font-family: 'Cafe24Ohsquare';

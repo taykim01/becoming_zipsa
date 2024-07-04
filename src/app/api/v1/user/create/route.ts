@@ -6,7 +6,7 @@ export async function POST(request: Request): Promise<Response> {
         const {
             userData
         } = await request.json() as {
-            userData: User
+            userData: UserModel
         }
         const userID = userData.id
         const userRef = doc(collection(db, "user"), userID)

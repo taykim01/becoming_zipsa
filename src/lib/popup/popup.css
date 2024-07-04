@@ -1,6 +1,5 @@
 .modal-cont {
   border-radius: 24px;
-  left: 8px;
-  right: 8px;
-  bottom: 8px;
+  margin: 0 auto 8px auto;
+  width: 377px;
 }
