@@ -22,7 +22,7 @@ export default class ChatWithCatUseCase {
                 })
             })
             const data = await res.json()
-
+            if(!data.success) return new MyResponse(false, "채팅에 실패했습니다.", {})
 
             const userID = sessionStorage.getItem('uid')
             const userChatRes = await fetch(`http://localhost:3000/api/v1/cat/chat/create`, {
