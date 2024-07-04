@@ -1,6 +1,7 @@
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import MyResponse from "../MyResponse"
 import { auth, provider } from "@/firebase"
+import myUrl from "@/domain/my_url";
 
 export default class GoogleSignUpUseCase {
     async verifyInput(
@@ -45,7 +46,7 @@ export default class GoogleSignUpUseCase {
                 email: email,
                 name: name,
             }
-            const res = await fetch(`http://localhost:3000/api/v1/user/create`, {
+            const res = await fetch(`${myUrl}/api/v1/user/create`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

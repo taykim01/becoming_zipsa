@@ -1,9 +1,10 @@
+import myUrl from "@/domain/my_url"
 import MyResponse from "../MyResponse"
 
 export default class ActionsToCatUseCase {
     async applyAction(catAction: string, userID: string, catID: string): Promise<MyResponse> {
         try {
-            const catReadRes = await fetch(`http://localhost:3000/api/v1/cat/read`, {
+            const catReadRes = await fetch(`${myUrl}/api/v1/cat/read`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
@@ -46,7 +47,7 @@ export default class ActionsToCatUseCase {
             const catActionRes = Math.random() < 0.6 ? "positive" : "nagative" ;
 
 
-            const catUpdateRes = await fetch(`http://localhost:3000/api/v1/cat/update`, {
+            const catUpdateRes = await fetch(`${myUrl}/api/v1/cat/update`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({

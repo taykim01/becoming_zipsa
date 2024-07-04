@@ -1,10 +1,11 @@
+import myUrl from "@/domain/my_url";
 import MyResponse from "../MyResponse";
 
 export default class ReadCatUseCase{
     async read():Promise<MyResponse>{
         try {
             const userID = sessionStorage.getItem('uid')
-            const res = await fetch(`http://localhost:3000/api/v1/cat/read`, {
+            const res = await fetch(`${myUrl}/api/v1/cat/read`, {
                 headers: { "Content-type": "application/json" },
                 method: "POST",
                 body : JSON.stringify({

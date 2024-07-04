@@ -1,5 +1,6 @@
 import { Chat } from "@/app/(pages)/my-cat/components/interaction_group"
 import MyResponse from "../MyResponse"
+import myUrl from "@/domain/my_url"
 
 export default class ChatWithCatUseCase {
     async chat(
@@ -10,7 +11,7 @@ export default class ChatWithCatUseCase {
         chat: Chat[]
     ): Promise<MyResponse> {
         try {
-            const res = await fetch(`http://localhost:3000/api/v1/cat/llm/chat`, {
+            const res = await fetch(`${myUrl}/api/v1/cat/llm/chat`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
@@ -25,7 +26,7 @@ export default class ChatWithCatUseCase {
             if(!data.success) return new MyResponse(false, "채팅에 실패했습니다.", {})
 
             const userID = sessionStorage.getItem('uid')
-            const userChatRes = await fetch(`http://localhost:3000/api/v1/cat/chat/create`, {
+            const userChatRes = await fetch(`${myUrl}/api/v1/cat/chat/create`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
@@ -38,7 +39,7 @@ export default class ChatWithCatUseCase {
             if (!userChatData.success) return new MyResponse(false, "유저 채팅 데이터 저장에 실패했습니다.", {})
 
             const catChat = data.data
-            const catChatRes = await fetch(`http://localhost:3000/api/v1/cat/chat/create`, {
+            const catChatRes = await fetch(`${myUrl}/api/v1/cat/chat/create`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({

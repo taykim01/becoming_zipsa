@@ -56,7 +56,7 @@ export default class EmailSignUpUseCase {
                 password: this.password,
                 name: this.name,
             }
-            const res = await fetch(`http://localhost:3000/api/v1/user/create`, {
+            const res = await fetch(`${url}/api/v1/user/create`, {
                 method: "POST",
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,3 +1,4 @@
+import myUrl from "@/domain/my_url"
 import MyResponse from "../MyResponse"
 
 export default class AdoptCatUseCase {
@@ -28,7 +29,7 @@ export default class AdoptCatUseCase {
             }
            
 
-            const res = await fetch(`http://localhost:3000/api/v1/cat/create`, {
+            const res = await fetch(`${myUrl}/api/v1/cat/create`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body : JSON.stringify({
