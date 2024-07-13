@@ -1,0 +1,13 @@
+.heart_animation {
+    animation: heart 1s 1;
+}
+
+@keyframes heart {
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(0, -40px);
+    }
+}
