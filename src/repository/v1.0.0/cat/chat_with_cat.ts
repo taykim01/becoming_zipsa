@@ -127,7 +127,7 @@ export default class ChatWithCat {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
-                    who: "cat",
+                    who: "assistant",
                     chat: catChat,
                     cat_id
                 })
@@ -181,11 +181,6 @@ export default class ChatWithCat {
             const catChatRes = await this.generateCatResponse(chatToCat, catData)
             if (!catChatRes.success) return catChatRes
             const catChat = catChatRes.data
-
-            
-            totalChat.unshift({ role: "cat", content: catChat })
-            catData.chats = totalChat
-            localStorage.setItem('catData', JSON.stringify(catData))
 
 
             const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id)

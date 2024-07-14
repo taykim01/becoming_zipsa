@@ -20,8 +20,8 @@ import Popup from "@/lib/popup";
 import CheckCat from "@/utils/check_cat";
 
 export interface Chat {
-    who: "user" | "cat"
-    chat: string
+    role: "user" | "assistant"
+    content: string
 }
 
 const actions = ["간식주기", "밥주기", "쓰다듬기", "사냥놀이", "빗어주기", "사진찍기"] as const
@@ -78,7 +78,7 @@ export default function InteractionGroup() {
 
     const sendChat = async (message: string) => {
         setChatLoading(true)
-        setChat([{ who: "user", chat: message }, ...chat])
+        setChat([{ role: "user", content: message }, ...chat])
         const response = await cat_with_chat.chat(
             message
         )
@@ -94,7 +94,7 @@ export default function InteractionGroup() {
         const catChat = response.data.catChat
         const responsePolarity = response.data.responsePolarity
         if (responsePolarity === "positive") setCatFeeling("positive")
-        setChat([{ who: "cat", chat: catChat }, { who: "user", chat: message }, ...chat])
+        setChat([{ role: "assistant", content: catChat }, { role: "user", content: message }, ...chat])
         setChatLoading(false)
     }
 
@@ -173,13 +173,13 @@ export default function InteractionGroup() {
                             {chatOrAction === "chat" && <div className="relative w-full h-full">
                                 <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
                                     {chat.map((chat, index) => {
-                                        if (chat.who === "user") return (
+                                        if (chat.role === "user") return (
                                             <div key={index} className="w-full flex justify-end">
-                                                <ChatBox.UserChatBox>{chat.chat}</ChatBox.UserChatBox>
+                                                <ChatBox.UserChatBox>{chat.content}</ChatBox.UserChatBox>
                                             </div>
                                         )
                                         else return (
-                                            <ChatBox.CatChatBox key={index}>{chat.chat}</ChatBox.CatChatBox>
+                                            <ChatBox.CatChatBox key={index}>{chat.content}</ChatBox.CatChatBox>
                                         )
                                     })}
                                 </div>

@@ -8,16 +8,16 @@ export async function POST(request: Request): Promise<Response> {
             chat,
             cat_id
         } = await request.json() as {
-            who: "user" | "cat",
+            who: "user" | "assistant",
             chat: string,
             cat_id: string
         }
         
         const docRef = catDoc(cat_id);
         await updateDoc(docRef, {
-            catChat: arrayUnion({
-                who,
-                chat
+            chats: arrayUnion({
+                role: who,
+                content: chat
             })
         });
 
