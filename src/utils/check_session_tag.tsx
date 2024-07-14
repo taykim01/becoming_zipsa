@@ -15,7 +15,6 @@ export default function CheckSessionTag() {
     const checkSession = async () => {
         setLoading(true)
         const response = await check_session.check()
-        console.log(response)
         if (!response.success) router.push("/log-in")
         setLoading(false)
     }

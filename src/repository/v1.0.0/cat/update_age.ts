@@ -3,12 +3,12 @@ import URL from "@/repository/url";
 import { Cat, CatChapter } from "./cat";
 
 export default class UpdateAge {
-    private catChapters: { [key: string]: number } = {
+    private catChapters: { [key: CatChapter[number]]: number } = {
         "첫 만남": 0,
-        "아기 고양이": 60,
-        "청소년 고양이": 120,
-        "어른 고양이": 300,
-        "나이든 고양이": 420,
+        "아기 고양이": 0,
+        "청소년 고양이": 60,
+        "어른 고양이": 120,
+        "나이든 고양이": 300,
         "고양이 별": 421
     }
 
@@ -83,19 +83,11 @@ export default class UpdateAge {
             if (!updateCatRes.success) return updateCatRes
 
 
-            const oldCatChapter = catData.chapter
-            let newCatChapter: CatChapter | undefined;
-            for (const chapter in this.catChapters) {
-                if (this.catChapters[chapter] <= newCatAge) newCatChapter = chapter as CatChapter
-            }
-            if (!newCatChapter) return new RepositoryResponse(false, "챕터를 찾을 수 없습니다.");
-
-
+            const newCatChapter = Object.keys(this.catChapters).find(key => this.catChapters[key] === newCatAge) as CatChapter
             catData.age = newCatAge
             catData.chapter = newCatChapter
             localStorage.setItem("catData", JSON.stringify(catData))
-
-            if (oldCatChapter === newCatChapter) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.")
+            if (!newCatChapter) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.");
 
 
             const updateChapterRes = await this.updateChapter(cat_id, newCatChapter)

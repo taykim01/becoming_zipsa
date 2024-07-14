@@ -5,40 +5,47 @@ import Image from "next/image";
 import Images from "@/lib/images";
 import Components from "./components";
 import { useParams } from "next/navigation";
+import CatResponse from "@/lib/cat_response";
 
 
 export default function Page() {
     const params = useParams()
-    const eventType = params.eventType as "disease" | "neuter";
+    const eventType = params.eventType as "disease" | "neutering";
+
 
     const eventTranslation = {
         "disease": "질병",
-        "neuter": "중성화",
+        "neutering": "중성화",
     };
 
     const image = {
         "disease": Images.tablet,
-        "neuter": Images.kit,
+        "neutering": Images.kit,
     };
 
-    const ButtonType = {
+    const buttonType = {
         "disease": Components.PillButton,
-        "neuter": Components.HospitalButton,
+        "neutering": Components.HospitalButton,
     };
-    const ButtonComponent = ButtonType[eventType];
+
+    const response = {
+        "disease": "집사야 아프다ㅠㅠ",
+        "neutering": "내가 고자라니...?",
+    }
+
+
+    const ButtonComponent = buttonType[eventType];
 
     return (
         <Container.Main headerTitle={eventTranslation[eventType]} bgClass="bg-gradient-2">
             <div className="relative flex flex-col items-center flex-grow">
                 <div className="pt-[120px] ">
-                    {/* <CatResponse>목욕할 시간이라니 ....</CatResponse> */}
+                    <CatResponse>{response[eventType]}</CatResponse>
                 </div>
                 <div className="pt-0">
-                    <Image src={image[eventType]} width={340} height={340} alt={eventType} />
+                    <Image src={image[eventType]} width={150} height={150} alt={eventType} />
                 </div>
-                <div className="absolute bottom-10 w-full">
-                    <ButtonComponent />
-                </div>
+                <ButtonComponent />
             </div>
         </Container.Main>
     );

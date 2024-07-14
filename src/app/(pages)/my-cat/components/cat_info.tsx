@@ -25,6 +25,7 @@ export default function CatInfo() {
     const read_cat = new ReadCat()
     const update_age = new UpdateAge()
 
+
     const router = useRouter()
     const setLoading = useSetRecoilState(loadingState)
     const [catData, setCatData] = useState({} as Cat)
@@ -56,7 +57,7 @@ export default function CatInfo() {
         readCatData(true);
         const interval = setInterval(() => {
             updateTime();
-        }, 6000);
+        }, 60000);
 
         return () => clearInterval(interval);
     }, []);

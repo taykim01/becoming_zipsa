@@ -27,7 +27,6 @@ export default class GoogleLogIn {
 
             const uid = response.user.uid;
             localStorage.setItem('id', uid);
-            console.log("uid", uid);
 
             if (!credential) return new RepositoryResponse(true, "이미 인증된 사용자입니다.", response.user);
             return new RepositoryResponse(true, "인증에 성공했습니다.", response.user);

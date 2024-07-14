@@ -1,6 +1,6 @@
 export default function CatResponse(props: {
     children: string,
-    name: string
+    name?: string
 }) {
     return (
         <div className={`
@@ -13,7 +13,7 @@ export default function CatResponse(props: {
             `}
             style={{ maxWidth: 353 }}
         >
-            <div className="fs-l text-12 text-pink-200 flex-shrink-0">{props.name}</div>
+            {props.name && <div className="fs-l text-12 text-pink-200 flex-shrink-0">{props.name}</div>}
             {props.children}
         </div>
     )
