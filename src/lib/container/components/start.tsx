@@ -3,7 +3,7 @@ import { ReactNode } from "react";
 export default function Start(props: { children: ReactNode }) {
     return (
         <div
-            className="h-full w-screen px-5 bg-gradient-1 pb-10 relative"
+            className="h-full w-screen px-5 bg-type1_dark pb-10 relative"
             style={{ maxWidth: 393, overflow: "hidden"}}
         >
             <div className="absolute bg-gradient-start-1 flex justify-center items-end" style={{

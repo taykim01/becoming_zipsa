@@ -7,9 +7,9 @@ export default function Default(props: {
             onClick={props.onClick && props.onClick}
             className={`
                 flex items-center justify-center
-                bg-black text-white rounded-2xl
+                bg-black-1 text-white-1 rounded-2xl
                 cursor-pointer overflow-hidden font-ohsquare
-                text-r20 px-5 py-3 w-full`}
+                text-20 px-5 py-3 w-full`}
             style={{ maxWidth: 353 }}
         >
             {props.children}

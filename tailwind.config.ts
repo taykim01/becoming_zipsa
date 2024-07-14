@@ -8,8 +8,8 @@ const config: Config = {
   theme: {
     extend: {
       backgroundImage: {
-        'type1_dark': 'linear-gradient(180deg, rgba(254, 138, 139, 0.90) 0%, rgba(255, 146, 139, 0.90) 26%, rgba(254, 167, 137, 0.90) 51%, rgba(255, 195, 152, 0.90) 76.8%, rgba(253, 229, 157, 0.90) 100%), #FFFFFF',
-        'type1_light': 'linear-gradient(180deg, rgba(254, 138, 139, 0.70) 0%, rgba(255, 146, 139, 0.70) 26%, rgba(254, 167, 137, 0.70) 51%, rgba(255, 195, 152, 0.70) 76.8%, rgba(253, 229, 157, 0.70) 100%), #FFFFFF',
+        'type1_dark': 'linear-gradient(180deg, rgba(254, 138, 139, 0.90) 0%, rgba(255, 146, 139, 0.90) 26%, rgba(254, 167, 137, 0.90) 51%, rgba(255, 195, 152, 0.90) 76.8%, rgba(253, 229, 157, 0.90) 100%)',
+        'type1_light': 'linear-gradient(180deg, rgba(254, 138, 139, 0.70) 0%, rgba(255, 146, 139, 0.70) 26%, rgba(254, 167, 137, 0.70) 51%, rgba(255, 195, 152, 0.70) 76.8%, rgba(253, 229, 157, 0.70) 100%)',
         'type2': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 89.13%, #909090 129.7%)',
         'type3': 'linear-gradient(180deg, #D5F8FF 0.01%, #BEB4FF 119.88%)',
         'type4': 'linear-gradient(180deg, #FDCDD2 0.01%, #DDD1D2 32.38%, #BCD5D3 65.34%, #A2D8D3 90.51%, #85DBD4 119.88%)',
@@ -44,6 +44,8 @@ const config: Config = {
         '0.4': 'rgba(255, 255, 255, 0.4)',
         '0.2': 'rgba(255, 255, 255, 0.2)',
         '0.15': 'rgba(255, 255, 255, 0.15)',
+        '0.12': 'rgba(255, 255, 255, 0.12)',
+
       },
       pink: {
         500: '#9f4e4f',
