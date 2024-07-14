@@ -45,6 +45,20 @@ export default function InputCatData() {
 
 
     const adoptCat = async () => {
+        const verifyRes = await adopt_cat.verifyInput(
+            catData.name,
+            catData.color as CatType,
+            catData.sex as CatSex
+        )
+        if (!verifyRes.success) {setErrorPopup({
+            open: true,
+            title: "오류가 발생했어요",
+            children: verifyRes.message
+        })
+        return 
+    }
+            
+            
         sendGAEvent({ event: 'adopt_cat', value: 'adopt_cat' })
         const verification = await adopt_cat.verifyInput(
             catData.name,
