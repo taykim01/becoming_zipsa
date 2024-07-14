@@ -10,7 +10,11 @@ export default function Main(props:{
 }){
     const backgroundClass = props.bgClass || "bg-type1_light";
     return (
+<<<<<<< HEAD
         <div className={`flex flex-col h-full w-screen px-5 ${backgroundClass} py-8`} style={{ maxWidth: 393}}>
+=======
+        <div className={`flex flex-col justify-between h-full w-screen px-5 ${backgroundClass} py-8 overflow-hidden`} style={{ maxWidth: 393}}>
+>>>>>>> origin/screenshot
             <Header badge={props.badge} back={props.back}>{props.headerTitle}</Header>
             {props.children}
         </div>

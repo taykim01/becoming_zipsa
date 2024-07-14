@@ -18,7 +18,7 @@ type CatData = {
 export default function InputCatData() {
     const adopt_cat = new AdoptCat()
 
-    
+
     const router = useRouter()
     const [personalityPopup, setPersonalityPopup] = useState<boolean>(false)
     const [catData, setCatData] = useState<CatData>({
@@ -63,38 +63,38 @@ export default function InputCatData() {
 
     return (
         <>
-            <div className="flex flex-col gap-4 w-full">
-                <Input.Text
-                    title="고양이 이름"
-                    onChange={setName}
-                    placeholder="불러주고픈 이름이 있나요?"
-                    onEnter={adoptCat}
-                />
-                <Input.MultiSelect
-                    title="성격"
-                    onSelect={setColor}
-                    guide="고양이별 성격 알아보기"
-                    guideClick={() => setPersonalityPopup(true)}
-                    items={["치즈냥이", "흰냥이", "깜냥이"]}
-                />
-                <Input.MultiSelect
-                    title="성별"
-                    onSelect={setSex}
-                    items={["수컷", "암컷"]}
-                />
-            </div>
-            <div className="absolute bottom-0 w-full">
+            <div className="flex flex-col justify-between flex-grow">
+                <div className="flex flex-col gap-4 w-full">
+                    <Input.Text
+                        title="고양이 이름"
+                        onChange={setName}
+                        placeholder="불러주고픈 이름이 있나요?"
+                        onEnter={adoptCat}
+                    />
+                    <Input.MultiSelect
+                        title="성격"
+                        onSelect={setColor}
+                        guide="고양이별 성격 알아보기"
+                        guideClick={() => setPersonalityPopup(true)}
+                        items={["치즈냥이", "흰냥이", "깜냥이"]}
+                    />
+                    <Input.MultiSelect
+                        title="성별"
+                        onSelect={setSex}
+                        items={["수컷", "암컷"]}
+                    />
+                </div>
                 <Button.Default onClick={adoptCat}>{`${catData.name || "_____"} 입양하기!`}</Button.Default>
             </div>
             <Popup.Default
                 title="고양이별 성격 알아보기"
                 open={personalityPopup}
                 onClose={() => setPersonalityPopup(false)}>
-                    <div className="flex flex-col gap-5">
-                        <CatListItem cat="치즈냥이" detail="활발함,응석받이, 소심"></CatListItem>
-                        <CatListItem cat="깜냥이" detail="똑똑함, 얌전함"></CatListItem>
-                        <CatListItem cat="흰냥이" detail="수줍음, 겁많음, 섬세함, 느긋함"></CatListItem>
-                    </div>
+                <div className="flex flex-col gap-5">
+                    <CatListItem cat="치즈냥이" detail="활발함,응석받이, 소심"></CatListItem>
+                    <CatListItem cat="깜냥이" detail="똑똑함, 얌전함"></CatListItem>
+                    <CatListItem cat="흰냥이" detail="수줍음, 겁많음, 섬세함, 느긋함"></CatListItem>
+                </div>
             </Popup.Default>
             <Popup.Default
                 open={errorPopup.open}

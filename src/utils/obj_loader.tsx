@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef, Suspense } from "react";
-import { Canvas, useLoader, useFrame } from "@react-three/fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
 import { OBJLoader } from "three-stdlib";
 import { MTLLoader } from "three-stdlib";
@@ -26,12 +26,14 @@ function Model({ objUrl, mtlUrl }: ModelProps) {
 interface ObjLoaderProps {
   objUrl: string;
   mtlUrl: string;
-  moveArm: boolean;
 }
 
 function ObjLoader({ objUrl, mtlUrl }: ObjLoaderProps) {
   return (
-    <Canvas style={{ width: "100%", height: "100%" }}>
+    <Canvas
+      style={{ width: "100%", height: "100%" }}
+      gl={{ preserveDrawingBuffer: true }} // Ensure preserveDrawingBuffer is true
+    >
       <ambientLight intensity={5} />
       <directionalLight position={[10, 10, 10]} intensity={0.6} />
       <pointLight position={[-5, -5, -5]} intensity={1} />
