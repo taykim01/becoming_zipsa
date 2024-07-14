@@ -12,13 +12,13 @@ export async function POST(request: Request): Promise<Response> {
         const catRef = catDoc(cat_id)
 
         await updateDoc(catRef, {
-            neutered: true
+            medicated: true
         });
 
         return new Response(
             JSON.stringify({
                 success: true,
-                message: "고양이 중성화 성공",
+                message: "고양이 치료 성공",
                 data: {}
             })
         );
@@ -26,7 +26,7 @@ export async function POST(request: Request): Promise<Response> {
         return new Response(
             JSON.stringify({
                 success: false,
-                message: "고양이 중성화 실패",
+                message: "고양이 치료 실패",
                 data: String(error)
             })
         );

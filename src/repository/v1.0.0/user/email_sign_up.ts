@@ -19,7 +19,7 @@ export default class EmailSignUp {
     ): Promise<RepositoryResponse> {
         try {
             //이메일 정규식 확인
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/;
             if (!emailRegex.test(email)) return new RepositoryResponse(false, "이메일 형식에 맞게 써 주세요.", {})
             this.email = email
             //패스워드 로직 통과하는지 확인

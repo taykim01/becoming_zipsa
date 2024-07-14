@@ -182,6 +182,11 @@ export default class ChatWithCat {
             if (!catChatRes.success) return catChatRes
             const catChat = catChatRes.data
 
+            
+            totalChat.unshift({ role: "cat", content: catChat })
+            catData.chats = totalChat
+            localStorage.setItem('catData', JSON.stringify(catData))
+
 
             const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id)
             if (!updateChatRes.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})

@@ -25,7 +25,7 @@ export default function Gauge(props: {
     title: string
 }) {
     return (
-        <div className="flex flex-col gap-4" style={{ maxWidth: 353 }}>
+        <div className="flex w-full flex-col gap-4" style={{ maxWidth: 353 }}>
             <div className="text-pink-500 text-18">{props.title}</div>
             <div className="rounded-full bg-white-0.4 relative" style={{ padding: '4px' }}>
                 <div className="absolute" style={{

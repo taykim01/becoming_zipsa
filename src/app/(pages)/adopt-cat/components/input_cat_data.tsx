@@ -34,12 +34,31 @@ export default function InputCatData() {
 
 
     const setName = (name: CatData["name"]) => setCatData({ ...catData, name })
-    const setColor = (color: CatData["color"]) => setCatData({ ...catData, color })
-    const setSex = (sex: CatData["sex"]) => setCatData({ ...catData, sex })
+    const setColor = (color: CatData["color"]) => setCatData(prevCatData => ({
+        ...prevCatData,
+        color: prevCatData.color === color ? "" : color
+    }));
+    const setSex = (sex: CatData["sex"]) => setCatData(prevCatData => ({
+        ...prevCatData,
+        sex: prevCatData.sex === sex ? "" : sex
+    }))
 
 
     const adoptCat = async () => {
         sendGAEvent({ event: 'adopt_cat', value: 'adopt_cat' })
+        const verification = await adopt_cat.verifyInput(
+            catData.name,
+            catData.color as CatType,
+            catData.sex as CatSex
+        )
+        if (!verification.success) {
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요.",
+                children: verification.message
+            })
+            return
+        }
         const response = await adopt_cat.adopt(
             catData.name,
             catData.color as CatType,
@@ -55,16 +74,15 @@ export default function InputCatData() {
         }
         setErrorPopup({
             open: true,
-            title: "알람",
-            children: "고양이 입양에 성공했습니다."
+            title: `${catData.name} 입양에 성공했어요.`,
+            children: `아기 ${catData.name}와 놀러가보아요!`
         })
-        router.push("/my-cat")
     }
 
     return (
         <>
-            <div className="flex flex-col justify-between flex-grow">
-                <div className="flex flex-col gap-4 w-full">
+            <div className="flex flex-col items-center justify-between flex-grow">
+                <div className="flex flex-col items-center gap-4 w-full">
                     <Input.Text
                         title="고양이 이름"
                         onChange={setName}
@@ -98,7 +116,10 @@ export default function InputCatData() {
             </Popup.Default>
             <Popup.Default
                 open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                onClose={() => {
+                    setErrorPopup({ ...errorPopup, open: false });
+                    errorPopup.title === `${catData.name} 입양에 성공했어요.` && router.push("/my-cat");
+                }}
                 title={errorPopup.title}
             >
                 {errorPopup.children}

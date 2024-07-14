@@ -17,6 +17,7 @@ import ChatWithCat from "@/repository/v1.0.0/cat/chat_with_cat";
 import html2canvas from "html2canvas";
 import { chatOrActionState } from "@/recoil/chat_or_action";
 import Popup from "@/lib/popup";
+import CheckCat from "@/utils/check_cat";
 
 export interface Chat {
     who: "user" | "cat"
@@ -161,61 +162,62 @@ export default function InteractionGroup() {
 
     return (
         <>
-        <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-5">
-            {
-                seeStatus
-                    ? <div className="w-full flex-grow flex flex-col justify-between gap-5">
-                        <Components.GaugeGroup />
-                        <Button.Default onClick={() => setSeeStatus(false)}>{`${catData.name}(이)랑 놀기`}</Button.Default>
-                    </div>
-                    : <>
-                        {chatOrAction === "chat" && <div className="relative w-full h-full">
-                            <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
-                                {chat.map((chat, index) => {
-                                    if (chat.who === "user") return (
-                                        <div key={index} className="w-full flex justify-end">
-                                            <ChatBox.UserChatBox>{chat.chat}</ChatBox.UserChatBox>
-                                        </div>
-                                    )
-                                    else return (
-                                        <ChatBox.CatChatBox key={index}>{chat.chat}</ChatBox.CatChatBox>
-                                    )
-                                })}
+            <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-5">
+                {
+                    seeStatus
+                        ? <div className="w-full flex-grow flex flex-col items-center justify-between gap-5">
+                            <Components.GaugeGroup />
+                            <Button.Default onClick={() => setSeeStatus(false)}>{`${catData.name}(이)랑 놀기`}</Button.Default>
+                        </div>
+                        : <>
+                            {chatOrAction === "chat" && <div className="relative w-full h-full">
+                                <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
+                                    {chat.map((chat, index) => {
+                                        if (chat.who === "user") return (
+                                            <div key={index} className="w-full flex justify-end">
+                                                <ChatBox.UserChatBox>{chat.chat}</ChatBox.UserChatBox>
+                                            </div>
+                                        )
+                                        else return (
+                                            <ChatBox.CatChatBox key={index}>{chat.chat}</ChatBox.CatChatBox>
+                                        )
+                                    })}
+                                </div>
                             </div>
-                        </div>
-                        }
-
-
-                        <div className="flex flex-col justify-end w-full gap-4 flex-grow">
-                            {
-                                chatOrAction === "action"
-                                    ? <div className="grid grid-cols-2 grid-rows-3 gap-4">
-                                        {
-                                            actions.map((action, index) => {
-                                                if (action === "사진찍기") return <Button.UserAction key={index} onClick={() => {catAction(action); takeScreenshot()}} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>
-                                                else return <Button.UserAction key={index} onClick={() => catAction(action)} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>
-                                            })
-                                        }
-                                        <div />
-                                        <Button.UserAction onClick={() => setChatOrAction("chat")} iconType="Back" textColor="black">돌아가기</Button.UserAction>
-                                    </div>
-                                    : <div className="flex gap-4 items-center">
-                                        <Button.UserAction onClick={() => setSeeStatus(true)} iconType="Status" textColor="black">상태 보기</Button.UserAction>
-                                        <Button.UserAction onClick={() => setChatOrAction("action")} iconType="Box" textColor="black">놀아주기</Button.UserAction>
-                                    </div>
                             }
-                            {chatOrAction === "chat" && <Input.Message onSend={sendChat} chatLoading={chatLoading} />}
-                        </div>
-                    </>
-            }
-        </div>
-        <Popup.Default
+
+
+                            <div className="flex flex-col justify-end w-full gap-4 flex-grow">
+                                {
+                                    chatOrAction === "action"
+                                        ? <div className="grid grid-cols-2 grid-rows-3 gap-4">
+                                            {
+                                                actions.map((action, index) => {
+                                                    if (action === "사진찍기") return <Button.UserAction key={index} onClick={() => { catAction(action); takeScreenshot() }} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>
+                                                    else return <Button.UserAction key={index} onClick={() => catAction(action)} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>
+                                                })
+                                            }
+                                            <div />
+                                            <Button.UserAction onClick={() => setChatOrAction("chat")} iconType="Back" textColor="black">돌아가기</Button.UserAction>
+                                        </div>
+                                        : <div className="flex gap-4 items-center">
+                                            <Button.UserAction onClick={() => setSeeStatus(true)} iconType="Status" textColor="black">상태 보기</Button.UserAction>
+                                            <Button.UserAction onClick={() => setChatOrAction("action")} iconType="Box" textColor="black">놀아주기</Button.UserAction>
+                                        </div>
+                                }
+                                {chatOrAction === "chat" && <Input.Message onSend={sendChat} chatLoading={chatLoading} />}
+                            </div>
+                        </>
+                }
+            </div>
+            <Popup.Default
                 open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false })}
                 title={errorPopup.title}
             >
                 {errorPopup.children}
             </Popup.Default>
+            <CheckCat for="no_cat" response="both" content="adopt-cat" />
         </>
     )
 }

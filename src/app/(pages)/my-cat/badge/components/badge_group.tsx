@@ -35,6 +35,7 @@ export default function BadgeGroup() {
         }
         const data = response.data as Cat
         if(data.neutered) setBadges(prev => [...prev, "씩씩한 고양이"])
+        if(data.medicated) setBadges(prev => [...prev, "건강한 고양이"])
         setCatData(response.data)
         setLoading(false)
     }

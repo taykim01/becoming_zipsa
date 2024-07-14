@@ -9,6 +9,7 @@ export default function Default(props: {
                 flex items-center justify-center
                 bg-black-1 text-white-1 rounded-2xl
                 cursor-pointer overflow-hidden font-ohsquare
+                flex-shrink-0
                 text-20 px-5 py-3 w-full`}
             style={{ maxWidth: 353 }}
         >

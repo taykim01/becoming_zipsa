@@ -21,6 +21,7 @@ export default class EmailLogIn {
 
             const response = await signInWithEmailAndPassword(auth, email, password);
             const uid = response.user.uid;
+            localStorage.setItem("id", uid);
 
             return new RepositoryResponse(true, "인증에 성공했습니다.", response.user);
         } catch (error) {

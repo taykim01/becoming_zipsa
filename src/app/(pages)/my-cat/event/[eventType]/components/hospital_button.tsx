@@ -3,13 +3,13 @@
 import Button from "@/lib/button";
 import Popup from "@/lib/popup";
 import { loadingState } from "@/recoil/loading";
-import NeuterCat from "@/repository/v1.0.0/cat/neuter_cat";
+import MedicateCat from "../../../../../../repository/v1.0.0/cat/medicate_cat";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useSetRecoilState } from "recoil";
 
 export default function HospitalButton() {
-    const neuter_cat = new NeuterCat()
+    const medicate_cat = new MedicateCat()
 
 
     const router = useRouter()
@@ -21,9 +21,9 @@ export default function HospitalButton() {
     })
 
 
-    const neuter = async () => {
+    const medicate = async () => {
         setLoading(true)
-        const response = await neuter_cat.neuter()
+        const response = await medicate_cat.medicate()
         if (!response.success) {
             setErrorPopup({
                 open: true,
@@ -43,7 +43,7 @@ export default function HospitalButton() {
 
     return (
         <>
-        <Button.UserAction onClick={neuter} iconType="Injection" textColor="white">병원가기</Button.UserAction>
+        <Button.UserAction onClick={medicate} iconType="Injection" textColor="white">병원가기</Button.UserAction>
         <Popup.Default
                 open={errorPopup.open}
                 onClose={() => setErrorPopup({ ...errorPopup, open: false})}

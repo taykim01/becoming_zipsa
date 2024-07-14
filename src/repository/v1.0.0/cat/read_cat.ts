@@ -21,6 +21,7 @@ export default class ReadCat{
             if(!getCatIdData.success) return new RepositoryResponse(false, "고양이 데이터 조회에 실패했습니다.")
             if(getCatIdData.data.cats.length === 0) return new RepositoryResponse(true, "고양이가 없습니다.", "no_cat")
 
+
             const cat_id = getCatIdData.data.cats[0]
             const res = await fetch(`${URL}/api/v1.0.0/cat/read`, {
                 headers: { "Content-type": "application/json" },
@@ -32,8 +33,10 @@ export default class ReadCat{
             const data = await res.json()
             const catData = data.data
 
+
             localStorage.setItem('catData', JSON.stringify(catData))
 
+            
             if(!data.success) return new RepositoryResponse(false, "고양이 데이터 조회에 실패했습니다.")
             return new RepositoryResponse(true, "고양이 데이터 조회에 성공했습니다.", data.data)
         } catch (error) {

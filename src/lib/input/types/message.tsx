@@ -42,6 +42,7 @@ export default function Message(props: {
                 onKeyPress={handleKeyPress}
                 value={message}
                 placeholder="대화하기"
+                maxLength={100}
             />
             <button
                 className="flex justify-center items-center focus:outline-none rounded-2xl bg-black-1 flex-shrink-0" style={{ width: '50px', height: '50px' }}

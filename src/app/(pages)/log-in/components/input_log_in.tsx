@@ -14,7 +14,7 @@ import Popup from "@/lib/popup";
 export default function InputLogIn() {
     const email_log_in = new EmailLogIn()
     const read_cat = new ReadCat()
-    
+
 
 
     const router = useRouter()
@@ -33,7 +33,7 @@ export default function InputLogIn() {
     const setEmail = (email: string) => setLogInData({ ...logInData, email })
     const setPassword = (password: string) => setLogInData({ ...logInData, password })
 
-    
+
     const logIn = async () => {
         setLoading(true)
         const response = await email_log_in.logIn(logInData.email, logInData.password)
@@ -47,6 +47,7 @@ export default function InputLogIn() {
             return
         }
         const checkCatRes = await read_cat.read()
+        console.log(checkCatRes)
         if (checkCatRes.data === "no_cat") router.push("/adopt-cat")
         else router.push("/my-cat")
         setLoading(false)
@@ -55,7 +56,7 @@ export default function InputLogIn() {
     return (
         <>
             <div className="flex flex-col gap-5 w-full items-center">
-                <div className="flex flex-col gap-3 w-full">
+                <div className="flex flex-col items-center gap-3 w-full">
                     <Input.Text
                         onChange={setEmail}
                         type="email"
@@ -75,12 +76,10 @@ export default function InputLogIn() {
                     <Components.GoogleSignUpButton />
                 </div>
             </div>
-            <div className="absolute bottom-5 w-full">
-                <Button.Default onClick={logIn}>로그인하기</Button.Default>
-            </div>
+            <Button.Default onClick={logIn}>로그인하기</Button.Default>
             <Popup.Default
                 open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false })}
                 title={errorPopup.title}
             >
                 {errorPopup.children}

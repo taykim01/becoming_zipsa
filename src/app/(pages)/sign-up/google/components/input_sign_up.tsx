@@ -39,30 +39,30 @@ export default function InputSignUp() {
         }
         setErrorPopup({
             open: true,
-            title: "알림",
-            children: "회원가입에 성공했습니다."
+            title: "회원가입이 완료되었어요.",
+            children: "이제 고양이를 입양해보아요!"
         })
-        router.push("/adopt-cat")
     }
 
     return (
         <>
-        <div className="relative flex flex-col items-center w-full h-full">
-            <div className="flex flex-col gap-5 w-full items-center h-full">
-                <Input.Text
-                    title="이름"
-                    placeholder="이름을 입력해주세요."
-                    onChange={setName}
-                    onEnter={signUp}
-                />
-            </div>
-            <div className="absolute bottom-0 w-full">
+            <div className="relative flex flex-col items-center w-full h-full">
+                <div className="flex flex-col gap-5 w-full items-center h-full">
+                    <Input.Text
+                        title="이름"
+                        placeholder="이름을 입력해주세요."
+                        onChange={setName}
+                        onEnter={signUp}
+                    />
+                </div>
                 <Button.Default onClick={signUp}>회원가입하기</Button.Default>
             </div>
-        </div>
-        <Popup.Default
+            <Popup.Default
                 open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                onClose={() => {
+                    setErrorPopup({ ...errorPopup, open: false })
+                    errorPopup.title === "회원가입이 완료되었어요." && router.push("/adopt-cat")
+                }}
                 title={errorPopup.title}
             >
                 {errorPopup.children}

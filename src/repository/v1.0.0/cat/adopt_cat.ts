@@ -9,8 +9,8 @@ export default class AdoptCat {
         sex: CatSex
     ): Promise<RepositoryResponse> {
         if (!catName) return new RepositoryResponse(false, "고양이 이름을 입력해주세요.")
-        if (!color) return new RepositoryResponse(false, "색상을 선택해주세요.")
-        if (!sex) return new RepositoryResponse(false, "성별을 선택해주세요.")
+        if (!color) return new RepositoryResponse(false, "고양이 종류를 선택해주세요.")
+        if (!sex) return new RepositoryResponse(false, "고양이 성별을 선택해주세요.")
         return new RepositoryResponse(true, "검증에 성공했습니다.")
     }
 
@@ -36,6 +36,7 @@ export default class AdoptCat {
                 neutered: false,
                 age: 0,
                 birthday: new Date(),
+                medicated: false
             }
             const newCat = new CatModel(cat)
             const catData = newCat.toObject()

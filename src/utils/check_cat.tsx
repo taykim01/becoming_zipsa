@@ -1,8 +1,9 @@
 "use client"
 
+import Popup from "@/lib/popup"
 import ReadCat from "@/repository/v1.0.0/cat/read_cat"
 import { useRouter } from "next/navigation"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 
 export default function CheckCat(props: {
@@ -12,21 +13,46 @@ export default function CheckCat(props: {
 }) {
     const read_cat = new ReadCat()
 
+
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
+    })
     const router = useRouter()
+
+
     const checkCat = async () => {
         const response = await read_cat.read()
+        if (response.success) return
         if (response.data === props.for) {
             if (props.response === "route") router.push(props.content)
-            else if (props.response === "alert") alert(props.content)
-            else {
-                alert(props.content)
-                router.push(props.content)
-            }
-            return
+            else setErrorPopup({
+                open: true,
+                title: "고양이가 없어요.",
+                children: "고양이를 입양하러 가보아요!."
+            });
         }
     }
+
+
     useEffect(() => {
         checkCat()
     }, [])
-    return <></>
+
+
+    return (
+        <>
+            <Popup.Default
+                open={errorPopup.open}
+                onClose={() => {
+                    setErrorPopup({ ...errorPopup, open: false });
+                    props.response === "both" && router.push(props.content)
+                }}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
+        </>
+    )
 }

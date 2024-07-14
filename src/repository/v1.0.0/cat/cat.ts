@@ -22,6 +22,7 @@ export interface Cat {
     health: number;
     age: number;
     birthday: Date;
+    medicated: boolean;
 }
 
 export default class CatModel implements Cat {
@@ -38,6 +39,7 @@ export default class CatModel implements Cat {
     health: number;
     age: number;
     birthday: Date;
+    medicated: boolean;
 
     constructor(cat: Cat) {
         const missingProperties: string[] = [];
@@ -72,6 +74,7 @@ export default class CatModel implements Cat {
         this.health = cat.health;
         this.age = cat.age;
         this.birthday = cat.birthday;
+        this.medicated = cat.medicated;
     }
 
     toObject() {
@@ -88,7 +91,8 @@ export default class CatModel implements Cat {
             affection: this.affection,
             health: this.health,
             age: this.age,
-            birthday: this.birthday
+            birthday: this.birthday,
+            medicated: this.medicated
         };
     }
 }
