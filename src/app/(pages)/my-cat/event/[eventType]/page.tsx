@@ -33,18 +33,21 @@ export default function Page() {
         "neutering": "내가 고자라니...?",
     }
 
+    const color = {
+        "disease": "bg-type5",
+        "neutering": "bg-type4"
+    }
+
 
     const ButtonComponent = buttonType[eventType];
 
     return (
-        <Container.Main headerTitle={eventTranslation[eventType]} bgClass="bg-gradient-2">
-            <div className="relative flex flex-col items-center flex-grow">
+        <Container.Main headerTitle={eventTranslation[eventType]} bgClass={color[eventType]}>
+            <div className="justify-between flex flex-col items-center flex-grow">
                 <div className="pt-[120px] ">
                     <CatResponse>{response[eventType]}</CatResponse>
                 </div>
-                <div className="pt-0">
-                    <Image src={image[eventType]} width={150} height={150} alt={eventType} />
-                </div>
+                <Image src={image[eventType]} width={150} height={150} alt={eventType} />
                 <ButtonComponent />
             </div>
         </Container.Main>

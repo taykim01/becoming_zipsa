@@ -1,6 +1,6 @@
 "use client"
 
-import Badge from "@/lib/badge"
+import Badge, { Badges } from "@/lib/badge"
 import Loading from "@/lib/loading"
 import { loadingState } from "@/recoil/loading"
 import { Cat } from "@/repository/v1.0.0/cat/cat"
@@ -12,7 +12,7 @@ export default function BadgeGroup() {
     const read_cat_use_case = new ReadCat()
 
     const [catData, setCatData] = useState({} as Cat)
-    const [badges, setBadges] = useState([] as string[])
+    const [badges, setBadges] = useState([] as Badges[])
     const setLoading = useSetRecoilState(loadingState)
 
 

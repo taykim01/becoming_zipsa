@@ -2,7 +2,8 @@
 
 import Image from "next/image";
 import Images from "../images";
-import { Badges } from "@/domain/model/cat_model";
+
+export type Badges = "깨끗한 고양이" | "건강한 고양이" | "씩씩한 고양이"
 
 export default function Badge(props: {
     title: Badges
