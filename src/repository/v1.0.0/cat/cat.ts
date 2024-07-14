@@ -4,6 +4,8 @@ export type CatType = "치즈냥이" | "깜냥이" | "흰냥이"
 
 export type CatChapter = "첫 만남" | "아기 고양이" | "청소년 고양이" | "어른 고양이" | "나이든 고양이" | "고양이 별"
 
+export type CatEvent = "disease" | "neutering"
+
 export type CatChat = {
     role: string, content: string
 }

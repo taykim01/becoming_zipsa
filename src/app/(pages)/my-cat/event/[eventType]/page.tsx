@@ -24,8 +24,8 @@ export default function Page() {
     };
 
     const buttonType = {
-        "disease": Components.PillButton,
-        "neutering": Components.HospitalButton,
+        "disease": Components.HospitalButton,
+        "neutering": Components.PillButton,
     };
 
     const response = {

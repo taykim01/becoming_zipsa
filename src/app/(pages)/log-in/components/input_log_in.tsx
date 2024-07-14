@@ -47,7 +47,6 @@ export default function InputLogIn() {
             return
         }
         const checkCatRes = await read_cat.read()
-        console.log(checkCatRes)
         if (checkCatRes.data === "no_cat") router.push("/adopt-cat")
         else router.push("/my-cat")
         setLoading(false)
