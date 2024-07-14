@@ -1,0 +1,12 @@
+.expand {
+    background-color: #ffb2ae;
+    transition: all 0.3s ease-out;
+    height: 50vh;
+    box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.05);
+}
+
+.default {
+    height: 150px;
+    background-color: transparent;
+    transition: all 0.3s ease-out;
+}
