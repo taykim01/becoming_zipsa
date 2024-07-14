@@ -20,7 +20,7 @@ export default function SignUpPopup(props: {
         router.push("/sign-up/google")
     }
     return (
-        <Popup
+        <Popup.Default
             title="회원가입 방법 선택하기"
             open={props.open}
             onClose={props.onClose}
@@ -29,6 +29,6 @@ export default function SignUpPopup(props: {
                 <Button.Default onClick={googleSignUp}>구글 회원가입</Button.Default>
                 <Button.Default onClick={() => router.push("/sign-up/email")}>이메일 회원가입</Button.Default>
             </div>
-        </Popup>
+        </Popup.Default>
     )
 }

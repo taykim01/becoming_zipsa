@@ -73,7 +73,7 @@ export default function InputCatData() {
             <div className="absolute bottom-0 w-full">
                 <Button.Default onClick={adoptCat}>{`${catData.name || "_____"} 입양하기!`}</Button.Default>
             </div>
-            <Popup
+            <Popup.Default
                 title="고양이별 성격 알아보기"
                 open={personalityPopup}
                 onClose={() => setPersonalityPopup(false)}>
@@ -82,7 +82,7 @@ export default function InputCatData() {
                         <CatListItem cat="깜냥이" detail="똑똑함, 얌전함"></CatListItem>
                         <CatListItem cat="흰냥이" detail="수줍음, 겁많음, 섬세함, 느긋함"></CatListItem>
                     </div>
-            </Popup>
+            </Popup.Default>
         </>
     )
 }
