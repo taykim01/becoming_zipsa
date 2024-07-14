@@ -1,6 +1,7 @@
 "use client"
 
 
+import Popup from "@/lib/popup"
 import { loadingState } from "@/recoil/loading"
 import { Cat } from "@/repository/v1.0.0/cat/cat"
 import ReadCat from "@/repository/v1.0.0/cat/read_cat"
@@ -29,13 +30,22 @@ export default function CatInfo() {
     const router = useRouter()
     const setLoading = useSetRecoilState(loadingState)
     const [catData, setCatData] = useState({} as Cat)
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
+    })
 
 
     const readCatData = async (isInitialLoad = false) => {
         if (isInitialLoad) setLoading(true);
         const response = await read_cat.read(true);
         if (!response.success) {
-            alert(response.message);
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: response.message
+            });
             if (isInitialLoad) setLoading(false);
             return;
         }
@@ -46,7 +56,12 @@ export default function CatInfo() {
 
     const updateTime = async () => {
         const response = await update_age.update();
-        if (!response.success) alert(response.message);
+        if (!response.success) 
+            setErrorPopup({
+            open: true,
+            title: "오류가 발생했어요!",
+            children: response.message
+        });
         
         const event = response.data;
         if (typeof event === "string") router.push(`my-cat/event/${event}`)
@@ -64,6 +79,7 @@ export default function CatInfo() {
 
 
     return (
+        <>
         <div className="flex flex-col gap-2 items-center">
             <div className="flex gap-3 items-center">
                 <svg xmlns="http://www.w3.org/2000/svg" width="22" height="20" viewBox="0 0 22 20" fill="none">
@@ -80,5 +96,13 @@ export default function CatInfo() {
                 <div>{catData.chapter}</div>
             </div>
         </div>
+        <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
+        </>
     )
 }

@@ -2,6 +2,7 @@
 
 
 import Gauge from "@/lib/gauge";
+import Popup from "@/lib/popup";
 import { loadingState } from "@/recoil/loading";
 import { Cat } from "@/repository/v1.0.0/cat/cat";
 import ReadCat from "@/repository/v1.0.0/cat/read_cat";
@@ -15,13 +16,22 @@ export default function GaugeGroup() {
 
     const [catData, setCatData] = useState({} as Cat)
     const setLoading = useSetRecoilState(loadingState)
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
+    })
 
 
     const readCatData = async () => {
         setLoading(true)
         const response = await read_cat.read()
         if (!response.success) {
-            alert(response.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: response.message
+            })
             return
         }
         setCatData(response.data)
@@ -40,6 +50,13 @@ export default function GaugeGroup() {
                 <Gauge title="배고픔" value={catData?.hunger} />
                 <Gauge title="체력" value={catData?.health} />
             </div>
+            <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
         </>
     )
 }

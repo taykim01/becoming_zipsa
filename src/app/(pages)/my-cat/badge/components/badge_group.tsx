@@ -2,6 +2,7 @@
 
 import Badge, { Badges } from "@/lib/badge"
 import Loading from "@/lib/loading"
+import Popup from "@/lib/popup"
 import { loadingState } from "@/recoil/loading"
 import { Cat } from "@/repository/v1.0.0/cat/cat"
 import ReadCat from "@/repository/v1.0.0/cat/read_cat"
@@ -14,13 +15,22 @@ export default function BadgeGroup() {
     const [catData, setCatData] = useState({} as Cat)
     const [badges, setBadges] = useState([] as Badges[])
     const setLoading = useSetRecoilState(loadingState)
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
+    })
 
 
     const readCatData = async () => {
         setLoading(true)
         const response = await read_cat_use_case.read()
         if (!response.success) {
-            alert(response.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: response.message
+            })
             return
         }
         const data = response.data as Cat
@@ -36,6 +46,7 @@ export default function BadgeGroup() {
 
 
     return (
+        <>
         <div className="absolute overflow-scroll w-full h-full flex flex-col gap-3 items-center">
             {
                 badges?.length > 0
@@ -45,5 +56,13 @@ export default function BadgeGroup() {
                     : <div className="font-fs-l text-18">{catData.name}(이)는 아직 뱃지가 없어요.</div>
             }
         </div>
+        <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
+        </>
     )
 }

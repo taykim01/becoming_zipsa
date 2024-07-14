@@ -14,6 +14,7 @@ import { loadingState } from "@/recoil/loading";
 import ActionsToCat from "@/repository/v1.0.0/cat/actions_to_cat";
 import ReadCat from "@/repository/v1.0.0/cat/read_cat";
 import ChatWithCat from "@/repository/v1.0.0/cat/chat_with_cat";
+import Popup from "@/lib/popup";
 
 export interface Chat {
     who: "user" | "cat"
@@ -46,6 +47,11 @@ export default function InteractionGroup() {
     const [catResponse, setCatResponse] = useState("")
     const setCatFeeling = useSetRecoilState(catFeelingState)
     const [chatLoading, setChatLoading] = useState(false)
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
+    })
 
 
     const [catData, setCatData] = useState({} as Cat)
@@ -53,7 +59,11 @@ export default function InteractionGroup() {
         setLoading(true)
         const response = await read_cat.read()
         if (!response.success) {
-            alert(response.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: response.message
+            })
             return
         }
         setCatData(response.data)
@@ -69,7 +79,11 @@ export default function InteractionGroup() {
             message
         )
         if (!response.success) {
-            alert(response.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: response.message
+            })
             setChatLoading(false)
             return
         }
@@ -87,12 +101,20 @@ export default function InteractionGroup() {
             const catResponse = response.data.catResponse
             setCatFeeling(catFeeling)
             if (!response.success) {
-                alert(response.message)
+                setErrorPopup({
+                    open: true,
+                    title: "오류가 발생했어요!",
+                    children: response.message
+                })
                 return
             }
             setCatResponse(catResponse)
         } catch (error) {
-            alert("일시적인 오류가 발생했습니다. 관리자에게 문의주세요.")
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: "일시적인 오류가 발생했습니다. 관리자에게 문의주세요."
+            })
         }
     }
 
@@ -101,6 +123,7 @@ export default function InteractionGroup() {
     }, [])
 
     return (
+        <>
         <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-5">
             {
                 seeStatus
@@ -150,5 +173,13 @@ export default function InteractionGroup() {
                     </>
             }
         </div>
+        <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
+        </>
     )
 }

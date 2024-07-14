@@ -9,10 +9,12 @@ import EmailLogIn from "@/repository/v1.0.0/user/email_log_in";
 import { useSetRecoilState } from "recoil";
 import { loadingState } from "@/recoil/loading";
 import ReadCat from "@/repository/v1.0.0/cat/read_cat";
+import Popup from "@/lib/popup";
 
 export default function InputLogIn() {
     const email_log_in = new EmailLogIn()
     const read_cat = new ReadCat()
+    
 
 
     const router = useRouter()
@@ -20,6 +22,11 @@ export default function InputLogIn() {
     const [logInData, setLogInData] = useState({
         email: "",
         password: ""
+    })
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
     })
 
 
@@ -31,7 +38,11 @@ export default function InputLogIn() {
         setLoading(true)
         const response = await email_log_in.logIn(logInData.email, logInData.password)
         if (!response.success) {
-            alert(response.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: response.message
+            })
             setLoading(false)
             return
         }
@@ -67,6 +78,13 @@ export default function InputLogIn() {
             <div className="absolute bottom-5 w-full">
                 <Button.Default onClick={logIn}>로그인하기</Button.Default>
             </div>
+            <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
         </>
     )
 }

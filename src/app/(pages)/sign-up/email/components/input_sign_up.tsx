@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import Loading from "@/lib/loading";
 import EmailSignUp from "@/repository/v1.0.0/user/email_sign_up";
+import Popup from "@/lib/popup";
 
 export default function InputSignUp() {
 
@@ -18,6 +19,11 @@ export default function InputSignUp() {
         name: ""
     })
         const [loading, setLoading] = useState<boolean>(false)
+        const [errorPopup, setErrorPopup] = useState({
+            open: false,
+            title: "",
+            children: ""
+        })
     
 
     const setEmail = (email: string) => {
@@ -40,24 +46,40 @@ export default function InputSignUp() {
         setLoading(true)
         const verifyRes = await sign_up.verifyInput(signUpData.email, signUpData.password, signUpData.passwordCheck, signUpData.name)
         if (!verifyRes.success) {
-            alert(verifyRes.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: verifyRes.message
+            })
             setLoading(false)
             return
         }
         const signUpRes = await sign_up.signUp()
         if (!signUpRes.success) {
-            alert(signUpRes.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: signUpRes.message
+            })
             setLoading(false)
             return
         }
         const createUserRes = await sign_up.createUser()
         if (!createUserRes.success) {
             await sign_up.deleteAuth()
-            alert(createUserRes.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: createUserRes.message
+            })
             setLoading(false)
             return
         }
-        alert("회원가입에 성공했습니다.")
+        setErrorPopup({
+            open: true,
+            title: "회원가입이 완료되었습니다.",
+            children: "가입해주셔서 감사합니다."
+        })
         router.push("/adopt-cat")
         setLoading(false)
     }
@@ -99,6 +121,13 @@ export default function InputSignUp() {
             </div>
         </div>
         {loading&&<Loading/>}
+        <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
         </>
     )
 }

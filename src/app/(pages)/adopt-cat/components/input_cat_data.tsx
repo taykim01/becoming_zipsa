@@ -26,6 +26,11 @@ export default function InputCatData() {
         color: "",
         sex: "",
     })
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
+    })
 
 
     const setName = (name: CatData["name"]) => setCatData({ ...catData, name })
@@ -41,10 +46,18 @@ export default function InputCatData() {
             catData.sex as CatSex
         )
         if (!response.success) {
-            alert(response.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요.",
+                children: response.message
+            })
             return
         }
-        alert("고양이 입양에 성공했습니다.")
+        setErrorPopup({
+            open: true,
+            title: "알람",
+            children: "고양이 입양에 성공했습니다."
+        })
         router.push("/my-cat")
     }
 
@@ -82,6 +95,13 @@ export default function InputCatData() {
                         <CatListItem cat="깜냥이" detail="똑똑함, 얌전함"></CatListItem>
                         <CatListItem cat="흰냥이" detail="수줍음, 겁많음, 섬세함, 느긋함"></CatListItem>
                     </div>
+            </Popup.Default>
+            <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
             </Popup.Default>
         </>
     )

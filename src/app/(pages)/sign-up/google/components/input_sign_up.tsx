@@ -5,29 +5,48 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import GoogleSignUp from "@/repository/v1.0.0/user/google_sign_up";
+import Popup from "@/lib/popup";
 
 export default function InputSignUp() {
 
     const sign_up = new GoogleSignUp()
     const router = useRouter()
     const [name, setName] = useState("")
+    const [errorPopup, setErrorPopup] = useState({
+        open: false,
+        title: "",
+        children: ""
+    })
 
     const signUp = async () => {
         const verifyRes = await sign_up.verifyInput(name)
         if (!verifyRes.success) {
-            alert(verifyRes.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: verifyRes.message
+            })
             return
         }
         const createUserRes = await sign_up.createUser(name)
         if (!createUserRes.success) {
-            alert(createUserRes.message)
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요!",
+                children: createUserRes.message
+            })
             return
         }
-        alert("회원가입에 성공했습니다.")
+        setErrorPopup({
+            open: true,
+            title: "알림",
+            children: "회원가입에 성공했습니다."
+        })
         router.push("/adopt-cat")
     }
 
     return (
+        <>
         <div className="relative flex flex-col items-center w-full h-full">
             <div className="flex flex-col gap-5 w-full items-center h-full">
                 <Input.Text
@@ -41,5 +60,13 @@ export default function InputSignUp() {
                 <Button.Default onClick={signUp}>회원가입하기</Button.Default>
             </div>
         </div>
+        <Popup.Default
+                open={errorPopup.open}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                title={errorPopup.title}
+            >
+                {errorPopup.children}
+            </Popup.Default>
+        </>
     )
 }
