@@ -34,9 +34,9 @@ export default function Message(props: {
         <div className="flex gap-3">
             <input
                 className={`
-                        px-5 py-3 border border-white-72 bg-white-50
-                        rounded-2xl w-full font-fs-l text-black text-l16
-                        focus:outline-none placeholder-black-20
+                        px-5 py-3 border border-white-0.72 bg-white-0.5
+                        rounded-2xl w-full font-fs-l text-black-1 text-16
+                        focus:outline-none placeholder-black-0.2
                     `}
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
@@ -44,7 +44,7 @@ export default function Message(props: {
                 placeholder="대화하기"
             />
             <button
-                className="flex justify-center items-center focus:outline-none rounded-2xl bg-black flex-shrink-0" style={{ width: '50px', height: '50px' }}
+                className="flex justify-center items-center focus:outline-none rounded-2xl bg-black-1 flex-shrink-0" style={{ width: '50px', height: '50px' }}
                 onClick={sendMessage}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" fill="none">

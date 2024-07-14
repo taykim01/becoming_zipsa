@@ -30,7 +30,7 @@ export default function Text(props: {
         >
             <input
                 type={props.type || "text"}
-                className="px-5 py-3 border border-white-72 bg-white-15 rounded-2xl w-full font-fs-l text-white text-l20 focus:outline-none placeholder-white-60"
+                className="px-5 py-3 border border-white-0.72 bg-white-0.15 rounded-2xl w-full font-fs-l text-white-0.6 text-20 focus:outline-none placeholder-white-0.6"
                 onChange={handleChange}
                 onKeyDown={handleEnter}
                 placeholder={props.placeholder || ""}

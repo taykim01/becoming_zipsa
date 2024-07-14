@@ -18,7 +18,7 @@ function BadgeButton(props: {
 }) {
     const router = useRouter()
     return (
-        <button onClick={() => router.push("/my-cat/badge")} className="px-3 py-2 bg-white-20 rounded-lg flex gap-1">
+        <button onClick={() => router.push("/my-cat/badge")} className="px-3 py-2 bg-white-0.2 rounded-lg flex gap-1">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="vuesax/bold/medal-star">
                     <g id="medal-star">
@@ -28,7 +28,7 @@ function BadgeButton(props: {
                     </g>
                 </g>
             </svg>
-            <div className="font-fs-m text-m12">뱃지</div>
+            <div className="font-fs-m text-12">뱃지</div>
         </button>
     )
 }
@@ -45,7 +45,7 @@ export default function Header(props: {
                 {props.back && <BackButton onClick={() => history.back()} />}
             </div>
             <div className="flex justify-center flex-1 items-center">
-                <div className="text-black font-ohsquare text-r20 flex-shrink-0">{props.children}</div>
+                <div className="text-black-1 font-ohsquare text-20 flex-shrink-0">{props.children}</div>
             </div>
             <div className="flex justify-end flex-1">
                 {props.badge && <BadgeButton onClick={() => router.push("/my-cat/badge")} />}

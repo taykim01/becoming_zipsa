@@ -22,7 +22,7 @@ export default function Popup(props: {
             <div className="flex flex-col">
                 <div className="flex items-center bg-beige w-full h-fit p-5">
                     <div className="flex-1" />
-                    <div className="flex-5 text-center text-black font-ohsquare text-n20">{props.title}</div>
+                    <div className="flex-5 text-center text-black-1 font-ohsquare text-20">{props.title}</div>
                     <div className="flex-1 flex justify-end">
                         <button className="ml-auto" onClick={props.onClose}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
