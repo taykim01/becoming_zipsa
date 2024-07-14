@@ -25,6 +25,7 @@ export default class ActionsToCat {
                     })
                 })
                 if (!catUpdateRes) return new RepositoryResponse(false, "고양이 상태 업데이트에 실패했습니다.", {})
+                
 
 
                 const catFeelingRes = "negative";
@@ -54,6 +55,7 @@ export default class ActionsToCat {
                     })
                 })
                 if (!catUpdateRes) return new RepositoryResponse(false, "고양이 상태 업데이트에 실패했습니다.", {})
+                
 
 
                 const catFeelingRes = "negative";
@@ -107,6 +109,10 @@ export default class ActionsToCat {
                 catStatus.health = Math.min(Math.max(catStatus.health, 0), 100)
                 catStatus.affection = Math.min(Math.max(catStatus.affection, 0), 100)
 
+                catData.hunger = catStatus.hunger
+                catData.health = catStatus.health
+                catData.affection = catStatus.affection
+
 
 
 
@@ -119,6 +125,9 @@ export default class ActionsToCat {
                     })
                 })
                 if (!catUpdateRes) return new RepositoryResponse(false, "고양이 상태 업데이트에 실패했습니다.", {})
+
+
+                localStorage.setItem("catData",JSON.stringify(catData))
 
 
                 const catFeelingRes = Math.random() < 0.6 ? "positive" : "negative";
@@ -136,6 +145,9 @@ export default class ActionsToCat {
                 const catResponse = isJSON(makeResponseData.data) ? JSON.parse(makeResponseData.data) : makeResponseData.data
                 if (!makeResponseData.success) return new RepositoryResponse(false, "고양이 대화 생성에 실패했습니다.", {})
                 const finalResponse = { catFeelingRes, catResponse }
+
+
+
                 return new RepositoryResponse(true, "행동에 성공했습니다.", finalResponse)
             }
         } catch (error) {

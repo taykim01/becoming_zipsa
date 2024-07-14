@@ -25,7 +25,7 @@ export default function GaugeGroup() {
 
     const readCatData = async () => {
         setLoading(true)
-        const response = await read_cat.read()
+        const response = await read_cat.read(true)
         if (!response.success) {
             setErrorPopup({
                 open: true,
