@@ -36,16 +36,17 @@ function BadgeButton(props: {
 export default function Header(props: {
     children: ReactNode,
     badge?: boolean,
-    back?: boolean
+    back?: boolean,
+    titleColor?: "white" | "black"
 }) {
     const router = useRouter()
     return (
-        <header className="flex justify-between py-3 mb-5">
+        <header className="flex w-full justify-between py-3 mb-5" style={{ maxWidth: 393 }}>
             <div className="flex justify-start flex-1">
                 {props.back && <BackButton onClick={() => history.back()} />}
             </div>
             <div className="flex justify-center flex-1 items-center">
-                <div className="text-black-1 font-ohsquare text-20 flex-shrink-0">{props.children}</div>
+                <div className={`text-${props.titleColor}-1 font-ohsquare text-20 flex-shrink-0`}>{props.children}</div>
             </div>
             <div className="flex justify-end flex-1">
                 {props.badge && <BadgeButton onClick={() => router.push("/my-cat/badge")} />}

@@ -38,18 +38,21 @@ export default function Page() {
         "neutering": "bg-type4"
     }
 
+    const titleColor = {
+        "disease": "white",
+        "neutering": "black"
+    }
+
 
     const ButtonComponent = buttonType[eventType];
 
     return (
-        <Container.Main headerTitle={eventTranslation[eventType]} bgClass={color[eventType]}>
-            <div className="justify-between flex flex-col items-center flex-grow">
-                <div className="pt-[120px] ">
-                    <CatResponse>{response[eventType]}</CatResponse>
-                </div>
-                <Image src={image[eventType]} width={150} height={150} alt={eventType} />
-                <ButtonComponent />
+        <Container.Main headerTitle={eventTranslation[eventType]} bgClass={color[eventType]} titleColor={titleColor[eventType] as "white" | "black"}>
+            <div className="flex flex-col items-center gap-12 pb-10">
+                <CatResponse>{response[eventType]}</CatResponse>
+                <Image src={image[eventType]} width={250} height={250} alt={eventType} />
             </div>
+            <ButtonComponent />
         </Container.Main>
     );
 }

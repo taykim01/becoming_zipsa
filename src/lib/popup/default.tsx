@@ -21,7 +21,7 @@ export default function Default(props: {
             }}
         >
             <div className="flex flex-col">
-                <div className="flex items-center bg-beige w-full h-fit p-5">
+                <div className="flex items-center bg-beige-200 w-full h-fit p-5">
                     <div className="flex-1" />
                     <div className="flex-5 text-center text-black-1 font-ohsquare text-20">{props.title}</div>
                     <div className="flex-1 flex justify-end">

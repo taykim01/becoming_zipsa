@@ -89,7 +89,7 @@ export default function InputCatData() {
         setErrorPopup({
             open: true,
             title: `${catData.name} 입양에 성공했어요.`,
-            children: `아기 ${catData.name}와 놀러가보아요!`
+            children: `아기 ${catData.name}가 기다리고 있어요!`
         })
     }
 
