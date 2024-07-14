@@ -60,7 +60,7 @@ export default function InputLogIn() {
                 </div>
                 <div className="flex items-center gap-3">
                     <Components.SignUpButton />
-                    <div className="font-fs-r text-gray-dark text-r16">|</div>
+                    <div className="font-fs-r text-gray-500 text-16">|</div>
                     <Components.GoogleSignUpButton />
                 </div>
             </div>

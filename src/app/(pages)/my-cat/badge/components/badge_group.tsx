@@ -33,7 +33,7 @@ export default function BadgeGroup() {
                     ? catData.badges?.map((badge, index) => {
                         return <Badge key={index} title={badge} />
                     })
-                    : <div className="font-fs-l text-m18">{catData.catName}(이)는 아직 뱃지가 없어요.</div>
+                    : <div className="font-fs-l text-18">{catData.catName}(이)는 아직 뱃지가 없어요.</div>
                 }
             </div>
             {loading && <Loading />}
