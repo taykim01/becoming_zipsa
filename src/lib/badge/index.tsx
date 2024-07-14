@@ -6,7 +6,8 @@ import Images from "../images";
 export type Badges = "깨끗한 고양이" | "건강한 고양이" | "씩씩한 고양이"
 
 export default function Badge(props: {
-    title: Badges
+    title: Badges,
+    opaque?: boolean
 }) {
     const badgeColor = {
         "깨끗한 고양이": {
@@ -27,8 +28,8 @@ export default function Badge(props: {
     }
 
     return (
-        <div className="flex py-2 pr-7 pl-2 items-center justify-between w-full h-fit rounded-full bg-white-0.4">
-            <div className="flex w-24 h-24 justify-center items-center rounded-full overflow-hidden bg-white-0.8">
+        <div className={`flex py-2 pr-7 pl-2 items-center justify-between w-full h-fit rounded-3xl bg-white-0.4 ${props.opaque ? "opacity-50" : ""} `}>
+            <div className="flex w-24 h-24 justify-center items-center overflow-hidden bg-white-0.8" style={{ borderRadius: 20 }}>
                 <Image alt={props.title} src={badgeColor[props.title].img || ""} width={60} height={60} />
             </div>
             <div className="inline-flex flex-col justify-items-center">

@@ -12,11 +12,12 @@ export default function UserAction(props: {
             onClick={props.onClick}
             className={`
                     flex gap-3 justify-center items-center w-full
-                    px-4 py-2 rounded-full border-white-0.5 border-2 bg-white-0.12
+                    px-4 py-2 rounded-full border-beige-50 bg-white-0.12
                     active:bg-pink-0.15
                     active:text-pink-100
                     active:border-pink-0.6
                 `}
+            style={{ borderWidth: 3 }}
         >
             {NewIcon}
             <div className={`

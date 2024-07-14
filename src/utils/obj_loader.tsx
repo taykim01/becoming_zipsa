@@ -32,7 +32,7 @@ function ObjLoader({ objUrl, mtlUrl }: ObjLoaderProps) {
   return (
     <Canvas
       style={{ width: "100%", height: "100%" }}
-      gl={{ preserveDrawingBuffer: true }} // Ensure preserveDrawingBuffer is true
+      gl={{ preserveDrawingBuffer: true }}
     >
       <ambientLight intensity={5} />
       <directionalLight position={[10, 10, 10]} intensity={0.6} />

@@ -7,6 +7,7 @@ import InputFrame from "./input_frame";
 export default function Text(props: {
     title?: string,
     guide?: string,
+    guideClick?: () => any,
     onChange?: (value: string) => void,
     type?: "text" | "password" | "email",
     onEnter?: () => any,
@@ -27,6 +28,7 @@ export default function Text(props: {
             title={props.title}
             guide={props.guide}
             info={props.info}
+            guideClick={props.guideClick}
         >
             <input
                 type={props.type || "text"}

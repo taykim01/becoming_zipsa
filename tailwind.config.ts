@@ -14,7 +14,8 @@ const config: Config = {
         'type3': 'linear-gradient(180deg, #D5F8FF 0.01%, #BEB4FF 119.88%)',
         'type4': 'linear-gradient(180deg, #FDCDD2 0.01%, #DDD1D2 32.38%, #BCD5D3 65.34%, #A2D8D3 90.51%, #85DBD4 119.88%)',
         'type5': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 113.9%, #909090 165.74%)',
-        'gauge' : 'linear-gradient(90deg, rgba(186, 194, 154, 0.90) 0%, #FE8A8B 264.17%)'
+        'gauge': 'linear-gradient(90deg, rgba(186, 194, 154, 0.90) 0%, #FE8A8B 264.17%)',
+        'sky': 'radial-gradient(100.9% 100.9% at 50% 50%, #BFDFFF 0%, #A4D2FF 100%)'
       },
     },
     colors: {
@@ -25,9 +26,11 @@ const config: Config = {
         100: '#c59494',
       },
       beige: {
-        300: '#e3ae99',
+        400: '#e3ae99',
+        300: '#F6D6C0',
         200: '#fee9d8',
         100: '#fff7f0',
+        50: '#F6F0EA'
       },
       black: {
         '1': '#1b1b1b',
@@ -49,6 +52,7 @@ const config: Config = {
 
       },
       pink: {
+        800: '#9F4E4F',
         500: '#9f4e4f',
         400: '#ff6c6d',
         300: '#f57a87',

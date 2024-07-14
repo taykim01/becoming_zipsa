@@ -18,6 +18,8 @@ import html2canvas from "html2canvas";
 import { chatOrActionState } from "@/recoil/chat_or_action";
 import Popup from "@/lib/popup";
 import CheckCat from "@/utils/check_cat";
+import StatusBox from "@/lib/status_box";
+import { seeStatusState } from "@/recoil/see_status";
 
 export interface Chat {
     role: "user" | "assistant"
@@ -44,7 +46,7 @@ export default function InteractionGroup() {
 
 
     const [chatOrAction, setChatOrAction] = useRecoilState<"chat" | "action">(chatOrActionState)
-    const [seeStatus, setSeeStatus] = useState(false)
+    const [seeStatus, setSeeStatus] = useRecoilState(seeStatusState)
     const [chat, setChat] = useState<Chat[]>([])
     const setLoading = useSetRecoilState(loadingState)
     const setCatResponse = useSetRecoilState(catResponseState)
@@ -162,6 +164,11 @@ export default function InteractionGroup() {
 
     return (
         <>
+            <div className="flex items-center gap-4 w-full">
+                <StatusBox name="애정도" value={catData.affection} />
+                <StatusBox name="배고픔" value={catData.hunger} />
+                <StatusBox name="체력" value={catData.health} />
+            </div>
             <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-5">
                 {
                     seeStatus
@@ -170,27 +177,28 @@ export default function InteractionGroup() {
                             <Button.Default onClick={() => setSeeStatus(false)}>{`${catData.name}(이)랑 놀기`}</Button.Default>
                         </div>
                         : <>
-                            {chatOrAction === "chat" && <div className="relative w-full h-full">
-                                <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
-                                    {chat.map((chat, index) => {
-                                        if (chat.role === "user") return (
-                                            <div key={index} className="w-full flex justify-end">
-                                                <ChatBox.UserChatBox>{chat.content}</ChatBox.UserChatBox>
-                                            </div>
-                                        )
-                                        else return (
-                                            <ChatBox.CatChatBox key={index}>{chat.content}</ChatBox.CatChatBox>
-                                        )
-                                    })}
+                            {
+                                chatOrAction === "chat" && <div className="relative w-full h-full">
+                                    <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
+                                        {chat.map((chat, index) => {
+                                            if (chat.role === "user") return (
+                                                <div key={index} className="w-full flex justify-end">
+                                                    <ChatBox.UserChatBox>{chat.content}</ChatBox.UserChatBox>
+                                                </div>
+                                            )
+                                            else return (
+                                                <ChatBox.CatChatBox key={index}>{chat.content}</ChatBox.CatChatBox>
+                                            )
+                                        })}
+                                    </div>
                                 </div>
-                            </div>
                             }
 
 
                             <div className="flex flex-col justify-end w-full gap-4 flex-grow">
                                 {
                                     chatOrAction === "action"
-                                        ? <div className="grid grid-cols-2 grid-rows-3 gap-4">
+                                        ? <div className="grid grid-cols-2 grid-rows-3 gap-4 w-full">
                                             {
                                                 actions.map((action, index) => {
                                                     if (action === "사진찍기") return <Button.UserAction key={index} onClick={() => { catAction(action); takeScreenshot() }} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>

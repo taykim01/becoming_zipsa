@@ -8,14 +8,22 @@ import { useEffect, useState } from 'react';
 import CatComponent from '@/lib/cat_component';
 import ReadCat from '@/repository/v1.0.0/cat/read_cat';
 import { Cat } from '@/repository/v1.0.0/cat/cat';
+import Components from ".";
+import Icons from "@/lib/icons";
+import { useRouter } from "next/navigation";
+import { seeStatusState } from "@/recoil/see_status";
+import { chatOrActionState } from "@/recoil/chat_or_action";
 
 
 export default function CatAnimation() {
     const read_cat = new ReadCat()
 
 
+    const router = useRouter()
     const [catData, setCatData] = useState({} as Cat)
     const [catFeeling, setCatFeeling] = useRecoilState(catFeelingState)
+    const [seeStatus, setSeeStatus] = useRecoilState(seeStatusState)
+    const [chatOrAction, setChatOrAction] = useRecoilState<"chat" | "action">(chatOrActionState)
     const [expand, setExpand] = useState(false)
     const expandCat = () => setExpand(!expand)
 
@@ -48,26 +56,49 @@ export default function CatAnimation() {
         readCatData()
     }, [])
 
+    const ExpandIcon = () => Icons.Expand
+    const ShrinkIcon = () => Icons.Shrink
+    const MedalIcon = () => Icons.Medal
+    const SettingsIcon = () => Icons.Settings
+
 
     return (
-        <div className={`relative w-full rounded-2xl ${expand ? "expand" : "default"}`} onClick={expandCat}>
+        <div className="relative w-full flex flex-col py-7 items-center rounded-3xl border-4 border-beige-300 gap-5 box-border">
+            <div className="absolute top-3 left-3 p-2" style={{ zIndex: 1000 }}>
+                {
+                    expand
+                        ? <div onClick={expandCat}><ShrinkIcon /></div>
+                        : <div onClick={expandCat}><ExpandIcon /></div>
+                }
+            </div>
+            <div className="absolute top-5 right-5 flex flex-col gap-2" style={{ zIndex: 1000 }}>
+                <div onClick={() => router.push("/my-cat/badge")}><MedalIcon /></div>
+                <div onClick={() => router.push("/settings")}><SettingsIcon /></div>
+            </div>
+            <div className={`relative w-full ${expand ? "expand" : "default"}`}>
 
+                {
+                    heartLocations.map((location, i) => (
+                        <div
+                            key={i}
+                            className='absolute'
+                            style={{
+                                left: location.x,
+                                bottom: expand ? `calc(${location.y}px + 20vh)` : location.y,
+                                transform: `scale(${expand ? location.size * 1.2 : location.size})`
+                            }}>
+                            {catFeeling === "positive" && <CatHearts />}
+                        </div>
+                    ))
+                }
+                {
+                    catData.color && <CatComponent color={catData.color} />
+                }
+            </div>
             {
-                heartLocations.map((location, i) => (
-                    <div
-                        key={i}
-                        className='absolute'
-                        style={{
-                            left: location.x,
-                            bottom: expand ? `calc(${location.y}px + 20vh)` : location.y,
-                            transform: `scale(${expand ? location.size * 1.2 : location.size})`
-                        }}>
-                        {catFeeling === "positive" && <CatHearts />}
-                    </div>
-                ))
-            }
-            {
-                catData.color && <CatComponent color={catData.color} />
+                chatOrAction === "action"
+                ? <Components.CatReaction />
+                : <Components.CatInfo expand={expand} />
             }
         </div>
     );

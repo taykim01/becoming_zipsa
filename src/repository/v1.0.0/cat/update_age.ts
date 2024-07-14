@@ -65,6 +65,38 @@ export default class UpdateAge {
     }
 
 
+    private async rechargeHealth(cat_id: string, catData: Cat): Promise<RepositoryResponse> {
+        try {
+            const newHealth = catData.health + 1
+            const update_data = {
+                hunger: catData.hunger,
+                affection: catData.affection,
+                health: newHealth
+            }
+            const res = await fetch(`${URL}/api/v1.0.0/cat/update/status`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    cat_id,
+                    update_data
+                })
+            })
+            const data = await res.json()
+            if (!data.success) return new RepositoryResponse(false, "체력 충전에 실패했습니다.", data.data)
+
+            catData.health = newHealth
+            localStorage.setItem("catData", JSON.stringify(catData))
+
+
+            return new RepositoryResponse(true, "체력 충전에 성공했습니다.")
+        } catch (error) {
+            return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
+        }
+    }
+
+
 
     async update(): Promise<RepositoryResponse> {
         try {
@@ -81,6 +113,12 @@ export default class UpdateAge {
 
             const updateCatRes = await this.updateAge(cat_id, newCatAge)
             if (!updateCatRes.success) return updateCatRes
+
+
+            if (newCatAge % 3 === 0) {
+                const rechargeHealthRes = await this.rechargeHealth(cat_id, catData)
+                if (!rechargeHealthRes.success) return rechargeHealthRes
+            }
 
 
             const newCatChapter = Object.keys(this.catChapters).find(key => this.catChapters[key] === newCatAge) as CatChapter

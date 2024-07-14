@@ -34,8 +34,8 @@ export default function BadgeGroup() {
             return
         }
         const data = response.data as Cat
-        if(data.neutered) setBadges(prev => [...prev, "씩씩한 고양이"])
-        if(data.medicated) setBadges(prev => [...prev, "건강한 고양이"])
+        if (data.neutered) setBadges(prev => [...prev, "씩씩한 고양이"])
+        if (data.medicated) setBadges(prev => [...prev, "건강한 고양이"])
         setCatData(response.data)
         setLoading(false)
     }
@@ -48,18 +48,14 @@ export default function BadgeGroup() {
 
     return (
         <>
-        <div className="absolute overflow-scroll w-full h-full flex flex-col gap-3 items-center">
-            {
-                badges?.length > 0
-                    ? badges?.map((badge, index) => {
-                        return <Badge key={index} title={badge} />
-                    })
-                    : <div className="font-fs-l text-18">{catData.name}(이)는 아직 뱃지가 없어요.</div>
-            }
-        </div>
-        <Popup.Default
+            <div className="absolute overflow-scroll w-full h-full flex flex-col gap-3 items-center">
+                <Badge title="씩씩한 고양이" opaque={!catData.neutered} />
+                <Badge title="건강한 고양이" opaque={!catData.medicated} />
+                <Badge title="깨끗한 고양이" opaque={true} />
+            </div>
+            <Popup.Default
                 open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
+                onClose={() => setErrorPopup({ ...errorPopup, open: false })}
                 title={errorPopup.title}
             >
                 {errorPopup.children}

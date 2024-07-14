@@ -1,16 +1,13 @@
 import Container from "@/lib/container";
-import InfoComponents from "../components";
 import Components from "./components";
-import CatAnimation from "../components/cat_animation";
+import CatInfo from "../components/cat_info";
 
 export default function Page() {
     return (
-        <Container.Main headerTitle="뱃지" back>
+        <Container.Main headerTitle="뱃지" back bgClass="bg-beige-200">
             <div className="flex flex-col gap-7 items-center relative w-full h-full">
-                <div style={{ height: 150 }}>
-                    <CatAnimation />
-                </div>
-                <InfoComponents.CatInfo />
+                <Components.Portrait />
+                <CatInfo expand />
                 <div className="relative w-full h-full">
                     <Components.BadgeGroup />
                 </div>

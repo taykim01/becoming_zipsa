@@ -1,6 +1,7 @@
 "use client"
 
 import Button from "@/lib/button"
+import CatComponent from "@/lib/cat_component"
 import Input from "@/lib/input"
 import Popup from "@/lib/popup"
 import AdoptCat from "@/repository/v1.0.0/cat/adopt_cat"
@@ -50,15 +51,16 @@ export default function InputCatData() {
             catData.color as CatType,
             catData.sex as CatSex
         )
-        if (!verifyRes.success) {setErrorPopup({
-            open: true,
-            title: "오류가 발생했어요",
-            children: verifyRes.message
-        })
-        return 
-    }
-            
-            
+        if (!verifyRes.success) {
+            setErrorPopup({
+                open: true,
+                title: "오류가 발생했어요",
+                children: verifyRes.message
+            })
+            return
+        }
+
+
         sendGAEvent({ event: 'adopt_cat', value: 'adopt_cat' })
         const verification = await adopt_cat.verifyInput(
             catData.name,
@@ -96,25 +98,33 @@ export default function InputCatData() {
     return (
         <>
             <div className="flex flex-col items-center justify-between flex-grow">
-                <div className="flex flex-col items-center gap-4 w-full">
-                    <Input.Text
-                        title="고양이 이름"
-                        onChange={setName}
-                        placeholder="불러주고픈 이름이 있나요?"
-                        onEnter={adoptCat}
-                    />
-                    <Input.MultiSelect
-                        title="성격"
-                        onSelect={setColor}
-                        guide="고양이별 성격 알아보기"
-                        guideClick={() => setPersonalityPopup(true)}
-                        items={["치즈냥이", "흰냥이", "깜냥이"]}
-                    />
-                    <Input.MultiSelect
-                        title="성별"
-                        onSelect={setSex}
-                        items={["수컷", "암컷"]}
-                    />
+                <div className="flex flex-col gap-5 w-full items-center">
+                    {
+                        catData.color &&
+                        <div style={{ maxWidth: 150, maxHeight: 150 }}>
+                            <CatComponent color={catData.color as CatType} />
+                        </div>
+                    }
+                    <div className="flex flex-col items-center gap-4 w-full">
+                        <Input.Text
+                            title="고양이 이름"
+                            onChange={setName}
+                            placeholder="불러주고픈 이름이 있나요?"
+                            onEnter={adoptCat}
+                        />
+                        <Input.MultiSelect
+                            title="성격"
+                            onSelect={setColor}
+                            guide="고양이별 성격 알아보기"
+                            guideClick={() => setPersonalityPopup(true)}
+                            items={["치즈냥이", "흰냥이", "깜냥이"]}
+                        />
+                        <Input.MultiSelect
+                            title="성별"
+                            onSelect={setSex}
+                            items={["수컷", "암컷"]}
+                        />
+                    </div>
                 </div>
                 <Button.Default onClick={adoptCat}>{`${catData.name || "_____"} 입양하기!`}</Button.Default>
             </div>

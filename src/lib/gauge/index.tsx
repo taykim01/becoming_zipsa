@@ -5,10 +5,10 @@ function Indicator(props: {
 }) {
     return (
         <div className="relative">
-            <div className="font-fs-sb text-10 text-beige-300 w-full text-center absolute" style={{
+            <div className="font-fs-sb text-10 text-beige-400 w-full text-center absolute" style={{
                 margin: "0 auto",
                 top: "-15px",
-                }}>{props.value}%</div>
+            }}>{props.value}%</div>
             <div className="flex justify-center items-center rounded-full" style={{ backgroundColor: '#E3AE99', padding: '2px' }}>
                 <div className="flex justify-center items-center rounded-full bg-beige-200 p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
@@ -24,12 +24,20 @@ export default function Gauge(props: {
     value: number,
     title: string
 }) {
+    const value = props.value
+        ? props.value > 90
+            ? 94
+            : props.value < 10
+                ? 6
+                : props.value
+        : props.value
+
     return (
         <div className="flex w-full flex-col gap-4" style={{ maxWidth: 353 }}>
             <div className="text-pink-500 text-18">{props.title}</div>
             <div className="rounded-full bg-white-0.4 relative" style={{ padding: '4px' }}>
                 <div className="absolute" style={{
-                    left: `${props.value}%`,
+                    left: `${value}%`,
                     top: "50%",
                     transform: "translate(-50%, -50%)"
                 }}>

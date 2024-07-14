@@ -5,12 +5,10 @@ import CheckSessionTag from "@/utils/check_session_tag";
 export default async function Page() {
     return (
         <>
-            <Container.Main headerTitle="내 고양이" badge>
-                <div className="flex flex-col items-center justify-between relative w-full h-full gap-5">
+            <Container.Main headerTitle="내 고양이" bgClass="bg-beige-100">
+                <div className="flex flex-col items-center justify-between relative w-full h-full gap-5 box-border">
                     <div className="w-full flex flex-col items-center w-full gap-5 relative" id="screencaptureArea">
                         <Components.CatAnimation />
-                        <Components.CatInfo />
-                        <Components.CatReaction />
                     </div>
                     <Components.InteractionGroup />
                 </div>

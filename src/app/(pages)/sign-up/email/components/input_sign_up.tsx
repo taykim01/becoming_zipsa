@@ -25,6 +25,8 @@ export default function InputSignUp() {
         children: ""
     })
 
+    const [popup, setPopup] = useState(false)
+
 
     const setEmail = (email: string) => {
         setSignUpData({ ...signUpData, email })
@@ -105,9 +107,10 @@ export default function InputSignUp() {
                         title="비밀번호"
                         type="password"
                         placeholder="비밀번호를 입력해주세요."
+                        guide="비밀번호 규칙"
+                        guideClick={() => setPopup(true)}
                         onChange={setPassword}
                         onEnter={signUp}
-                        info="알파벳, 특수문자, 숫자 포함 6자 이상으로 구성해주세요."
                     />
                     <Input.Text
                         title="비밀번호 확인"
@@ -135,6 +138,13 @@ export default function InputSignUp() {
                 title={errorPopup.title}
             >
                 {errorPopup.children}
+            </Popup.Default>
+            <Popup.Default
+                open={popup}
+                onClose={() => setPopup(false)}
+                title="비밀번호 규칙"
+            >
+                비밀번호는 알파벳, 숫자, 특수문자를 포함한 8자 이상으로 설정해주세요.
             </Popup.Default>
         </>
     )
