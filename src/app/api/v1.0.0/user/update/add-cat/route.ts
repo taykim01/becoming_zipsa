@@ -1,4 +1,4 @@
-import { userCollection } from "@/firebase"
+import { userCollection } from "../../../../../../firebase";
 import { arrayUnion, doc, updateDoc } from "firebase/firestore";
 
 export async function POST(request: Request): Promise<Response> {

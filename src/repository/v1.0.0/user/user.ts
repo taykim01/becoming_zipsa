@@ -12,6 +12,16 @@ export default class UserModel implements User {
     cats: string[];
 
     constructor(user: User) {
+        const missingProperties: string[] = [];
+
+        if (!user.email) missingProperties.push('email');
+        if (!user.name) missingProperties.push('name');
+        if (!user.cats) missingProperties.push('cats');
+
+        if (missingProperties.length > 0) {
+            throw new Error(`Missing required properties: ${missingProperties.join(', ')}`);
+        }
+
         this.id = user.id;
         this.email = user.email;
         this.name = user.name;

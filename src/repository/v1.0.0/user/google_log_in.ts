@@ -1,6 +1,7 @@
 import { auth, provider } from "@/firebase";
 import RepositoryResponse from "@/repository/repository_response";
 import { signInWithPopup, GoogleAuthProvider, deleteUser } from "firebase/auth";
+import URL from "@/repository/url";
 
 export default class GoogleLogIn {
     async logIn(): Promise<RepositoryResponse> {

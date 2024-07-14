@@ -17,7 +17,10 @@ export default function ToLogInButton() {
     const routeTo = async () => {
         setLoading(true)
         const response = await check_sesssion.check()
-        if (!response.success) router.push("/log-in")
+        if (!response.success) {
+            router.push("/log-in")
+            return
+        }
 
         const catResponse = await read_cat.read()
         if (catResponse.data === "yes_cat") router.push("/my-cat")

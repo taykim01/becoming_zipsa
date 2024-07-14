@@ -16,7 +16,7 @@ export default function CatAnimation() {
     const readCatData = async () => {
         const response = await read_cat.read()
         if (!response.success) {
-            alert(response.message)
+            // alert(response.message)
             return
         }
         setCatData(response.data)
@@ -51,7 +51,9 @@ export default function CatAnimation() {
                     </div>
                 ))
             }
-            <CatComponent color={catData.color} />
+            {
+                catData.color && <CatComponent color={catData.color} />
+            }
         </div>
     );
 }

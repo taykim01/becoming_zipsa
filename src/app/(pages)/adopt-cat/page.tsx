@@ -8,7 +8,7 @@ export default function Page() {
             <Container.Main headerTitle="고양이 입양하기">
                 <Components.InputCatData />
             </Container.Main>
-            <CheckCat />
+            <CheckCat for={"no_cat"} response={"route"} content={"/adopt-cat"} />
         </>
     )
 }

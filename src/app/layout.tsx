@@ -22,8 +22,8 @@ export default function RootLayout({
       <RecoilRootWrapper>
         <body>
           {children}
+          <Loading />
         </body>
-        <Loading />
       </RecoilRootWrapper>
       <ClearSessionStorageOnExit />
       <GoogleAnalytics gaId={analyticsTags.default} />

@@ -68,6 +68,7 @@ export default function InteractionGroup() {
         const response = await cat_with_chat.chat(
             message
         )
+        console.log(response)
         if (!response.success) {
             alert(response.message)
             setChatLoading(false)

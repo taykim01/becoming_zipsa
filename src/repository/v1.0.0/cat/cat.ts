@@ -2,7 +2,7 @@ export type CatSex = "수컷" | "암컷"
 
 export type CatType = "치즈냥이" | "깜냥이" | "흰냥이"
 
-export type CatChapter = "첫 만남" | "아기 고양이" | "청소년 고양이" | "어른 고양이" | "나이든 고양이" | "무지개 다리"
+export type CatChapter = "첫 만남" | "아기 고양이" | "청소년 고양이" | "어른 고양이" | "나이든 고양이" | "고양이 별"
 
 export type CatChat = {
     role: string, content: string
@@ -40,6 +40,25 @@ export default class CatModel implements Cat {
     birthday: Date;
 
     constructor(cat: Cat) {
+        const missingProperties: string[] = [];
+
+        if (!cat.user_id) missingProperties.push('user_id');
+        if (!cat.name) missingProperties.push('name');
+        if (!cat.color) missingProperties.push('color');
+        if (!cat.sex) missingProperties.push('sex');
+        if (cat.neutered === undefined) missingProperties.push('neutered');
+        if (!cat.chapter) missingProperties.push('chapter');
+        if (!cat.chats) missingProperties.push('chats');
+        if (cat.hunger === undefined) missingProperties.push('hunger');
+        if (cat.affection === undefined) missingProperties.push('affection');
+        if (cat.health === undefined) missingProperties.push('health');
+        if (cat.age === undefined) missingProperties.push('age');
+        if (!cat.birthday) missingProperties.push('birthday');
+
+        if (missingProperties.length > 0) {
+            throw new Error(`Missing required properties: ${missingProperties.join(', ')}`);
+        }
+
         this.id = cat.id;
         this.user_id = cat.user_id;
         this.name = cat.name;

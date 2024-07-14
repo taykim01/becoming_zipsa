@@ -1,12 +1,15 @@
+"use client"
+
 import Container from "@/lib/container";
 import Image from "next/image";
 import Images from "@/lib/images";
 import Components from "./components";
-import { useRouter } from "next/router";
+import { useParams } from "next/navigation";
+
 
 export default function Page() {
-    const router = useRouter();
-    const eventType = router.query.eventType as "disease" | "neuter";
+    const params = useParams()
+    const eventType = params.eventType as "disease" | "neuter";
 
     const eventTranslation = {
         "disease": "질병",

@@ -1,6 +1,6 @@
 import RepositoryResponse from "@/repository/repository_response";
 import URL from "@/repository/url";
-import { CatChapter } from "./cat";
+import { Cat, CatChapter } from "./cat";
 
 export default class UpdateAge {
     private catChapters: { [key: string]: number } = {
@@ -9,13 +9,14 @@ export default class UpdateAge {
         "청소년 고양이": 120,
         "어른 고양이": 300,
         "나이든 고양이": 420,
-        "무지개 다리": 421
+        "고양이 별": 421
     }
 
 
     private lifeCycle: { [key: string]: string } = {
         "청소년 고양이": "neutering",
-        "나이든 고양이": "disease"
+        "나이든 고양이": "disease",
+        "고양이 별": "death"
     }
 
 
@@ -67,12 +68,18 @@ export default class UpdateAge {
 
     async update(): Promise<RepositoryResponse> {
         try {
-            const catData = sessionStorage.getItem("catData")
-            if (!catData) return new RepositoryResponse(false, "고양이 정보가 없습니다.")
-            const cat_id = JSON.parse(catData).cat_id
+            const catDataJSON = sessionStorage.getItem("catData")
+            if (!catDataJSON) return new RepositoryResponse(false, "고양이 정보가 없습니다.")
+            const catData = JSON.parse(catDataJSON) as Cat
+            
 
-            const oldAge = JSON.parse(catData).age
-            const newCatAge = JSON.parse(catData).age + 1
+            if(catData.chapter === "고양이 별") return new RepositoryResponse(false, "이미 고양이 별에 있습니다.")
+
+
+            const cat_id = catData.id
+            if(!cat_id) return new RepositoryResponse(false, "고양이 ID가 없습니다.")
+            const oldAge = catData.age
+            const newCatAge = catData.age + 1
 
 
             const updateCatRes = await this.updateAge(cat_id, newCatAge)
@@ -90,8 +97,10 @@ export default class UpdateAge {
             if (!updateChapterRes.success) return updateChapterRes
 
 
-            if (!this.lifeCycle[newCatChapter]) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.")
-            return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.", this.lifeCycle[newCatChapter])
+            const newEvent = this.lifeCycle[newCatChapter]
+            if (!newEvent) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.")
+            
+            return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.", newEvent)
         } catch (error) {
             return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
         }

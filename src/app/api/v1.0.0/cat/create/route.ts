@@ -17,7 +17,7 @@ export async function POST(request: Request): Promise<Response> {
             JSON.stringify({
                 success: true,
                 message: "고양이 생성 성공",
-                data: {}
+                data: catRef.id
             })
         )
     } catch (error) {

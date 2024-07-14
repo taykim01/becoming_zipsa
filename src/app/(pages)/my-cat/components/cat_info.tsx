@@ -21,7 +21,7 @@ function SexSymbol(props: { sex: "수컷" | "암컷" }) {
 }
 
 
-export default function CatInfo(props: {}) {
+export default function CatInfo() {
     const read_cat = new ReadCat()
     const update_age = new UpdateAge()
 
@@ -45,10 +45,11 @@ export default function CatInfo(props: {}) {
 
     const updateTime = async () => {
         const response = await update_age.update();
+        console.log(response)
         if (!response.success) alert(response.message);
         
         const event = response.data;
-        if (event) router.push(`my-cat/event/${event}`)
+        if (typeof event === "string") router.push(`my-cat/event/${event}`)
     }
 
 

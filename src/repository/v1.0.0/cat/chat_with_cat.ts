@@ -47,7 +47,7 @@ export default class ChatWithCat {
             const catData = await catDataRes.json()
             if (!catData.success) return new RepositoryResponse(false, "고양이 정보를 불러오는데 실패했습니다.", catData)
 
-            return new RepositoryResponse(true, "채팅을 불러왔습니다.", catData)
+            return new RepositoryResponse(true, "채팅을 불러왔습니다.", catData.data)
         } catch (error) {
             return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
         }
@@ -72,7 +72,7 @@ export default class ChatWithCat {
                 "청소년 고양이": "You are a Adolscent cat. You become more independent and can manage well on it own.",
                 "어른 고양이": "You are a Adult cat. You show affection in various ways and form deeper bonds with its owner.",
                 "나이든 고양이": "You are a Aged cat. You prefer comfortable spots and spend more time resting and sleeping. It would be nice if the elderly cat complains to the owner like an old-timer, saying things like 'Back in my day, cats these days...’",
-                "무지개 다리": ""
+                "고양이 별": ""
             }
 
             const messages: any[] = [
@@ -102,30 +102,38 @@ export default class ChatWithCat {
             const data = await res.json()
             if (!data.success) return new RepositoryResponse(false, "고양이 대답 생성에 실패했습니다.", data)
 
-            return new RepositoryResponse(true, "고양이 대답 생성에 성공했습니다.", data)
+            return new RepositoryResponse(true, "고양이 대답 생성에 성공했습니다.", data.data)
         } catch (error) {
             return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
         }
     }
 
-    private async updateChatData(chatToCat: string, catChat: string): Promise<RepositoryResponse> {
+    private async updateChatData(chatToCat: string, catChat: string, cat_id:string): Promise<RepositoryResponse> {
         try {
-            const updateChatRes = await fetch(`${URL}/api/v1.0.0/cat/update/chat`, {
+            const updateUserChatRes = await fetch(`${URL}/api/v1.0.0/cat/update/chat`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
-                body: JSON.stringify([
-                    {
-                        who: "user",
-                        chat: chatToCat
-                    },
-                    {
-                        who: "cat",
-                        chat: catChat
-                    }
-                ])
+                body: JSON.stringify({
+                    who: "user",
+                    chat: chatToCat,
+                    cat_id
+                })
             })
-            const updateChat = await updateChatRes.json()
-            if (!updateChat.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
+            const updateUserChat = await updateUserChatRes.json()
+            if(!updateUserChat.success) return new RepositoryResponse(false, "유저 채팅 데이터 저장에 실패했습니다.", {})
+
+            
+            const updateCatChatRes = await fetch(`${URL}/api/v1.0.0/cat/update/chat`, {
+                method: "POST",
+                headers: { "Content-type": "application/json" },
+                body: JSON.stringify({
+                    who: "cat",
+                    chat: catChat,
+                    cat_id
+                })
+            })
+            const updateCatChat = await updateCatChatRes.json()
+            if (!updateCatChat.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
 
             return new RepositoryResponse(true, "채팅 데이터 저장에 성공했습니다.", {})
         } catch (error) {
@@ -135,11 +143,12 @@ export default class ChatWithCat {
 
     private async checkCatPolarity(catChat: string): Promise<RepositoryResponse> {
         try {
-            const catChatPolarityRes = await fetch(`${URL}/api/v0.1.0/llm`, {
+            const polarity = this.chatPolarityMessage(catChat)
+            const catChatPolarityRes = await fetch(`${URL}/api/v1.0.0/llm`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
                 body: JSON.stringify({
-                    messages: this.chatPolarityMessage(catChat)
+                    messages: polarity
                 })
             })
             const catChatPolarityData = await catChatPolarityRes.json()
@@ -162,6 +171,8 @@ export default class ChatWithCat {
 
             const catData = readCatRes.data as Cat
             const totalChat = catData.chats as CatChat[]
+            const cat_id = catData.id
+            if(!cat_id) return new RepositoryResponse(false, "고양이 ID가 없습니다.")
 
 
             totalChat.unshift({ role: "user", content: chatToCat })
@@ -172,10 +183,10 @@ export default class ChatWithCat {
             const catChat = catChatRes.data
 
 
-            const updateChatRes = await this.updateChatData(chatToCat, catChat)
+            const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id)
             if (!updateChatRes.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
 
-            
+
             const catChatPolarityRes = await this.checkCatPolarity(catChat)
             if (!catChatPolarityRes.success) return catChatPolarityRes
             const responsePolarity = catChatPolarityRes.data

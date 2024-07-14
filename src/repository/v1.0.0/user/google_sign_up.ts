@@ -29,6 +29,7 @@ export default class GoogleSignUp {
 
             sessionStorage.setItem('id', response.user.uid);
             sessionStorage.setItem('email', response.user.email)
+            
             return new RepositoryResponse(true, "인증에 성공했습니다.", this.user_id)
         } catch (error) {
             return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
