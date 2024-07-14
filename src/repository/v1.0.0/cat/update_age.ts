@@ -57,7 +57,7 @@ export default class UpdateAge {
             })
             const data = await res.json()
             if (!data.success) return new RepositoryResponse(false, "챕터 업데이트에 실패했습니다.", data.message)
-            
+
             return new RepositoryResponse(true, "챕터 업데이트에 성공했습니다.")
         } catch (error) {
             return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
@@ -68,17 +68,14 @@ export default class UpdateAge {
 
     async update(): Promise<RepositoryResponse> {
         try {
-            const catDataJSON = sessionStorage.getItem("catData")
+            const catDataJSON = localStorage.getItem("catData")
             if (!catDataJSON) return new RepositoryResponse(false, "고양이 정보가 없습니다.")
             const catData = JSON.parse(catDataJSON) as Cat
-            
-
-            if(catData.chapter === "고양이 별") return new RepositoryResponse(false, "이미 고양이 별에 있습니다.")
+            if (catData.chapter === "고양이 별") return new RepositoryResponse(false, "이미 고양이 별에 있습니다.")
 
 
             const cat_id = catData.id
-            if(!cat_id) return new RepositoryResponse(false, "고양이 ID가 없습니다.")
-            const oldAge = catData.age
+            if (!cat_id) return new RepositoryResponse(false, "고양이 ID가 없습니다.")
             const newCatAge = catData.age + 1
 
 
@@ -86,20 +83,29 @@ export default class UpdateAge {
             if (!updateCatRes.success) return updateCatRes
 
 
-            const oldCatChapter = Object.keys(this.catChapters).find(chapter => this.catChapters[chapter] === oldAge) as CatChapter
-            const newCatChapter = Object.keys(this.catChapters).find(chapter => this.catChapters[chapter] === newCatAge) as CatChapter
+            const oldCatChapter = catData.chapter
+            let newCatChapter: CatChapter | undefined;
+            for (const chapter in this.catChapters) {
+                if (this.catChapters[chapter] <= newCatAge) newCatChapter = chapter as CatChapter
+            }
+            if (!newCatChapter) return new RepositoryResponse(false, "챕터를 찾을 수 없습니다.");
 
+
+            catData.age = newCatAge
+            catData.chapter = newCatChapter
+            localStorage.setItem("catData", JSON.stringify(catData))
 
             if (oldCatChapter === newCatChapter) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.")
 
-            
+
             const updateChapterRes = await this.updateChapter(cat_id, newCatChapter)
             if (!updateChapterRes.success) return updateChapterRes
 
 
             const newEvent = this.lifeCycle[newCatChapter]
             if (!newEvent) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.")
-            
+
+
             return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.", newEvent)
         } catch (error) {
             return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))

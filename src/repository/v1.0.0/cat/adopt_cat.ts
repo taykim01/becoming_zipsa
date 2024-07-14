@@ -20,7 +20,7 @@ export default class AdoptCat {
         sex: CatSex
     ): Promise<RepositoryResponse> {
         try {
-            const user_id = sessionStorage.getItem('id')
+            const user_id = localStorage.getItem('id')
             if (!user_id) return new RepositoryResponse(false, "세션이 없습니다.", {})
 
             const cat: Cat = {
@@ -66,7 +66,7 @@ export default class AdoptCat {
             if (!addCatData.success) return new RepositoryResponse(false, "유저에게 고양이를 추가하는데 실패했습니다.")
 
 
-            sessionStorage.setItem('catData', JSON.stringify(catData))
+            localStorage.setItem('catData', JSON.stringify(catData))
 
 
             return new RepositoryResponse(true, "고양이 데이터 생성에 성공했습니다.")

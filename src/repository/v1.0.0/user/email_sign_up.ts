@@ -82,7 +82,7 @@ export default class EmailSignUp {
             const data = await res.json()
             if (!data.success) return new RepositoryResponse(false, "유저 데이터 생성에 실패했습니다.", {})
 
-            sessionStorage.setItem("uid", this.user_id)
+            localStorage.setItem("uid", this.user_id)
             
             return new RepositoryResponse(true, "유저 데이터 생성에 성공했습니다.", data.data)
         } catch (error) {

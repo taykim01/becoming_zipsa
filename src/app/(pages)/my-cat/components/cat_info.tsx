@@ -45,7 +45,6 @@ export default function CatInfo() {
 
     const updateTime = async () => {
         const response = await update_age.update();
-        console.log(response)
         if (!response.success) alert(response.message);
         
         const event = response.data;
@@ -57,7 +56,7 @@ export default function CatInfo() {
         readCatData(true);
         const interval = setInterval(() => {
             updateTime();
-        }, 60000);
+        }, 6000);
 
         return () => clearInterval(interval);
     }, []);

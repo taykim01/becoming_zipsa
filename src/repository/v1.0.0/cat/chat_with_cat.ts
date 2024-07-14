@@ -21,7 +21,7 @@ export default class ChatWithCat {
 
     private async readCat(): Promise<RepositoryResponse> {
         try {
-            const user_id = sessionStorage.getItem('id')
+            const user_id = localStorage.getItem('id')
             if (!user_id) return new RepositoryResponse(false, "로그인이 필요합니다.")
 
 

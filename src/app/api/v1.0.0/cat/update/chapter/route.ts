@@ -1,6 +1,6 @@
 
 import { catDoc } from "@/firebase";
-import { arrayUnion, doc, updateDoc } from "firebase/firestore";
+import { updateDoc } from "firebase/firestore";
 
 export async function POST(request: Request): Promise<Response> {
     try {

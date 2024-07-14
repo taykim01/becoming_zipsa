@@ -2,10 +2,10 @@
 
 import { useEffect } from 'react';
 
-const ClearSessionStorageOnExit = () => {
+const ClearlocalStorageOnExit = () => {
   useEffect(() => {
     const handleBeforeUnload = () => {
-      sessionStorage.clear();
+      localStorage.clear();
     };
 
     window.addEventListener('beforeunload', handleBeforeUnload);
@@ -18,4 +18,4 @@ const ClearSessionStorageOnExit = () => {
   return null;
 };
 
-export default ClearSessionStorageOnExit;
+export default ClearlocalStorageOnExit;

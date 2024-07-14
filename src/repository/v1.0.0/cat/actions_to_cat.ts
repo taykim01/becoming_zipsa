@@ -6,7 +6,7 @@ import RepositoryResponse from "@/repository/repository_response"
 export default class ActionsToCat {
     async applyAction(catAction: CatActionTypes): Promise<RepositoryResponse> {
         try {
-            const catDataJSON = sessionStorage.getItem("catData")
+            const catDataJSON = localStorage.getItem("catData")
             if (!catDataJSON) return new RepositoryResponse(false, "고양이 정보를 불러오는데 실패했습니다.", {})
             const catData = isJSON(catDataJSON) ? JSON.parse(catDataJSON) : catDataJSON
             const catStatus = {

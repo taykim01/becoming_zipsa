@@ -27,8 +27,8 @@ export default class GoogleSignUp {
             
             if(!response.user.email) return  new RepositoryResponse(false, "이메일이 없습니다.", {})
 
-            sessionStorage.setItem('id', response.user.uid);
-            sessionStorage.setItem('email', response.user.email)
+            localStorage.setItem('id', response.user.uid);
+            localStorage.setItem('email', response.user.email)
             
             return new RepositoryResponse(true, "인증에 성공했습니다.", this.user_id)
         } catch (error) {
@@ -38,8 +38,8 @@ export default class GoogleSignUp {
 
     async createUser(name: string): Promise<RepositoryResponse> {
         try {
-            const uid = sessionStorage.getItem('id')
-            const email = sessionStorage.getItem('email')
+            const uid = localStorage.getItem('id')
+            const email = localStorage.getItem('email')
             if(!uid || !email) return new RepositoryResponse(false, "이메일 혹은 아이디가 없습니다.", {})
             const userData: User = {
                 email: email,

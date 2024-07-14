@@ -5,7 +5,7 @@ import { Cat } from "./cat"
 export default class NeuterCat {
     async neuter(): Promise<RepositoryResponse> {
         try {
-            const catInJSON = sessionStorage.getItem('catData')
+            const catInJSON = localStorage.getItem('catData')
             if(!catInJSON) return new RepositoryResponse(false, "고양이 정보가 없습니다.", {})
             
             const catData: Cat = JSON.parse(catInJSON);

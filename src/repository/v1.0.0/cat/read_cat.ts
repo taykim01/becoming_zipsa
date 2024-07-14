@@ -4,10 +4,10 @@ import URL from "@/repository/url"
 export default class ReadCat{
     async read(reload?: boolean):Promise<RepositoryResponse>{
         try {
-            const user_id = sessionStorage.getItem('id')
+            const user_id = localStorage.getItem('id')
             if(!user_id) return new RepositoryResponse(false, "로그인이 필요합니다.", null)
             
-            const cachedData = sessionStorage.getItem('catData')
+            const cachedData = localStorage.getItem('catData')
             if(cachedData && !reload) return new RepositoryResponse(true, "고양이 데이터 조회에 성공했습니다.", JSON.parse(cachedData))
 
             const getCatIdRes = await fetch(`${URL}/api/v1.0.0/user/read`, {
@@ -32,7 +32,7 @@ export default class ReadCat{
             const data = await res.json()
             const catData = data.data
 
-            sessionStorage.setItem('catData', JSON.stringify(catData))
+            localStorage.setItem('catData', JSON.stringify(catData))
 
             if(!data.success) return new RepositoryResponse(false, "고양이 데이터 조회에 실패했습니다.")
             return new RepositoryResponse(true, "고양이 데이터 조회에 성공했습니다.", data.data)
