@@ -47,7 +47,7 @@ export default function GaugeGroup() {
         <>
             <div className="flex flex-col gap-4 w-full">
                 <Gauge title="애정도" value={catData?.affection} />
-                <Gauge title="배고픔" value={catData?.hunger} />
+                <Gauge title="포만감" value={catData?.hunger} />
                 <Gauge title="체력" value={catData?.health} />
             </div>
             <Popup.Default
