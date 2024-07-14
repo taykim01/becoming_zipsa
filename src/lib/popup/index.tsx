@@ -1,4 +1,4 @@
-import Default from './Default';
+import Default from './default';
 
 const Popup = {
     Default,

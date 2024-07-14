@@ -10,6 +10,6 @@ export default function CatComponent(props: {color: CatType}) {
         "흰냥이": "/cat_white.mtl",
     }
     return (
-        <ObjLoader objUrl="/cat.obj" mtlUrl={catColors[props.color]} moveArm={true} />
+        <ObjLoader objUrl="/cat.obj" mtlUrl={catColors[props.color]} />
     );
 }
