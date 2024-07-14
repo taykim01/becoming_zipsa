@@ -93,8 +93,8 @@ function CatListItem(props: {
 }) {
     return (
         <div className="flex items-start justify-between gap-[10px] w-full">
-            <div className="bg-pink-15 text-pink-200  font-fs-m text-m18">{props.cat}</div>
-            <div className="text-black  font-fs-m text-m18">{props.detail}</div>
+            <div className="bg-pink-0.15 text-pink-200  font-fs-m text-18">{props.cat}</div>
+            <div className="text-black-1  font-fs-m text-18">{props.detail}</div>
         </div>
     )
 }

@@ -70,7 +70,7 @@ export default function CatInfo() {
                 </svg>
                 <div className="font-ohsquare text-r20 text-black">{catData.name}</div>
             </div>
-            <div className="flex gap-2 items-center font-fs-r text-r14 text-gray-light">
+            <div className="flex gap-2 items-center font-fs-r text-14 text-gray-400">
                 <div className="flex items-center">
                     <SexSymbol sex={catData.sex} />
                     <div>{catData.sex}</div>

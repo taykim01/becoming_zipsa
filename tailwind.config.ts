@@ -86,6 +86,7 @@ const config: Config = {
     },
     fontSize: {
       '45': ['45px', { lineHeight: '1.5' }],
+      '35': ['35px', { lineHeight: '1.5' }],
       '22': ['22px', { lineHeight: '1.5' }],
       '20': ['20px', { lineHeight: '1.5' }],
       '18': ['18px', { lineHeight: '1.5' }],
