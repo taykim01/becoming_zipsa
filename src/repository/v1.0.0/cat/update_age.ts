@@ -120,12 +120,17 @@ export default class UpdateAge {
                 if (!rechargeHealthRes.success) return rechargeHealthRes
             }
 
+            const suggestPro =
+                (newCatAge === 17 || newCatAge === 63)
+                    ? "suggest_pro"
+                    : null
+
 
             const newCatChapter = Object.keys(this.catChapters).find(key => this.catChapters[key] === newCatAge) as CatChapter
             catData.age = newCatAge
             catData.chapter = newCatChapter
             localStorage.setItem("catData", JSON.stringify(catData))
-            if (!newCatChapter) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.");
+            if (!newCatChapter) return new RepositoryResponse(true, "나이 업데이트에 성공했습니다.", suggestPro);
 
 
             const updateChapterRes = await this.updateChapter(cat_id, newCatChapter)
