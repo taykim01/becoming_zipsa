@@ -18,25 +18,32 @@ export default function Page() {
 
     const image = {
         "disease": Images.tablet,
-        "neuter": Images.kit,
+        "neuter": Images.toy,
     };
 
     const ButtonType = {
         "disease": Components.PillButton,
         "neuter": Components.HospitalButton,
     };
+
+    const color = {
+        "disease": "bg-type5",
+        "neuter": "bg-type4"
+    }
+
+
     const ButtonComponent = ButtonType[eventType];
 
     return (
-        <Container.Main headerTitle={eventTranslation[eventType]} bgClass="bg-gradient-2">
-            <div className="relative flex flex-col items-center flex-grow">
+        <Container.Main headerTitle={eventTranslation[eventType]} bgClass= {color[eventType]}>
+            <div className="justify-between flex flex-col items-center flex-grow">
                 <div className="pt-[120px] ">
                     {/* <CatResponse>목욕할 시간이라니 ....</CatResponse> */}
                 </div>
                 <div className="pt-0">
                     <Image src={image[eventType]} width={340} height={340} alt={eventType} />
                 </div>
-                <div className="absolute bottom-10 w-full">
+                <div className="w-full">
                     <ButtonComponent />
                 </div>
             </div>

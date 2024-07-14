@@ -13,7 +13,8 @@ const config: Config = {
         'type2': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 89.13%, #909090 129.7%)',
         'type3': 'linear-gradient(180deg, #D5F8FF 0.01%, #BEB4FF 119.88%)',
         'type4': 'linear-gradient(180deg, #FDCDD2 0.01%, #DDD1D2 32.38%, #BCD5D3 65.34%, #A2D8D3 90.51%, #85DBD4 119.88%)',
-        'type5': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 113.9%, #909090 165.74%)'
+        'type5': 'linear-gradient(180deg, #2A2A2A 0.01%, #676767 113.9%, #909090 165.74%)',
+        'gauge' : 'linear-gradient(90deg, rgba(186, 194, 154, 0.90) 0%, #FE8A8B 264.17%)'
       },
     },
     colors: {

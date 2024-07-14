@@ -1,7 +1,6 @@
 const Images = {
     bath:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fbath.webp?alt=media&token=59a8b117-ef8b-4441-ae0e-b899a8eb33d0",
     house:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fhouse.png?alt=media&token=ba64b4e1-5070-4200-aa8d-f1bb621016b1",
-    bin: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fbin.webp?alt=media&token=6f25aef3-a773-4942-a1bf-77c70017370c",
     tablet: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Ftablet.webp?alt=media&token=571b0038-8b4f-4c21-a6e5-7b3cdf4dfbba",
     kit: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fkit2.webp?alt=media&token=bbe7a78f-ac87-40f0-9ff9-7878ffa5e045",
     toy: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Ftoy1.webp?alt=media&token=384ec213-c3ab-403f-9b8f-4d72a5f61d1d",
