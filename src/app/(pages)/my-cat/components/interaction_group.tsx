@@ -20,6 +20,8 @@ import Popup from "@/lib/popup";
 import CheckCat from "@/utils/check_cat";
 import StatusBox from "@/lib/status_box";
 import { seeStatusState } from "@/recoil/see_status";
+import ChatLoading from "@/lib/chat_loading";
+import { useRouter } from "next/navigation";
 
 export interface Chat {
     role: "user" | "assistant"
@@ -45,6 +47,7 @@ export default function InteractionGroup() {
     const actions_to_cat = new ActionsToCat()
 
 
+    const router = useRouter()
     const [chatOrAction, setChatOrAction] = useRecoilState<"chat" | "action">(chatOrActionState)
     const [seeStatus, setSeeStatus] = useRecoilState(seeStatusState)
     const [chat, setChat] = useState<Chat[]>([])
@@ -62,7 +65,7 @@ export default function InteractionGroup() {
     const [catData, setCatData] = useState({} as Cat)
     const readCatData = async () => {
         setLoading(true)
-        const response = await read_cat.read()
+        const response = await read_cat.read(true)
         if (!response.success) {
             setErrorPopup({
                 open: true,
@@ -72,7 +75,7 @@ export default function InteractionGroup() {
             return
         }
         setCatData(response.data)
-        const catChat = response.data.catChat ? response.data.catChat.reverse() : []
+        const catChat = response.data.chats ? response.data.chats.reverse() : []
         setChat(catChat)
         setLoading(false)
     }
@@ -85,6 +88,10 @@ export default function InteractionGroup() {
             message
         )
         if (!response.success) {
+            if (response.data === "cat_leave") {
+                router.push("/my-cat/event/leave")
+                return
+            }
             setErrorPopup({
                 open: true,
                 title: "오류가 발생했어요!",
@@ -98,6 +105,7 @@ export default function InteractionGroup() {
         if (responsePolarity === "positive") setCatFeeling("positive")
         setChat([{ role: "assistant", content: catChat }, { role: "user", content: message }, ...chat])
         setChatLoading(false)
+        readCatData()
     }
 
 
@@ -116,6 +124,7 @@ export default function InteractionGroup() {
                 return
             }
             setCatResponse(catResponse)
+            readCatData()
         } catch (error) {
             setErrorPopup({
                 open: true,
@@ -127,32 +136,32 @@ export default function InteractionGroup() {
 
 
     const takeScreenshot = async () => {
-        const height = 400
-
         const containerElement = document.getElementById('screencaptureArea');
         if (!containerElement) {
             console.error("Container element not found");
             return;
         }
-
+        const height = document.getElementById('screencaptureArea')!.clientHeight + 8
         setTimeout(() => {
             html2canvas(containerElement, {
-                backgroundColor: "#ffc3ad",
+                backgroundColor: "#fff7f0",
                 height: height,
-                width: document.documentElement.clientWidth,
+                width: document.getElementById('screencaptureArea')!.clientWidth + 8,
                 scrollY: -window.scrollY,
                 windowHeight: height,
-                useCORS: true
+                useCORS: true,
+                scale: 5
             }).then(canvas => {
-                const dataURL = canvas.toDataURL("image/jpeg");
+                const dataURL = canvas.toDataURL("image/jpeg", 3.0);
                 const link = document.createElement("a");
                 link.href = dataURL;
-                link.download = "screenshot_top_100px.jpeg";
+                const todayInYYYYMMDD = new Date().toISOString().slice(0, 10);
+                link.download = `${catData.name}-${todayInYYYYMMDD}.jpeg`;
                 link.click();
             }).catch(error => {
                 console.error("Screenshot error", error);
             });
-        }, 1500);
+        }, 1000);
     };
 
 
@@ -166,7 +175,7 @@ export default function InteractionGroup() {
         <>
             <div className="flex items-center gap-4 w-full">
                 <StatusBox name="애정도" value={catData.affection} />
-                <StatusBox name="배고픔" value={catData.hunger} />
+                <StatusBox name="포만감" value={catData.hunger} />
                 <StatusBox name="체력" value={catData.health} />
             </div>
             <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-5">
@@ -179,6 +188,7 @@ export default function InteractionGroup() {
                         : <>
                             {
                                 chatOrAction === "chat" && <div className="relative w-full h-full">
+                                    {chatLoading && <ChatLoading />}
                                     <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
                                         {chat.map((chat, index) => {
                                             if (chat.role === "user") return (
@@ -213,7 +223,7 @@ export default function InteractionGroup() {
                                             <Button.UserAction onClick={() => setChatOrAction("action")} iconType="Box" textColor="black">놀아주기</Button.UserAction>
                                         </div>
                                 }
-                                {chatOrAction === "chat" && <Input.Message onSend={sendChat} chatLoading={chatLoading} />}
+                                {chatOrAction === "chat" && <Input.Message onSend={sendChat} />}
                             </div>
                         </>
                 }

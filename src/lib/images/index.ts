@@ -7,7 +7,8 @@ const Images = {
     medicine:"https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fmedicine.webp?alt=media&token=1cb82e58-e359-4239-8b80-8503691f78a0",
     paw: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fpaw2.webp?alt=media&token=3a5df5c5-dc35-4893-90a9-1a0a1d94c69e",
     moon: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fmoon.webp?alt=media&token=9b0c43a2-f014-4ac8-a6fb-f7b76ac4e725",
-    kit: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fkit2.webp?alt=media&token=bbe7a78f-ac87-40f0-9ff9-7878ffa5e045"
+    kit: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fkit2.webp?alt=media&token=bbe7a78f-ac87-40f0-9ff9-7878ffa5e045",
+    leave: "https://firebasestorage.googleapis.com/v0/b/stardenburdenhardenbart-kairos.appspot.com/o/website_images%2Fleave.webp?alt=media&token=54b926c9-5524-484d-a4a9-8830ec8bd0e5"
 }
 
 export default Images;

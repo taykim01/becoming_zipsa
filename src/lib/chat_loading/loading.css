@@ -1,5 +1,5 @@
 .loading_bg {
-    position: absolute; /* fixed에서 absolute로 변경 */
+    position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
@@ -7,23 +7,24 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 10; /* 적절한 z-index 설정 */
-    background-color: rgba(0, 0, 0, 0.5); /* 배경색 유지 */
+    z-index: 5000;
+    background-color: #fff7f0;
+    opacity: 0.5;
 }
 
 .wrapper {
-    width: 50px; /* 적절한 크기로 조정 */
-    height: 15px; /* 적절한 크기로 조정 */
+    width: 200px;
+    height: 60px;
     position: relative;
     z-index: 1;
 }
 
 .circle {
-    width: 5px; /* 적절한 크기로 조정 */
-    height: 5px; /* 적절한 크기로 조정 */
+    width: 20px;
+    height: 20px;
     position: absolute;
     border-radius: 50%;
-    background-color: #fff;
+    background-color: #F6D6C0;
     left: 15%;
     transform-origin: 50%;
     animation: circle7124 .5s alternate infinite ease;
@@ -31,14 +32,14 @@
 
 @keyframes circle7124 {
     0% {
-        top: 15px; /* 적절한 크기로 조정 */
-        height: 1.25px; /* 적절한 크기로 조정 */
+        top: 60px;
+        height: 5px;
         border-radius: 50px 50px 25px 25px;
         transform: scaleX(1.7);
     }
 
     40% {
-        height: 5px; /* 적절한 크기로 조정 */
+        height: 20px;
         border-radius: 50%;
         transform: scaleX(1);
     }
@@ -60,16 +61,16 @@
 }
 
 .shadow {
-    width: 5px; /* 적절한 크기로 조정 */
-    height: 1px; /* 적절한 크기로 조정 */
+    width: 20px;
+    height: 4px;
     border-radius: 50%;
     background-color: rgba(0, 0, 0, 0.9);
     position: absolute;
-    top: 15.5px; /* 적절한 크기로 조정 */
+    top: 62px;
     transform-origin: 50%;
     z-index: -1;
     left: 15%;
-    filter: blur(0.5px);
+    filter: blur(1px);
     animation: shadow046 .5s alternate infinite ease;
 }
 

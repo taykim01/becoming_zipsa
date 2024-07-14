@@ -5,10 +5,11 @@ export default class ReadCat{
     async read(reload?: boolean):Promise<RepositoryResponse>{
         try {
             const user_id = localStorage.getItem('id')
-            if(!user_id) return new RepositoryResponse(false, "로그인이 필요합니다.", null)
+            if(!user_id) return new RepositoryResponse(false, "로그인이 필요합니다.")
             
             const cachedData = localStorage.getItem('catData')
             if(cachedData && !reload) return new RepositoryResponse(true, "고양이 데이터 조회에 성공했습니다.", JSON.parse(cachedData))
+
 
             const getCatIdRes = await fetch(`${URL}/api/v1.0.0/user/read`, {
                 headers: { "Content-type": "application/json" },

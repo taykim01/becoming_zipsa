@@ -7,9 +7,7 @@ export default async function Page() {
         <>
             <Container.Main headerTitle="내 고양이" bgClass="bg-beige-100">
                 <div className="flex flex-col items-center justify-between relative w-full h-full gap-5 box-border">
-                    <div className="w-full flex flex-col items-center w-full gap-5 relative" id="screencaptureArea">
-                        <Components.CatAnimation />
-                    </div>
+                    <Components.CatAnimation />
                     <Components.InteractionGroup />
                 </div>
             </Container.Main>

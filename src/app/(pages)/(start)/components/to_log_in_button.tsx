@@ -25,6 +25,7 @@ export default function ToLogInButton() {
         const catResponse = await read_cat.read()
         if (catResponse.data === "no_cat") {
             router.push("/adopt-cat")
+            setLoading(false)
             return
         }
         router.push("/my-cat")

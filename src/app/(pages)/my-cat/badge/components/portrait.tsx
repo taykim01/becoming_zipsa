@@ -17,7 +17,6 @@ export default function Portrait() {
 
     const readCatData = async () => {
         const response = await read_cat.read()
-        console.log(response)
         if (!response.success) {
             setPopup({
                 open: true,

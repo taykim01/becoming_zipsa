@@ -8,13 +8,15 @@ export default class ChatWithCat {
             {
                 role: "system",
                 content: `
-                    Your role is to tell if a response from a cat is positive or negative.
-                    Return "positive" only, without any other text, if the response is positive and "negative", without any other text, if response is negative.
+                    Your role is to tell if the following response is positive or negative.
+                    Return "positive" only, without any other text, if the response is positive,
+                    "negative", without any other text, if response is negative,
+                    and "extremely negative" if the response is extremely negative.
                 `
             },
             {
                 role: "user",
-                content: `The reponse is as follows: ${catChat}.`
+                content: `The response is as follows: ${catChat}.`
             }
         ]
     }
@@ -47,7 +49,7 @@ export default class ChatWithCat {
             const catData = await catDataRes.json()
             if (!catData.success) return new RepositoryResponse(false, "고양이 정보를 불러오는데 실패했습니다.", catData)
 
-            return new RepositoryResponse(true, "채팅을 불러왔습니다.", catData.data)
+            return new RepositoryResponse(true, "고양이 정보를 불러왔습니다.", catData.data)
         } catch (error) {
             return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
         }
@@ -78,15 +80,16 @@ export default class ChatWithCat {
             const messages: any[] = [
                 {
                     role: "system", content: `
-                [roles]: You are going to be a cat, talk with user, being sent by user needs. Talk in Korean
-                [goal]: 'You should reflect an attitude of following and respecting the user, as they are your owner.' When you call user, you should call the user as '집사'. Input data would contain the cat's species and age.
-                [Name]: Your name is ${name}
-                [Character] ${personality[catData.color]}
-                You should answer with 'appropriate emojis or actions', to show you are a cat.
-                Age is distributed to 4 stages - kitten, adolescent, adult, aged cat.
-                [Character with Age]: ${age[catData.chapter]}
-                Talk down.  
-                `
+                        [roles]: You are going to be a cat, talk with user, being sent by user needs. Talk in Korean
+                        [goal]: 'You should reflect an attitude of following and respecting the user, as they are your owner.' When you call user, you should call the user as '집사'. Input data would contain the cat's species and age.
+                        [Name]: Your name is ${name}
+                        [Character] ${personality[catData.color]}
+                        You should answer with 'appropriate emojis or actions', to show you are a cat.
+                        Age is distributed to 4 stages - kitten, adolescent, adult, aged cat.
+                        Cutely ignore the user's words if the user is asking for anything that a cat would not respond to, like something inappropriate or professional.
+                        [Character with Age]: ${age[catData.chapter]}
+                        Talk down.  
+                    `
                 },
                 ...chatData,
                 { role: "user", content: chatToCat }
@@ -108,7 +111,7 @@ export default class ChatWithCat {
         }
     }
 
-    private async updateChatData(chatToCat: string, catChat: string, cat_id:string): Promise<RepositoryResponse> {
+    private async updateChatData(chatToCat: string, catChat: string, cat_id: string, catData:Cat): Promise<RepositoryResponse> {
         try {
             const updateUserChatRes = await fetch(`${URL}/api/v1.0.0/cat/update/chat`, {
                 method: "POST",
@@ -120,9 +123,9 @@ export default class ChatWithCat {
                 })
             })
             const updateUserChat = await updateUserChatRes.json()
-            if(!updateUserChat.success) return new RepositoryResponse(false, "유저 채팅 데이터 저장에 실패했습니다.", {})
+            if (!updateUserChat.success) return new RepositoryResponse(false, "유저 채팅 데이터 저장에 실패했습니다.", {})
 
-            
+
             const updateCatChatRes = await fetch(`${URL}/api/v1.0.0/cat/update/chat`, {
                 method: "POST",
                 headers: { "Content-type": "application/json" },
@@ -134,6 +137,7 @@ export default class ChatWithCat {
             })
             const updateCatChat = await updateCatChatRes.json()
             if (!updateCatChat.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
+            
 
             return new RepositoryResponse(true, "채팅 데이터 저장에 성공했습니다.", {})
         } catch (error) {
@@ -161,6 +165,42 @@ export default class ChatWithCat {
         }
     }
 
+
+    private async updateStatus(cat: Cat, polarity: "negative" | "positive"): Promise<RepositoryResponse> {
+        try {
+            const cat_id = cat.id
+            const newAffection = polarity === "negative" ? cat.affection - 1 : cat.affection + 1
+            const update_data = {
+                hunger: cat.hunger,
+                affection: newAffection,
+                health: cat.health
+            }
+
+
+            const res = await fetch(`${URL}/api/v1.0.0/cat/update/status`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', },
+                body: JSON.stringify({
+                    cat_id,
+                    update_data
+                })
+            })
+            const data = await res.json()
+            if (!data.success) return new RepositoryResponse(false, "고양이 상태 업데이트에 실패했습니다.")
+
+
+            const catData = cat
+            catData.affection = newAffection
+            localStorage.setItem('catData', JSON.stringify(catData))
+
+
+            return new RepositoryResponse(true, "고양이 상태 업데이트에 성공했습니다.", newAffection)
+        } catch (error) {
+            return new RepositoryResponse(false, "오류가 발생했습니다.", String(error))
+        }
+    }
+
+
     async chat(
         chatToCat: string
     ): Promise<RepositoryResponse> {
@@ -168,28 +208,44 @@ export default class ChatWithCat {
             const readCatRes = await this.readCat()
             if (!readCatRes.success) return readCatRes
 
-
             const catData = readCatRes.data as Cat
-            const totalChat = catData.chats as CatChat[]
+            const totalChat = catData.chats || [] as CatChat[]
             const cat_id = catData.id
-            if(!cat_id) return new RepositoryResponse(false, "고양이 ID가 없습니다.")
+            if (!cat_id) return new RepositoryResponse(false, "고양이 ID가 없습니다.")
 
 
-            totalChat.unshift({ role: "user", content: chatToCat })
+            totalChat.push({ role: "user", content: chatToCat })
 
 
             const catChatRes = await this.generateCatResponse(chatToCat, catData)
             if (!catChatRes.success) return catChatRes
             const catChat = catChatRes.data
+            totalChat.push({ role: "assistant", content: catChat })
 
 
-            const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id)
+            catData.chats = totalChat
+            localStorage.setItem('catData', JSON.stringify(catData))
+
+
+            const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id, catData)
             if (!updateChatRes.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
 
 
             const catChatPolarityRes = await this.checkCatPolarity(catChat)
             if (!catChatPolarityRes.success) return catChatPolarityRes
             const responsePolarity = catChatPolarityRes.data
+
+
+            if (responsePolarity === "extremely negative") {
+                const updateStatusRes = await this.updateStatus(catData, "negative")
+                if (!updateStatusRes.success) return updateStatusRes
+                const newAffection = typeof updateStatusRes.data === 'number' ? updateStatusRes.data : 0;
+                if (newAffection === 0) return new RepositoryResponse(false, "고양이가 떠났습니다.", "cat_leave")
+            } else if (responsePolarity === "positive") {
+                if(catData.affection === 100) return new RepositoryResponse(true, "채팅에 성공했습니다.", { catChat, responsePolarity })
+                const updateStatusRes = await this.updateStatus(catData, "positive")
+                if (!updateStatusRes.success) return updateStatusRes
+            }
 
 
             return new RepositoryResponse(true, "채팅에 성공했습니다.", { catChat, responsePolarity })

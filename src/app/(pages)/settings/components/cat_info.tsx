@@ -1,20 +1,37 @@
+"use client"
+
+import React, { useEffect, useState } from "react";
 import InfoDetails from "./info_details";
 import SettingsConatiner from "./settings_container";
-
+import ReadCat from "../../../../repository/v1.0.0/cat/read_cat";
+import { Cat } from "../../../../repository/v1.0.0/cat/cat";
 
 
 export default function CatInfo() {
-    
+    const read_cat = new ReadCat()
+
+    const [catData, setCatData] = useState({} as Cat)
+    const readCatData = async () => {
+        const response = await read_cat.read()
+        if (!response.success) {
+            return
+        }
+        setCatData(response.data)
+    }
+
+    useEffect(() => {
+        readCatData()
+    }, [])
+
     return (
         <>
-        <SettingsConatiner title={"내 고양이"} content={<div className="font-fs-sb text-5 text-pink-500">{"랑기"}</div>} children={
-            <div className="flex flex-col justify-between gap-2">
-                <InfoDetails title={"성격"} content={"깜냥이"}></InfoDetails>
-                <InfoDetails title={"성별"} content={"수컷"}></InfoDetails>
-                <InfoDetails title={"챕터"} content={"청소년"}></InfoDetails>
-            </div>
-        }>
-        </SettingsConatiner>
+            <SettingsConatiner title={"내 고양이"} content={<div className="font-fs-sb text-5 text-pink-500">{catData.name}</div>}>
+                <div className="flex flex-col justify-between gap-2">
+                    <InfoDetails title="종류" content={catData.color}></InfoDetails>
+                    <InfoDetails title="성별" content={catData.sex}></InfoDetails>
+                    <InfoDetails title="시기" content={catData.chapter}></InfoDetails>
+                </div>
+            </SettingsConatiner>
         </>
     )
 }

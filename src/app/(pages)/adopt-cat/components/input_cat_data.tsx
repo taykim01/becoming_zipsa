@@ -91,13 +91,13 @@ export default function InputCatData() {
         setErrorPopup({
             open: true,
             title: `${catData.name} 입양에 성공했어요.`,
-            children: `아기 ${catData.name}가 기다리고 있어요!`
+            children: `아기 ${catData.name}(이)가 기다리고 있어요!`
         })
     }
 
     return (
         <>
-            <div className="flex flex-col items-center justify-between flex-grow">
+            <div className="flex flex-col items-center justify-between flex-grow w-full">
                 <div className="flex flex-col gap-5 w-full items-center">
                     {
                         catData.color &&
