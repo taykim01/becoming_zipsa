@@ -54,7 +54,7 @@ export default function Portrait() {
             <div className="relative bg-sky border-beige-400 flex justify-center items-center overflow-hidden" style={{ borderWidth: 10, width: 193, minHeight: 193 }}>
                 {
                     pawLocations.map((paw, index) => {
-                        return <div className="absolute" style={{ transform: `rotate(${paw.rotate} deg)`, left: paw.x, bottom: paw.y }}>
+                        return <div key={index} className="absolute" style={{ transform: `rotate(${paw.rotate} deg)`, left: paw.x, bottom: paw.y }}>
                             <PortraitPaw />
                         </div>
                     })
