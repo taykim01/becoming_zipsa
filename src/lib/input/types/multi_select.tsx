@@ -8,12 +8,21 @@ export default function MultiSelect(props: {
     guide?: string,
     guideClick?: () => void,
     onSelect?: (value: string) => void,
-    items: string[]
+    items: string[],
+    unSelectable?: string[]
 }) {
     const [selected, setSelected] = useState<string>("")
     const handleSelect = (item: (typeof props.items)[number]) => {
-        if (selected === item) setSelected("");
-        else setSelected(item);
+        if(!props.unSelectable) {
+            if (selected === item) setSelected("");
+            else setSelected(item);
+            props.onSelect && props.onSelect(item);
+            return
+        }
+        if (props.unSelectable && !props.unSelectable.includes(item)) {
+            if (selected === item) setSelected("");
+            else setSelected(item);
+        }
         props.onSelect && props.onSelect(item);
     }
     return (

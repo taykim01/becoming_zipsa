@@ -35,10 +35,17 @@ export default function InputCatData() {
 
 
     const setName = (name: CatData["name"]) => setCatData({ ...catData, name })
-    const setColor = (color: CatData["color"]) => setCatData(prevCatData => ({
-        ...prevCatData,
-        color: prevCatData.color === color ? "" : color
-    }));
+    const setColor = (color: CatData["color"]) => {
+        if (color === "흰냥이") setCatData(prevCatData => ({
+            ...prevCatData,
+            color: prevCatData.color === color ? "" : color
+        }))
+        else setErrorPopup({
+            open: true,
+            title: "무료 버전은 흰냥이만 입양 가능해요.",
+            children: "빠른 시일 내에 다른 냥이를 입양할 수 있게 준비할게요!"
+        })
+    }
     const setSex = (sex: CatData["sex"]) => setCatData(prevCatData => ({
         ...prevCatData,
         sex: prevCatData.sex === sex ? "" : sex
@@ -100,10 +107,11 @@ export default function InputCatData() {
             <div className="flex flex-col items-center justify-between flex-grow w-full">
                 <div className="flex flex-col gap-5 w-full items-center">
                     {
-                        catData.color &&
-                        <div style={{ maxWidth: 150, maxHeight: 150 }}>
-                            <CatComponent color={catData.color as CatType} />
-                        </div>
+                        catData.color
+                            ? <div style={{ maxWidth: 150, maxHeight: 150 }}>
+                                <CatComponent color={catData.color as CatType} />
+                            </div>
+                            : <div style={{ width: 150, height: 150 }} />
                     }
                     <div className="flex flex-col items-center gap-4 w-full">
                         <Input.Text
@@ -117,7 +125,8 @@ export default function InputCatData() {
                             onSelect={setColor}
                             guide="고양이별 성격 알아보기"
                             guideClick={() => setPersonalityPopup(true)}
-                            items={["치즈냥이", "흰냥이", "깜냥이"]}
+                            items={["흰냥이", "치즈냥이", "깜냥이"]}
+                            unSelectable={["치즈냥이", "깜냥이"]}
                         />
                         <Input.MultiSelect
                             title="성별"
@@ -133,9 +142,9 @@ export default function InputCatData() {
                 open={personalityPopup}
                 onClose={() => setPersonalityPopup(false)}>
                 <div className="flex flex-col gap-5">
+                    <CatListItem cat="흰냥이" detail="수줍음, 겁많음, 섬세함, 느긋함"></CatListItem>
                     <CatListItem cat="치즈냥이" detail="활발함,응석받이, 소심"></CatListItem>
                     <CatListItem cat="깜냥이" detail="똑똑함, 얌전함"></CatListItem>
-                    <CatListItem cat="흰냥이" detail="수줍음, 겁많음, 섬세함, 느긋함"></CatListItem>
                 </div>
             </Popup.Default>
             <Popup.Default
