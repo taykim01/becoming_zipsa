@@ -4,10 +4,10 @@ import URL from "../../url"
 export default class SignUpPro {
     async sign():Promise<RespositoryResponse> {
         try {
-            const user_id = localStorage.getItem('user_id')
+            const user_id = localStorage.getItem('id')
             if (!user_id) return new RespositoryResponse(false, "로그인이 필요합니다.")
 
-            const res = await fetch(`${URL}/api/v1.0.0/user/update/sign-up-pro`, {
+            const res = await fetch(`${URL}/api/v1.0.0/sign-up-pro`, {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({

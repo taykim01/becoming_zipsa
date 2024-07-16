@@ -26,8 +26,7 @@
     "react-dom": "^18",
     "recoil": "^0.7.7",
     "three": "^0.166.1",
-    "three-stdlib": "^2.30.4",
-    "use-react-screenshot": "^4.0.0"
+    "three-stdlib": "^2.30.4"
   },
   "devDependencies": {
     "@types/node": "^20",

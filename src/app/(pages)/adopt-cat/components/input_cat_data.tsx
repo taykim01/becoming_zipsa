@@ -6,7 +6,6 @@ import Input from "@/lib/input"
 import Popup from "@/lib/popup"
 import AdoptCat from "@/repository/v1.0.0/cat/adopt_cat"
 import { CatSex, CatType } from "@/repository/v1.0.0/cat/cat"
-import { sendGAEvent } from "@next/third-parties/google"
 import { useState } from "react"
 import size from "@/lib/size"
 import { useSetRecoilState } from "recoil"
@@ -67,7 +66,6 @@ export default function InputCatData() {
                 raiseErrorPopup(verifyRes.message)
                 return
             }
-            sendGAEvent({ event: 'adopt_cat', value: 'adopt_cat' })
             const verification = await adopt_cat.verifyInput(
                 catData.name,
                 catData.color as CatType,

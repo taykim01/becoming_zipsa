@@ -12,7 +12,7 @@ export default async function Page() {
                     <Components.InteractionGroup />
                 </div>
             </Container.Main>
-            <CheckSessionTag />
+            <CheckSessionTag session="/log-in" />
             <Components.UpdateTime />
         </>
     )

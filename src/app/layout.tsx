@@ -1,7 +1,6 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import RecoilRootWrapper from "../recoil/recoil_wrapper";
-import analyticsTags from "@/analytics";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Loading from "@/lib/loading";
 import Popup from "@/lib/popup";
@@ -26,7 +25,7 @@ export default function RootLayout({
           <Popup.Error />
         </body>
       </RecoilRootWrapper>
-      <GoogleAnalytics gaId={analyticsTags.default} />
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_MEASUREMENT_ID || ""} />
     </html>
   );
 }

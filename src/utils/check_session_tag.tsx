@@ -7,7 +7,10 @@ import { useEffect } from "react"
 import { useSetRecoilState } from "recoil"
 
 
-export default function CheckSessionTag() {
+export default function CheckSessionTag(props: {
+    noSession?: string,
+    session?: string
+}) {
     const check_session = new CheckSession()
 
     const router = useLoadingRouter()
@@ -15,7 +18,8 @@ export default function CheckSessionTag() {
     const checkSession = async () => {
         setLoading(true)
         const response = await check_session.check()
-        if (!response.success) router("/log-in")
+        if (!response.success && props.session) router(props.session)
+        if (response.success && props.noSession) router(props.noSession)
         setLoading(false)
     }
     useEffect(() => {

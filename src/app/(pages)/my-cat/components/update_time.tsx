@@ -5,11 +5,11 @@ import UpdateAge from "../../../../repository/v1.0.0/cat/update_age"
 import { useSetRecoilState } from "recoil"
 import { CatEvent } from "@/repository/v1.0.0/cat/cat"
 import Button from "@/lib/button"
-import { sendGAEvent } from "@next/third-parties/google"
 import SignUpPro from "@/repository/v1.0.0/user/sign_up_for_pro"
 import { errorPopupState } from "@/recoil/error_popup"
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup"
 import { useLoadingRouter } from "@/hooks/use_loading_router"
+import { loadingState } from "@/recoil/loading"
 
 export default function UpdateTime() {
     const update_age = new UpdateAge()
@@ -19,18 +19,24 @@ export default function UpdateTime() {
     const router = useLoadingRouter()
     const setErrorPopup = useSetRecoilState(errorPopupState)
     const raiseErrorPopup = useRaiseErrorPopup()
+    const setLoading = useSetRecoilState(loadingState)
 
 
     const signUpPro = async () => {
-        const response = await sign_up_pro.sign();
-        if (!response.success)
-            raiseErrorPopup(response.message);
-        else
-            setErrorPopup({
-                open: true,
-                title: "성공적으로 신청되었습니다!",
-                children: "프로 계정이 출시되면 가장 빠르게 알려드릴게요."
-            });
+        try {
+            setLoading(true);
+            const response = await sign_up_pro.sign();
+            if (!response.success)
+                raiseErrorPopup(response.message);
+            else
+                setErrorPopup({
+                    open: true,
+                    title: "성공적으로 신청되었습니다!",
+                    children: "프로 계정이 출시되면 가장 빠르게 알려드릴게요."
+                });
+        } finally {
+            setLoading(false);
+        }
     }
 
 
@@ -58,7 +64,6 @@ export default function UpdateTime() {
                     <li>• 고양이와 함께하는 이벤트가 추가돼요</li>
                 </ul>
                 <Button.Default onClick={() => {
-                    sendGAEvent({ event: 'register_pro', value: 'registerd' });
                     signUpPro();
                 }}>
                     프로 계정 예약하고 할인받기!

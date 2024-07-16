@@ -22,6 +22,7 @@ import { seeStatusState } from "@/recoil/see_status";
 import ChatLoading from "@/lib/chat_loading";
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
 import { useLoadingRouter } from "@/hooks/use_loading_router";
+import { sendGAEvent } from "@next/third-parties/google";
 
 
 export interface Chat {
@@ -82,6 +83,7 @@ export default function InteractionGroup() {
     const sendChat = async (message: string) => {
         try {
             setChatLoading(true)
+            sendGAEvent({ event: 'cat_chat', value: message })
             setChat([{ role: "user", content: message }, ...chat]) // 여기까지 맞음
             const response = await cat_with_chat.chat(
                 message
@@ -110,6 +112,7 @@ export default function InteractionGroup() {
     const catAction = async (action: CatActionTypes) => {
         try {
             setLoading(true)
+            sendGAEvent({ event: 'cat_action', value: action })
             const response = await actions_to_cat.applyAction(action)
             const catFeeling = response.data.catFeelingRes
             const catResponse = response.data.catResponse

@@ -20,20 +20,24 @@ export default function CatInfo(props: { expand: boolean }) {
     const raiseErrorPopup = useRaiseErrorPopup()
 
 
-    const readCatData = async (isInitialLoad = false) => {
-        if (isInitialLoad) setLoading(true);
-        const response = await read_cat.read(true);
-        if (!response.success) {
-            raiseErrorPopup(response.message);
+    const readCatData = async () => {
+        try {
+            setLoading(true);
+            const response = await read_cat.read(true);
+            if (!response.success) {
+                raiseErrorPopup(response.message);
+                setLoading(false);
+                return;
+            }
+            setCatData(response.data);
             setLoading(false);
-            return;
+        } finally {
+            setLoading(false);
         }
-        setCatData(response.data);
-        setLoading(false);
     }
 
     useEffect(() => {
-        readCatData(true);
+        readCatData();
     }, [])
 
 
