@@ -3,12 +3,12 @@
 import React from "react";
 import Button from "../../../../lib/button";
 import SettingsConatiner from "./settings_container";
-import { useRouter } from "next/navigation";
+import { useLoadingRouter } from "@/hooks/use_loading_router";
 
 export default function MyBadge() {
-    const router = useRouter()
+    const router = useLoadingRouter()
 
     return (
-        <SettingsConatiner title="뱃지" content={<Button.Text onClick={() => router.push("/my-cat/badge")}>더보기</Button.Text>} />
+        <SettingsConatiner title="뱃지" content={<Button.Text onClick={() => router("/my-cat/badge")}>더보기</Button.Text>} />
     )
 }

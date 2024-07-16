@@ -2,14 +2,14 @@
 
 import Button from "../../../../../../lib/button"
 import React from "react"
-import { useRouter } from "next/navigation"
 import DeleteCat from "../../../../../../repository/v1.0.0/cat/delete_cat"
+import { useLoadingRouter } from "@/hooks/use_loading_router"
 
 export default function ButtonComponent(){
     const delete_cat = new DeleteCat()
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
 
 
     const deleteCat = async () => {
@@ -18,7 +18,7 @@ export default function ButtonComponent(){
             return
         }
         localStorage.clear()
-        router.push('/adopt-cat')
+        router('/adopt-cat')
     }
 
     return(

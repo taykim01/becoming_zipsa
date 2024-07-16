@@ -1,6 +1,6 @@
 "use client"
 
-import { useRouter } from "next/navigation"
+import { useLoadingRouter } from "@/hooks/use_loading_router"
 import { ReactNode } from "react"
 
 function BackButton(props: {
@@ -16,9 +16,9 @@ function BackButton(props: {
 function BadgeButton(props: {
     onClick: () => any
 }) {
-    const router = useRouter()
+    const router = useLoadingRouter()
     return (
-        <button onClick={() => router.push("/my-cat/badge")} className="px-3 py-2 bg-white-0.2 rounded-lg flex gap-1">
+        <button onClick={() => router("/my-cat/badge")} className="px-3 py-2 bg-white-0.2 rounded-lg flex gap-1">
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <g id="vuesax/bold/medal-star">
                     <g id="medal-star">
@@ -39,17 +39,17 @@ export default function Header(props: {
     back?: boolean,
     titleColor?: "white" | "black"
 }) {
-    const router = useRouter()
+    const router = useLoadingRouter()
     return (
         <header className="flex w-full justify-between py-3 mb-5" style={{ maxWidth: 393 }}>
             <div className="flex justify-start flex-1">
-                {props.back && <BackButton onClick={() => history.back()} />}
+                {props.back && <BackButton onClick={() => router("back")} />}
             </div>
             <div className="flex justify-center flex-1 items-center">
                 <div className={`text-${props.titleColor}-1 font-ohsquare text-20 flex-shrink-0`}>{props.children}</div>
             </div>
             <div className="flex justify-end flex-1">
-                {props.badge && <BadgeButton onClick={() => router.push("/my-cat/badge")} />}
+                {props.badge && <BadgeButton onClick={() => router("/my-cat/badge")} />}
             </div>
         </header>
     )

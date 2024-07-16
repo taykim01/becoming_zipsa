@@ -8,20 +8,20 @@ import { useEffect, useState } from "react";
 import Components from ".";
 import { IconName } from "@/lib/icons";
 import { useRecoilState, useSetRecoilState } from "recoil";
+import takeScreenshot from "@/utils/take_screenshot";
 import { catFeelingState } from "@/recoil/cat_feeling";
 import { Cat } from "@/repository/v1.0.0/cat/cat";
 import { loadingState } from "@/recoil/loading";
 import ActionsToCat from "@/repository/v1.0.0/cat/actions_to_cat";
 import ReadCat from "@/repository/v1.0.0/cat/read_cat";
 import ChatWithCat from "@/repository/v1.0.0/cat/chat_with_cat";
-import takeScreenshot from "@/utils/take_screenshot";
 import { chatOrActionState } from "@/recoil/chat_or_action";
 import CheckCat from "@/utils/check_cat";
 import StatusBox from "@/lib/status_box";
 import { seeStatusState } from "@/recoil/see_status";
 import ChatLoading from "@/lib/chat_loading";
-import { useRouter } from "next/navigation";
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
+import { useLoadingRouter } from "@/hooks/use_loading_router";
 
 
 export interface Chat {
@@ -48,7 +48,7 @@ export default function InteractionGroup() {
     const actions_to_cat = new ActionsToCat()
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
     const [chatOrAction, setChatOrAction] = useRecoilState<"chat" | "action">(chatOrActionState)
     const [seeStatus, setSeeStatus] = useRecoilState(seeStatusState)
     const [chat, setChat] = useState<Chat[]>([])
@@ -57,9 +57,9 @@ export default function InteractionGroup() {
     const setCatFeeling = useSetRecoilState(catFeelingState)
     const [chatLoading, setChatLoading] = useState(false)
     const raiseErrorPopup = useRaiseErrorPopup()
-
-
     const [catData, setCatData] = useState({} as Cat)
+
+
     const readCatData = async (reload?: boolean) => {
         try {
             setLoading(true)
@@ -88,14 +88,13 @@ export default function InteractionGroup() {
             )
             if (!response.success) {
                 if (response.data === "cat_leave") {
-                    router.push("/my-cat/event/leave")
+                    router("/my-cat/event/leave")
                     return
                 }
                 raiseErrorPopup(response.message)
                 return
             }
             const catChat = response.data.catChat
-            console.log(catChat)
             const responsePolarity = response.data.responsePolarity
             if (responsePolarity === "positive") setCatFeeling("positive")
             setChat([{ role: "assistant", content: catChat }, { role: "user", content: message }, ...chat]) // 여기부턴 틀림
@@ -106,10 +105,6 @@ export default function InteractionGroup() {
             setChatLoading(false)
         }
     }
-
-    useEffect(() => {
-        console.log(chat)
-    }, [chat])
 
 
     const catAction = async (action: CatActionTypes) => {
@@ -145,7 +140,7 @@ export default function InteractionGroup() {
                 <StatusBox name="포만감" value={catData.hunger} />
                 <StatusBox name="체력" value={catData.health} />
             </div>
-            <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-3">
+            <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-3 h-fit">
                 {
                     seeStatus
                         ? <div className="w-full flex-grow flex flex-col items-center justify-between gap-5">
@@ -156,7 +151,14 @@ export default function InteractionGroup() {
                             {
                                 chatOrAction === "chat" && <div className="relative w-full h-full">
                                     {chatLoading && <ChatLoading />}
-                                    <div className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full" style={{ flexDirection: "column-reverse" }}>
+                                    <div
+                                        className="absolute flex flex-col gap-2 flex-grow w-full overflow-scroll h-full"
+                                        style={{ 
+                                            flexDirection: "column-reverse",
+                                            msOverflowStyle: "none",
+                                            scrollbarWidth: "none",
+                                        }}
+                                    >
                                         {chat.map((chat, index) => {
                                             if (chat.role === "user") return (
                                                 <div key={index} className="w-full flex justify-end">
@@ -187,7 +189,14 @@ export default function InteractionGroup() {
                                         </div>
                                         : <></>
                                 }
-                                {chatOrAction === "chat" && <Input.Message onSend={sendChat} left1Click={() => setSeeStatus(true)} left2Click={() => setChatOrAction("action")} />}
+                                {chatOrAction === "chat" &&
+                                    <Input.Message
+                                        onSend={sendChat}
+                                        left1Click={() => setSeeStatus(true)}
+                                        left2Click={() => setChatOrAction("action")}
+                                        name={catData.name}
+                                        disabled={chatLoading}
+                                    />}
                             </div>
                         </>
                 }

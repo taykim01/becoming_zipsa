@@ -3,13 +3,13 @@
 import Input from "@/lib/input";
 import { useState } from "react";
 import Components from ".";
-import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import EmailLogIn from "@/repository/v1.0.0/user/email_log_in";
 import { useSetRecoilState } from "recoil";
 import { loadingState } from "@/recoil/loading";
 import ReadCat from "@/repository/v1.0.0/cat/read_cat";
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
+import { useLoadingRouter } from "@/hooks/use_loading_router";
 
 export default function InputLogIn() {
     const email_log_in = new EmailLogIn()
@@ -17,7 +17,7 @@ export default function InputLogIn() {
 
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
     const setLoading = useSetRecoilState(loadingState)
     const [logInData, setLogInData] = useState({
         email: "",
@@ -39,8 +39,8 @@ export default function InputLogIn() {
             return
         }
         const checkCatRes = await read_cat.read()
-        if (checkCatRes.data === "no_cat") router.push("/adopt-cat")
-        else router.push("/my-cat")
+        if (checkCatRes.data === "no_cat") router("/adopt-cat")
+        else router("/my-cat")
         setLoading(false)
     }
 

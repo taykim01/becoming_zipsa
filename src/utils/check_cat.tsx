@@ -1,8 +1,8 @@
 "use client"
 
+import { useLoadingRouter } from "@/hooks/use_loading_router"
 import Popup from "@/lib/popup"
 import ReadCat from "@/repository/v1.0.0/cat/read_cat"
-import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
 
 
@@ -19,14 +19,14 @@ export default function CheckCat(props: {
         title: "",
         children: ""
     })
-    const router = useRouter()
+    const router = useLoadingRouter()
 
 
     const checkCat = async () => {
         const response = await read_cat.read()
         if (response.success) return
         if (response.data === props.for) {
-            if (props.response === "route") router.push(props.content)
+            if (props.response === "route") router(props.content)
             else setErrorPopup({
                 open: true,
                 title: "고양이가 없어요.",
@@ -47,7 +47,7 @@ export default function CheckCat(props: {
                 open={errorPopup.open}
                 onClose={() => {
                     setErrorPopup({ ...errorPopup, open: false });
-                    props.response === "both" && router.push(props.content)
+                    props.response === "both" && router(props.content)
                 }}
                 title={errorPopup.title}
             >

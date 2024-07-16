@@ -2,18 +2,18 @@
 
 import Input from "@/lib/input";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import Loading from "@/lib/loading";
 import EmailSignUp from "@/repository/v1.0.0/user/email_sign_up";
 import Popup from "@/lib/popup";
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
+import { useLoadingRouter } from "@/hooks/use_loading_router";
 
 export default function InputSignUp() {
     const sign_up = new EmailSignUp()
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
     const [signUpData, setSignUpData] = useState({
         email: "",
         password: "",
@@ -113,7 +113,7 @@ export default function InputSignUp() {
                 open={errorPopup.open}
                 onClose={() => {
                     setErrorPopup({ ...errorPopup, open: false });
-                    errorPopup.title === "회원가입이 완료되었어요." && router.push("/adopt-cat");
+                    errorPopup.title === "회원가입이 완료되었어요." && router("/adopt-cat");
                 }}
                 title={errorPopup.title}
             >

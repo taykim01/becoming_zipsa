@@ -228,9 +228,6 @@ export default class ChatWithCat {
             localStorage.setItem('catData', JSON.stringify(catData))
 
 
-            console.log(catData.chats)
-
-
             const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id)
             if (!updateChatRes.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
 

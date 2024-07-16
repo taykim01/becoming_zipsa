@@ -2,19 +2,22 @@
 
 import Input from "@/lib/input";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import GoogleSignUp from "@/repository/v1.0.0/user/google_sign_up";
 import Popup from "@/lib/popup";
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
+import { useSetRecoilState } from "recoil";
+import { loadingState } from "@/recoil/loading";
+import { useLoadingRouter } from "@/hooks/use_loading_router";
 
 export default function InputSignUp() {
     const sign_up = new GoogleSignUp()
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
     const raiseErrorPopup = useRaiseErrorPopup()
     const [name, setName] = useState("")
+    const setLoading = useSetRecoilState(loadingState)
     const [errorPopup, setErrorPopup] = useState({
         open: false,
         title: "",
@@ -23,6 +26,7 @@ export default function InputSignUp() {
 
 
     const signUp = async () => {
+        setLoading(true)
         const verifyRes = await sign_up.verifyInput(name)
         if (!verifyRes.success) {
             raiseErrorPopup(verifyRes.message)
@@ -38,6 +42,7 @@ export default function InputSignUp() {
             title: "회원가입이 완료되었어요.",
             children: "이제 고양이를 입양해보아요!"
         })
+        setLoading(false)
     }
     
 
@@ -58,7 +63,7 @@ export default function InputSignUp() {
                 open={errorPopup.open}
                 onClose={() => {
                     setErrorPopup({ ...errorPopup, open: false })
-                    errorPopup.title === "회원가입이 완료되었어요." && router.push("/adopt-cat")
+                    errorPopup.title === "회원가입이 완료되었어요." && router("/adopt-cat")
                 }}
                 title={errorPopup.title}
             >
