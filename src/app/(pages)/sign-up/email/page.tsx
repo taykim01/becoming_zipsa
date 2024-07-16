@@ -10,7 +10,7 @@ export default function Page() {
                     <Components.InputSignUp />
                 </div>
             </Container.Main>
-            <CheckSessionTag noSession="/my-cat" />
+            <CheckSessionTag session="/my-cat" />
         </>
     )
 }

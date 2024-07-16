@@ -1,7 +1,6 @@
 import Container from "@/lib/container";
 import Components from "./components";
 import CheckSessionTag from "@/utils/check_session_tag";
-import Popup from "@/lib/popup";
 
 export default async function Page() {
     return (
@@ -12,7 +11,7 @@ export default async function Page() {
                     <Components.InteractionGroup />
                 </div>
             </Container.Main>
-            <CheckSessionTag session="/log-in" />
+            <CheckSessionTag noSession="/log-in" />
             <Components.UpdateTime />
         </>
     )
