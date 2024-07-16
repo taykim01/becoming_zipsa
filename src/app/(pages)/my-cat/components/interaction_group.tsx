@@ -14,14 +14,15 @@ import { loadingState } from "@/recoil/loading";
 import ActionsToCat from "@/repository/v1.0.0/cat/actions_to_cat";
 import ReadCat from "@/repository/v1.0.0/cat/read_cat";
 import ChatWithCat from "@/repository/v1.0.0/cat/chat_with_cat";
-import html2canvas from "html2canvas";
+import takeScreenshot from "@/utils/take_screenshot";
 import { chatOrActionState } from "@/recoil/chat_or_action";
-import Popup from "@/lib/popup";
 import CheckCat from "@/utils/check_cat";
 import StatusBox from "@/lib/status_box";
 import { seeStatusState } from "@/recoil/see_status";
 import ChatLoading from "@/lib/chat_loading";
 import { useRouter } from "next/navigation";
+import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
+
 
 export interface Chat {
     role: "user" | "assistant"
@@ -55,119 +56,85 @@ export default function InteractionGroup() {
     const setCatResponse = useSetRecoilState(catResponseState)
     const setCatFeeling = useSetRecoilState(catFeelingState)
     const [chatLoading, setChatLoading] = useState(false)
-    const [errorPopup, setErrorPopup] = useState({
-        open: false,
-        title: "",
-        children: ""
-    })
+    const raiseErrorPopup = useRaiseErrorPopup()
 
 
     const [catData, setCatData] = useState({} as Cat)
-    const readCatData = async () => {
-        setLoading(true)
-        const response = await read_cat.read(true)
-        if (!response.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: response.message
-            })
-            return
+    const readCatData = async (reload?: boolean) => {
+        try {
+            setLoading(true)
+            const response = await read_cat.read(reload)
+            if (!response.success) {
+                raiseErrorPopup(response.message)
+                return
+            }
+            setCatData(response.data)
+            const catChat = response.data.chats ? response.data.chats.reverse() : []
+            setChat(catChat)
+        } catch (error) {
+            raiseErrorPopup(String(error))
+        } finally {
+            setLoading(false)
         }
-        setCatData(response.data)
-        const catChat = response.data.chats ? response.data.chats.reverse() : []
-        setChat(catChat)
-        setLoading(false)
     }
 
 
     const sendChat = async (message: string) => {
-        setChatLoading(true)
-        setChat([{ role: "user", content: message }, ...chat])
-        const response = await cat_with_chat.chat(
-            message
-        )
-        if (!response.success) {
-            if (response.data === "cat_leave") {
-                router.push("/my-cat/event/leave")
+        try {
+            setChatLoading(true)
+            setChat([{ role: "user", content: message }, ...chat]) // 여기까지 맞음
+            const response = await cat_with_chat.chat(
+                message
+            )
+            if (!response.success) {
+                if (response.data === "cat_leave") {
+                    router.push("/my-cat/event/leave")
+                    return
+                }
+                raiseErrorPopup(response.message)
                 return
             }
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: response.message
-            })
+            const catChat = response.data.catChat
+            console.log(catChat)
+            const responsePolarity = response.data.responsePolarity
+            if (responsePolarity === "positive") setCatFeeling("positive")
+            setChat([{ role: "assistant", content: catChat }, { role: "user", content: message }, ...chat]) // 여기부턴 틀림
+            readCatData()
+        } catch (error) {
+            raiseErrorPopup(String(error))
+        } finally {
             setChatLoading(false)
-            return
         }
-        const catChat = response.data.catChat
-        const responsePolarity = response.data.responsePolarity
-        if (responsePolarity === "positive") setCatFeeling("positive")
-        setChat([{ role: "assistant", content: catChat }, { role: "user", content: message }, ...chat])
-        setChatLoading(false)
-        readCatData()
     }
+
+    useEffect(() => {
+        console.log(chat)
+    }, [chat])
 
 
     const catAction = async (action: CatActionTypes) => {
         try {
+            setLoading(true)
             const response = await actions_to_cat.applyAction(action)
             const catFeeling = response.data.catFeelingRes
             const catResponse = response.data.catResponse
             setCatFeeling(catFeeling)
             if (!response.success) {
-                setErrorPopup({
-                    open: true,
-                    title: "오류가 발생했어요!",
-                    children: response.message
-                })
+                raiseErrorPopup(response.message)
                 return
             }
             setCatResponse(catResponse)
             readCatData()
         } catch (error) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: "일시적인 오류가 발생했습니다. 관리자에게 문의주세요."
-            })
+            raiseErrorPopup("일시적인 오류가 발생했습니다. 잠시 후 다시 시도해주세요.")
+        } finally {
+            setLoading(false)
         }
     }
 
 
-    const takeScreenshot = async () => {
-        const containerElement = document.getElementById('screencaptureArea');
-        if (!containerElement) {
-            console.error("Container element not found");
-            return;
-        }
-        const height = document.getElementById('screencaptureArea')!.clientHeight + 8
-        setTimeout(() => {
-            html2canvas(containerElement, {
-                backgroundColor: "#fff7f0",
-                height: height,
-                width: document.getElementById('screencaptureArea')!.clientWidth + 8,
-                scrollY: -window.scrollY,
-                windowHeight: height,
-                useCORS: true,
-                scale: 5
-            }).then(canvas => {
-                const dataURL = canvas.toDataURL("image/jpeg", 3.0);
-                const link = document.createElement("a");
-                link.href = dataURL;
-                const todayInYYYYMMDD = new Date().toISOString().slice(0, 10);
-                link.download = `${catData.name}-${todayInYYYYMMDD}.jpeg`;
-                link.click();
-            }).catch(error => {
-                console.error("Screenshot error", error);
-            });
-        }, 1000);
-    };
-
-
-
     useEffect(() => {
-        readCatData()
+        readCatData(true)
     }, [])
 
 
@@ -178,7 +145,7 @@ export default function InteractionGroup() {
                 <StatusBox name="포만감" value={catData.hunger} />
                 <StatusBox name="체력" value={catData.health} />
             </div>
-            <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-5">
+            <div className="flex flex-col justify-between w-full items-center flex-grow relative gap-3">
                 {
                     seeStatus
                         ? <div className="w-full flex-grow flex flex-col items-center justify-between gap-5">
@@ -211,30 +178,20 @@ export default function InteractionGroup() {
                                         ? <div className="grid grid-cols-2 grid-rows-3 gap-4 w-full">
                                             {
                                                 actions.map((action, index) => {
-                                                    if (action === "사진찍기") return <Button.UserAction key={index} onClick={() => { catAction(action); takeScreenshot() }} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>
+                                                    if (action === "사진찍기") return <Button.UserAction key={index} onClick={() => { catAction(action); takeScreenshot(catData.name) }} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>
                                                     else return <Button.UserAction key={index} onClick={() => catAction(action)} iconType={iconByAction[action]} textColor="black">{action}</Button.UserAction>
                                                 })
                                             }
                                             <div />
                                             <Button.UserAction onClick={() => setChatOrAction("chat")} iconType="Back" textColor="black">돌아가기</Button.UserAction>
                                         </div>
-                                        : <div className="flex gap-4 items-center">
-                                            <Button.UserAction onClick={() => setSeeStatus(true)} iconType="Status" textColor="black">상태 보기</Button.UserAction>
-                                            <Button.UserAction onClick={() => setChatOrAction("action")} iconType="Box" textColor="black">놀아주기</Button.UserAction>
-                                        </div>
+                                        : <></>
                                 }
-                                {chatOrAction === "chat" && <Input.Message onSend={sendChat} />}
+                                {chatOrAction === "chat" && <Input.Message onSend={sendChat} left1Click={() => setSeeStatus(true)} left2Click={() => setChatOrAction("action")} />}
                             </div>
                         </>
                 }
             </div>
-            <Popup.Default
-                open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false })}
-                title={errorPopup.title}
-            >
-                {errorPopup.children}
-            </Popup.Default>
             <CheckCat for="no_cat" response="both" content="adopt-cat" />
         </>
     )

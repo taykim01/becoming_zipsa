@@ -6,11 +6,14 @@ import { useRouter } from "next/navigation";
 import Button from "@/lib/button";
 import GoogleSignUp from "@/repository/v1.0.0/user/google_sign_up";
 import Popup from "@/lib/popup";
+import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
 
 export default function InputSignUp() {
-
     const sign_up = new GoogleSignUp()
+
+
     const router = useRouter()
+    const raiseErrorPopup = useRaiseErrorPopup()
     const [name, setName] = useState("")
     const [errorPopup, setErrorPopup] = useState({
         open: false,
@@ -18,23 +21,16 @@ export default function InputSignUp() {
         children: ""
     })
 
+
     const signUp = async () => {
         const verifyRes = await sign_up.verifyInput(name)
         if (!verifyRes.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: verifyRes.message
-            })
+            raiseErrorPopup(verifyRes.message)
             return
         }
         const createUserRes = await sign_up.createUser(name)
         if (!createUserRes.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: createUserRes.message
-            })
+            raiseErrorPopup(createUserRes.message)
             return
         }
         setErrorPopup({
@@ -43,6 +39,7 @@ export default function InputSignUp() {
             children: "이제 고양이를 입양해보아요!"
         })
     }
+    
 
     return (
         <>

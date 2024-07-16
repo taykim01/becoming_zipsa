@@ -7,10 +7,12 @@ import Button from "@/lib/button";
 import Loading from "@/lib/loading";
 import EmailSignUp from "@/repository/v1.0.0/user/email_sign_up";
 import Popup from "@/lib/popup";
+import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
 
 export default function InputSignUp() {
-
     const sign_up = new EmailSignUp()
+
+
     const router = useRouter()
     const [signUpData, setSignUpData] = useState({
         email: "",
@@ -24,35 +26,21 @@ export default function InputSignUp() {
         title: "",
         children: ""
     })
-
     const [popup, setPopup] = useState(false)
+    const raiseErrorPopup = useRaiseErrorPopup()
 
 
-    const setEmail = (email: string) => {
-        setSignUpData({ ...signUpData, email })
-    }
+    const setEmail = (email: string) => setSignUpData({ ...signUpData, email })
+    const setPassword = (password: string) => setSignUpData({ ...signUpData, password })
+    const setPasswordCheck = (passwordCheck: string) => setSignUpData({ ...signUpData, passwordCheck })
+    const setName = (name: string) => setSignUpData({ ...signUpData, name })
 
-    const setPassword = (password: string) => {
-        setSignUpData({ ...signUpData, password })
-    }
-
-    const setPasswordCheck = (passwordCheck: string) => {
-        setSignUpData({ ...signUpData, passwordCheck })
-    }
-
-    const setName = (name: string) => {
-        setSignUpData({ ...signUpData, name })
-    }
 
     const signUp = async () => {
         setLoading(true)
         const verifyRes = await sign_up.verifyInput(signUpData.email, signUpData.password, signUpData.passwordCheck, signUpData.name)
         if (!verifyRes.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: verifyRes.message
-            })
+            raiseErrorPopup(verifyRes.message)
             setLoading(false)
             return
         }
@@ -66,22 +54,14 @@ export default function InputSignUp() {
             setLoading(false)
             return
         } else if (!signUpRes.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: signUpRes.message
-            })
+            raiseErrorPopup(signUpRes.message)
             setLoading(false)
             return
         }
         const createUserRes = await sign_up.createUser()
         if (!createUserRes.success) {
             await sign_up.deleteAuth()
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: createUserRes.message
-            })
+            raiseErrorPopup(createUserRes.message)
             setLoading(false)
             return
         }

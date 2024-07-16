@@ -12,7 +12,7 @@ export default function Main(props: {
     const backgroundClass = props.bgClass || "bg-type1_light";
     `${props.titleColor}`
     return (
-        <div className={`flex flex-col justify-between items-center h-full w-screen px-5 ${backgroundClass} py-8 overflow-hidden`}>
+        <div className={`flex flex-col justify-between items-center h-full w-screen px-5 ${backgroundClass} py-5 overflow-hidden`}>
             <Header badge={props.badge} back={props.back} titleColor={props.titleColor}>{props.headerTitle}</Header>
             <div className="flex flex-col justify-between items-center overflow-hidden w-full h-full" style={{ maxWidth: 393 }}>
                 {props.children}

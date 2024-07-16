@@ -9,6 +9,10 @@ import { CatSex, CatType } from "@/repository/v1.0.0/cat/cat"
 import { sendGAEvent } from "@next/third-parties/google"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
+import size from "@/lib/size"
+import { useRecoilState } from "recoil"
+import { errorPopupState } from "@/recoil/error_popup"
+import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup"
 
 type CatData = {
     name: string,
@@ -27,11 +31,8 @@ export default function InputCatData() {
         color: "",
         sex: "",
     })
-    const [errorPopup, setErrorPopup] = useState({
-        open: false,
-        title: "",
-        children: ""
-    })
+    const [errorPopup, setErrorPopup] = useRecoilState(errorPopupState)
+    const raiseErrorPopup = useRaiseErrorPopup();
 
 
     const setName = (name: CatData["name"]) => setCatData({ ...catData, name })
@@ -59,11 +60,7 @@ export default function InputCatData() {
             catData.sex as CatSex
         )
         if (!verifyRes.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요",
-                children: verifyRes.message
-            })
+            raiseErrorPopup(verifyRes.message)
             return
         }
 
@@ -75,11 +72,7 @@ export default function InputCatData() {
             catData.sex as CatSex
         )
         if (!verification.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요.",
-                children: verification.message
-            })
+            raiseErrorPopup(verification.message)
             return
         }
         const response = await adopt_cat.adopt(
@@ -88,51 +81,50 @@ export default function InputCatData() {
             catData.sex as CatSex
         )
         if (!response.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요.",
-                children: response.message
-            })
+            raiseErrorPopup(response.message)
             return
         }
         setErrorPopup({
             open: true,
             title: `${catData.name} 입양에 성공했어요.`,
-            children: `아기 ${catData.name}(이)가 기다리고 있어요!`
+            children: `아기 ${catData.name}(이)가 기다리고 있어요!`,
+            onClose: () => router.push('/my-cat')
         })
     }
 
     return (
         <>
-            <div className="flex flex-col items-center justify-between flex-grow w-full">
-                <div className="flex flex-col gap-5 w-full items-center">
-                    {
-                        catData.color
-                            ? <div style={{ maxWidth: 150, maxHeight: 150 }}>
-                                <CatComponent color={catData.color as CatType} />
-                            </div>
-                            : <div style={{ width: 150, height: 150 }} />
-                    }
-                    <div className="flex flex-col items-center gap-4 w-full">
-                        <Input.Text
-                            title="고양이 이름"
-                            onChange={setName}
-                            placeholder="불러주고픈 이름이 있나요?"
-                            onEnter={adoptCat}
-                        />
-                        <Input.MultiSelect
-                            title="성격"
-                            onSelect={setColor}
-                            guide="고양이별 성격 알아보기"
-                            guideClick={() => setPersonalityPopup(true)}
-                            items={["흰냥이", "치즈냥이", "깜냥이"]}
-                            unSelectable={["치즈냥이", "깜냥이"]}
-                        />
-                        <Input.MultiSelect
-                            title="성별"
-                            onSelect={setSex}
-                            items={["수컷", "암컷"]}
-                        />
+            <div className="flex flex-col items-center justify-between flex-grow w-full gap-5">
+                <div className="relative w-full h-full overflow-hidden">
+                    <div className="absolute h-full w-full overflow-scroll flex flex-col gap-5 items-center">
+                        {
+                            catData.color
+                                ? <div style={{ maxWidth: size.adoptCatVisual, maxHeight: size.adoptCatVisual }}>
+                                    <CatComponent color={catData.color as CatType} />
+                                </div>
+                                : <div style={{ width: size.adoptCatVisual, height: size.adoptCatVisual }} />
+                        }
+                        <div className="flex flex-col items-center gap-4 w-full">
+                            <Input.Text
+                                title="고양이 이름"
+                                onChange={setName}
+                                placeholder="불러주고픈 이름이 있나요?"
+                                onEnter={adoptCat}
+                            />
+                            <Input.MultiSelect
+                                title="성격"
+                                onSelect={setColor}
+                                guide="고양이별 성격 알아보기"
+                                guideClick={() => setPersonalityPopup(true)}
+                                items={["흰냥이", "치즈냥이", "깜냥이"]}
+                                unSelectable={["치즈냥이", "깜냥이"]}
+                            />
+                            <Input.MultiSelect
+                                title="성별"
+                                onSelect={setSex}
+                                items={["수컷", "암컷"]}
+                            />
+                        </div>
                     </div>
                 </div>
                 <Button.Default onClick={adoptCat}>{`${catData.name || "_____"} 입양하기!`}</Button.Default>
@@ -146,16 +138,6 @@ export default function InputCatData() {
                     <CatListItem cat="치즈냥이" detail="활발함,응석받이, 소심"></CatListItem>
                     <CatListItem cat="깜냥이" detail="똑똑함, 얌전함"></CatListItem>
                 </div>
-            </Popup.Default>
-            <Popup.Default
-                open={errorPopup.open}
-                onClose={() => {
-                    setErrorPopup({ ...errorPopup, open: false });
-                    errorPopup.title === `${catData.name} 입양에 성공했어요.` && router.push("/my-cat");
-                }}
-                title={errorPopup.title}
-            >
-                {errorPopup.children}
             </Popup.Default>
         </>
     )

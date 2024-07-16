@@ -1,11 +1,38 @@
 "use client"
 
+import Icons from "@/lib/icons";
 import { useState } from "react";
+
+
+function SideButton(props: {
+    onClick: () => void
+    textColor?: 'black' | 'white',
+    iconType: keyof typeof Icons
+}) {
+    const NewIcon = Icons[props.iconType]
+    return (
+        <button
+            onClick={props.onClick}
+            className={`
+                    flex justify-center items-center w-fit
+                    px-2 py-2 border-beige-50 bg-white-0.12
+                    active:bg-pink-0.15
+                    active:text-pink-100
+                    active:border-pink-0.6
+                `}
+            style={{ borderWidth: 3, borderRadius: 20 }}
+        >
+            {NewIcon}
+        </button>
+    )
+}
 
 
 export default function Message(props: {
     onSend: (message: string) => void
-    placeholder?: string
+    placeholder?: string,
+    left1Click?: () => void,
+    left2Click?: () => void,
 }) {
     const [message, setMessage] = useState('');
 
@@ -30,6 +57,18 @@ export default function Message(props: {
 
     return (
         <div className="flex gap-3">
+            <div className="flex gap-1">
+                <SideButton
+                    onClick={props.left1Click || (() => { })}
+                    iconType="Status"
+                    textColor="white"
+                />
+                <SideButton
+                    onClick={props.left2Click || (() => { })}
+                    iconType="Box"
+                    textColor="white"
+                />
+            </div>
             <input
                 className={`
                         px-5 py-3 bg-beige-50

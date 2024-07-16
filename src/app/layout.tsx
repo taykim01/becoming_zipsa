@@ -4,6 +4,7 @@ import RecoilRootWrapper from "../recoil/recoil_wrapper";
 import analyticsTags from "@/analytics";
 import { GoogleAnalytics } from '@next/third-parties/google'
 import Loading from "@/lib/loading";
+import Popup from "@/lib/popup";
 
 
 export const metadata: Metadata = {
@@ -22,6 +23,7 @@ export default function RootLayout({
         <body>
           {children}
           <Loading />
+          <Popup.Error />
         </body>
       </RecoilRootWrapper>
       <GoogleAnalytics gaId={analyticsTags.default} />

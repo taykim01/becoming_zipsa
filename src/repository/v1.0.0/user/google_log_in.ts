@@ -20,7 +20,7 @@ export default class GoogleLogIn {
             const data = await res.json();
             if (data.data === "no_user_with_email") {
                 const user = auth.currentUser;
-                if (!user) return new RepositoryResponse(false, "계정 삭제에 실패했습니다.", {});
+                if (!user) return new RepositoryResponse(false, "계정 에 실패했습니다.", {});
                 await deleteUser(user);
                 return new RepositoryResponse(false, "해당 이메일의 계정 정보가 없습니다.", null);
             }

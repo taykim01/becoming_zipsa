@@ -1,11 +1,11 @@
 "use client"
 
+import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
 import Button from "@/lib/button";
-import Popup from "@/lib/popup";
+import { errorPopupState } from "@/recoil/error_popup";
 import { loadingState } from "@/recoil/loading";
 import NeuterCat from "@/repository/v1.0.0/cat/neuter_cat";
 import { useRouter } from "next/navigation";
-import { useState, useEffect } from "react";
 import { useSetRecoilState } from "recoil";
 
 export default function PillButton() {
@@ -14,22 +14,15 @@ export default function PillButton() {
 
     const router = useRouter()
     const setLoading = useSetRecoilState(loadingState)
-    const [errorPopup, setErrorPopup] = useState({
-        open: false,
-        title: "",
-        children: ""
-    })
+    const setErrorPopup = useSetRecoilState(errorPopupState)
+    const raiseErrorPopup = useRaiseErrorPopup()
 
 
     const medicate = async () => {
         setLoading(true)
         const response = await neuter_cat.neuter()
         if (!response.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: response.message
-            })
+            raiseErrorPopup(response.message)
             return
         }
         setErrorPopup({
@@ -41,15 +34,6 @@ export default function PillButton() {
     }
 
     return (
-        <>
-            <Button.UserAction onClick={medicate} iconType="Pill" textColor="white">약 주기</Button.UserAction>
-            <Popup.Default
-                open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false })}
-                title={errorPopup.title}
-            >
-                {errorPopup.children}
-            </Popup.Default>
-        </>
+        <Button.UserAction onClick={medicate} iconType="Pill" textColor="white">약 주기</Button.UserAction>
     )
 }

@@ -2,35 +2,32 @@
 
 import Button from "@/lib/button";
 import Popup from "@/lib/popup";
+import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
 import GoogleSignUp from "@/repository/v1.0.0/user/google_sign_up";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
 
 export default function SignUpPopup(props: {
     open: boolean,
     onClose: () => any
-}){
-    const [errorPopup, setErrorPopup] = useState({
-        open: false,
-        title: "",
-        children: ""
-    })
-    const router = useRouter()
+}) {
     const google_sign_up = new GoogleSignUp()
-    const googleSignUp = async ()=> {
+
+
+    const router = useRouter()
+    const raiseErrorPopup = useRaiseErrorPopup()
+
+
+    const googleSignUp = async () => {
         const response = await google_sign_up.signUp()
-        if(!response.success) {
-            setErrorPopup({
-                open: true,
-                title: "오류가 발생했어요!",
-                children: response.message
-            })
+        if (!response.success) {
+            raiseErrorPopup(response.message)
             return
         }
         router.push("/sign-up/google")
     }
+
+
     return (
-        <>
         <Popup.Default
             title="회원가입 방법 선택하기"
             open={props.open}
@@ -41,13 +38,5 @@ export default function SignUpPopup(props: {
                 <Button.Default onClick={() => router.push("/sign-up/email")}>이메일 회원가입</Button.Default>
             </div>
         </Popup.Default>
-        <Popup.Default
-                open={errorPopup.open}
-                onClose={() => setErrorPopup({ ...errorPopup, open: false})}
-                title={errorPopup.title}
-            >
-                {errorPopup.children}
-            </Popup.Default>
-        </>
     )
 }
