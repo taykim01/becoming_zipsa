@@ -3,7 +3,6 @@
 import { ReactNode } from "react";
 import "./popup.css";
 import Drawer from "@mui/material/Drawer";
-import React from "react";
 
 export default function Default(props: {
     children: ReactNode,

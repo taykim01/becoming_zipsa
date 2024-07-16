@@ -11,14 +11,18 @@ export default function ToLogInButton() {
     const read_cat = new ReadCat()
     const check_sesssion = new CheckSession()
 
+
     const setLoading = useSetRecoilState(loadingState)
     const router = useRouter();
 
     const routeTo = async () => {
         setLoading(true)
+        localStorage.clear()
+        
         const response = await check_sesssion.check()
         if (!response.success) {
             router.push("/log-in")
+            setLoading(false)
             return
         }
 

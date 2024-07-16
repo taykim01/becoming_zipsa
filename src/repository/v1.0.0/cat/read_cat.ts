@@ -11,19 +11,19 @@ export default class ReadCat{
             if(cachedData && !reload) return new RepositoryResponse(true, "고양이 데이터 조회에 성공했습니다.", JSON.parse(cachedData))
 
 
-            const getCatIdRes = await fetch(`${URL}/api/v1.0.0/user/read`, {
+            const getUserRes = await fetch(`${URL}/api/v1.0.0/user/read`, {
                 headers: { "Content-type": "application/json" },
                 method: "POST",
                 body : JSON.stringify({
                     user_id
                 })
             })
-            const getCatIdData = await getCatIdRes.json()
-            if(!getCatIdData.success) return new RepositoryResponse(false, "고양이 데이터 조회에 실패했습니다.")
-            if(getCatIdData.data.cats.length === 0) return new RepositoryResponse(true, "고양이가 없습니다.", "no_cat")
+            const getUserData = await getUserRes.json()
+            if(!getUserData.success) return new RepositoryResponse(false, "고양이 데이터 조회에 실패했습니다.")
+            if(getUserData.data.cats.length === 0) return new RepositoryResponse(true, "고양이가 없습니다.", "no_cat")
 
 
-            const cat_id = getCatIdData.data.cats[0]
+            const cat_id = getUserData.data.cats[0]
             const res = await fetch(`${URL}/api/v1.0.0/cat/read`, {
                 headers: { "Content-type": "application/json" },
                 method: "POST",

@@ -111,7 +111,7 @@ export default class ChatWithCat {
         }
     }
 
-    private async updateChatData(chatToCat: string, catChat: string, cat_id: string, catData:Cat): Promise<RepositoryResponse> {
+    private async updateChatData(chatToCat: string, catChat: string, cat_id: string): Promise<RepositoryResponse> {
         try {
             const updateUserChatRes = await fetch(`${URL}/api/v1.0.0/cat/update/chat`, {
                 method: "POST",
@@ -137,7 +137,7 @@ export default class ChatWithCat {
             })
             const updateCatChat = await updateCatChatRes.json()
             if (!updateCatChat.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
-            
+
 
             return new RepositoryResponse(true, "채팅 데이터 저장에 성공했습니다.", {})
         } catch (error) {
@@ -214,20 +214,24 @@ export default class ChatWithCat {
             if (!cat_id) return new RepositoryResponse(false, "고양이 ID가 없습니다.")
 
 
-            totalChat.push({ role: "user", content: chatToCat })
+            const newTotalChat = [...catData.chats]
+            newTotalChat.push({ role: "user", content: chatToCat })
 
 
             const catChatRes = await this.generateCatResponse(chatToCat, catData)
             if (!catChatRes.success) return catChatRes
             const catChat = catChatRes.data
-            totalChat.push({ role: "assistant", content: catChat })
+            newTotalChat.push({ role: "assistant", content: catChat })
 
 
-            catData.chats = totalChat
+            catData.chats = newTotalChat
             localStorage.setItem('catData', JSON.stringify(catData))
 
 
-            const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id, catData)
+            console.log(catData.chats)
+
+
+            const updateChatRes = await this.updateChatData(chatToCat, catChat, cat_id)
             if (!updateChatRes.success) return new RepositoryResponse(false, "채팅 데이터 저장에 실패했습니다.", {})
 
 
@@ -242,7 +246,7 @@ export default class ChatWithCat {
                 const newAffection = typeof updateStatusRes.data === 'number' ? updateStatusRes.data : 0;
                 if (newAffection === 0) return new RepositoryResponse(false, "고양이가 떠났습니다.", "cat_leave")
             } else if (responsePolarity === "positive") {
-                if(catData.affection === 100) return new RepositoryResponse(true, "채팅에 성공했습니다.", { catChat, responsePolarity })
+                if (catData.affection === 100) return new RepositoryResponse(true, "채팅에 성공했습니다.", { catChat, responsePolarity })
                 const updateStatusRes = await this.updateStatus(catData, "positive")
                 if (!updateStatusRes.success) return updateStatusRes
             }

@@ -32,7 +32,7 @@ export default function Text(props: {
         >
             <input
                 type={props.type || "text"}
-                className="px-5 py-3 border border-white-0.72 bg-white-0.15 rounded-2xl w-full font-fs-l text-white-0.6 text-20 focus:outline-none placeholder-white-0.6"
+                className="px-5 py-3 border border-white-0.72 bg-white-0.15 rounded-2xl w-full font-fs-l text-gray-800 text-20 focus:outline-none placeholder-black-0.3"
                 onChange={handleChange}
                 onKeyDown={handleEnter}
                 maxLength={100}

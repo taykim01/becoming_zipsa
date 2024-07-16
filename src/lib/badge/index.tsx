@@ -28,7 +28,7 @@ export default function Badge(props: {
     }
 
     return (
-        <div className={`flex py-2 pr-7 pl-2 items-center justify-between w-full h-fit rounded-3xl bg-white-0.4 ${props.opaque ? "opacity-50" : ""} `}>
+        <div className={`flex py-2 pr-7 pl-2 items-center justify-between w-full h-fit rounded-3xl bg-white-0.4 ${props.opaque ? "opacity-20" : ""} `}>
             <div className="flex w-24 h-24 justify-center items-center overflow-hidden bg-white-0.8" style={{ borderRadius: 20 }}>
                 <Image alt={props.title} src={badgeColor[props.title].img || ""} width={60} height={60} />
             </div>

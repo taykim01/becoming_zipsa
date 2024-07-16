@@ -4,25 +4,17 @@ import React, { useEffect, useState } from "react";
 import { Cat } from "../../../../../repository/v1.0.0/cat/cat";
 import Icons from "../../../../../lib/icons"
 import ReadCat from "@/repository/v1.0.0/cat/read_cat";
-import Popup from "@/lib/popup";
+import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
 
 export default function Portrait() {
     const read_cat = new ReadCat()
     const [catData, setCatData] = useState({} as Cat)
-    const [popup, setPopup] = useState({
-        open: false,
-        title: "",
-        children: ""
-    })
+    const raiseErrorPopup = useRaiseErrorPopup()
 
     const readCatData = async () => {
         const response = await read_cat.read()
         if (!response.success) {
-            setPopup({
-                open: true,
-                title: "오류가 발생했습니다.",
-                children: response.message
-            })
+            raiseErrorPopup(response.message)
             return
         }
         setCatData(response.data)
@@ -50,22 +42,15 @@ export default function Portrait() {
     ]
 
     return (
-        <>
-            <div className="relative bg-sky border-beige-400 flex justify-center items-center overflow-hidden" style={{ borderWidth: 10, width: 193, minHeight: 193 }}>
-                {
-                    pawLocations.map((paw, index) => {
-                        return <div key={index} className="absolute" style={{ transform: `rotate(${paw.rotate} deg)`, left: paw.x, bottom: paw.y }}>
-                            <PortraitPaw />
-                        </div>
-                    })
-                }
-                <div className="flex justify-center items-center box-border" style={{ transform: "scale(0.6)", width: 150, height: 150 }}><Portrait /></div>
-            </div>
-            <Popup.Default open={popup.open} title={popup.title} onClose={() => setPopup({
-                ...popup, open: false
-            })}>
-                {popup.children}
-            </Popup.Default>
-        </>
+        <div className="relative bg-sky border-beige-400 flex justify-center items-center overflow-hidden" style={{ borderWidth: 10, width: 193, minHeight: 193 }}>
+            {
+                pawLocations.map((paw, index) => {
+                    return <div key={index} className="absolute" style={{ transform: `rotate(${paw.rotate} deg)`, left: paw.x, bottom: paw.y }}>
+                        <PortraitPaw />
+                    </div>
+                })
+            }
+            <div className="flex justify-center items-center box-border" style={{ transform: "scale(0.6)", width: 150, height: 150 }}><Portrait /></div>
+        </div>
     )
 }

@@ -12,6 +12,7 @@ import Components from ".";
 import Icons from "@/lib/icons";
 import { useRouter } from "next/navigation";
 import { chatOrActionState } from "@/recoil/chat_or_action";
+import size from "@/lib/size";
 
 
 export default function CatAnimation() {
@@ -61,7 +62,17 @@ export default function CatAnimation() {
 
 
     return (
-        <div className="relative w-full flex flex-col py-7 items-center rounded-3xl border-4 border-beige-300 gap-5 box-border" id="screencaptureArea">
+        <div
+            style={{
+                maxHeight: chatOrAction === "chat"
+                ? expand
+                    ? "100vh"
+                    : size.myCatVisual
+                : size.myCatVisual
+            }}
+            className="flex-grow relative relative w-full flex flex-col items-center rounded-3xl border-4 border-beige-300 gap-5 box-border"
+            id="screencaptureArea"
+        >
             <div className="absolute top-3 left-3 p-2" style={{ zIndex: 1000 }}>
                 {
                     expand
@@ -73,7 +84,7 @@ export default function CatAnimation() {
                 <div onClick={() => router.push("/my-cat/badge")}><MedalIcon /></div>
                 <div onClick={() => router.push("/settings")}><SettingsIcon /></div>
             </div>
-            <div className={`relative w-full ${expand ? "expand" : "default"}`}>
+            <div className={`relative w-full h-full flex-grow ${expand ? "expand" : "default"}`}>
 
                 {
                     heartLocations.map((location, i) => (
@@ -93,11 +104,13 @@ export default function CatAnimation() {
                     catData.color && <CatComponent color={catData.color} />
                 }
             </div>
-            {
-                chatOrAction === "action"
-                ? <Components.CatReaction />
-                : <Components.CatInfo expand={expand} />
-            }
+            <div className="absolute bottom-3 flex justify-center" style={{ maxWidth: `calc(100% - 40px)` }}>
+                {
+                    chatOrAction === "action"
+                        ? <Components.CatReaction />
+                        : <Components.CatInfo expand={true} />
+                }
+            </div>
         </div>
     );
 }

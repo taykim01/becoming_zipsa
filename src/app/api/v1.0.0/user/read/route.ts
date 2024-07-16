@@ -16,7 +16,15 @@ export async function POST(request: Request): Promise<Response> {
             ...docSnap.data(),
             id: docSnap.id
         } as User
-        
+
+        if (!docSnap.exists()) return new Response(
+            JSON.stringify({
+                success: false,
+                message: "유저 불러오기 실패",
+                data: "존재하지 않는 유저입니다."
+            })
+        )
+
         return new Response(
             JSON.stringify({
                 success: true,
