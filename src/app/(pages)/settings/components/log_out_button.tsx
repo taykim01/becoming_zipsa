@@ -8,11 +8,13 @@ import ReadUser from "../../../../repository/v1.0.0/user/read_user";
 import User from "../../../../repository/v1.0.0/user/user";
 import LogOut from "../../../../repository/v1.0.0/user/log_out";
 import DeleteAccount from "../../../../repository/v1.0.0/user/delete_account";
-import { useRouter } from "next/navigation";
 import Popup from "../../../../lib/popup";
 import ReadCat from "../../../../repository/v1.0.0/cat/read_cat";
 import { Cat } from "../../../../repository/v1.0.0/cat/cat";
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup";
+import { useSetRecoilState } from "recoil";
+import { loadingState } from "@/recoil/loading";
+import { useLoadingRouter } from "@/hooks/use_loading_router";
 
 
 export default function LogOutButton() {
@@ -22,7 +24,7 @@ export default function LogOutButton() {
     const read_cat = new ReadCat()
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
     const [userData, setUserData] = useState({} as User)
     const [catData, setCatData] = useState({} as Cat)
     const [popup, setPopup] = useState({
@@ -32,6 +34,7 @@ export default function LogOutButton() {
         children: ""
     })
     const raiseErrorPopup = useRaiseErrorPopup()
+    const setLoading = useSetRecoilState(loadingState)
 
 
     const getUserData = async () => {
@@ -59,23 +62,27 @@ export default function LogOutButton() {
 
 
     const logOut = async () => {
+        setLoading(true)
         const response = await log_out.logOut()
         if (!response.success) {
             raiseErrorPopup(response.message)
             return
         }
         localStorage.clear()
-        router.push('/log-in')
+        router('/log-in')
+        setLoading(false)
     }
 
     const deleteAccount = async () => {
+        setLoading(true)
         const response = await delete_account.delete()
         if (!response.success) {
             raiseErrorPopup(response.message)
             return
         }
         localStorage.clear()
-        router.push('/log-in')
+        router('/log-in')
+        setLoading(false)
     }
 
 
@@ -117,7 +124,7 @@ export default function LogOutButton() {
                     {popup.content}
                     <Button.Default onClick={() => {
                         setPopup({ ...popup, open: false });
-                        popup.children === "계정 삭제" ? deleteAccount() : logOut()
+                        popup.children === "계정 탈퇴" ? deleteAccount() : logOut()
                     }}>{popup.children}</Button.Default>
                 </div>
             </Popup.Default>

@@ -33,6 +33,8 @@ export default function Message(props: {
     placeholder?: string,
     left1Click?: () => void,
     left2Click?: () => void,
+    disabled?: boolean,
+    name?: string
 }) {
     const [message, setMessage] = useState('');
 
@@ -54,6 +56,11 @@ export default function Message(props: {
             setMessage('');
         }
     }
+
+    const placeholder =
+        props.disabled
+            ? `${props.name || "고양이"}(이) 대답 중...`
+            : props.placeholder || '대화하기';
 
     return (
         <div className="flex gap-3">
@@ -78,8 +85,9 @@ export default function Message(props: {
                 onChange={handleChange}
                 onKeyPress={handleKeyPress}
                 value={message}
-                placeholder={props.placeholder || '대화하기'}
+                placeholder={placeholder}
                 maxLength={100}
+                disabled={props.disabled || false}
             />
             <button
                 className="flex justify-center items-center focus:outline-none rounded-2xl bg-black-1 flex-shrink-0" style={{ width: '50px', height: '50px' }}

@@ -1,21 +1,21 @@
 
 import { deleteDoc } from "firebase/firestore";
-import { catDoc } from "../../../../..//firebase";
+import { userDoc } from "../../../../..//firebase";
 
 export async function POST(request: Request): Promise<Response> {
     try {
         const {
-            cat_id
+            user_id
         } = await request.json() as {
-            cat_id: string
+            user_id: string
         }
-        const catRef = catDoc(cat_id)
-        await deleteDoc(catRef)
+        const userRef = userDoc(user_id)
+        await deleteDoc(userRef)
 
         return new Response(
             JSON.stringify({
                 success: true,
-                message: "고양이 삭제 성공",
+                message: "유저 읽기 성공",
                 data: {}
             })
         )
@@ -23,7 +23,7 @@ export async function POST(request: Request): Promise<Response> {
         return new Response(
             JSON.stringify({
                 success: false,
-                message: "고양이 삭제 실패",
+                message: "유저 읽기 실패",
                 data: String(error)
             })
         )

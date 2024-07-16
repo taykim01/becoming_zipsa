@@ -2,7 +2,6 @@
 
 import { useEffect } from "react"
 import UpdateAge from "../../../../repository/v1.0.0/cat/update_age"
-import { useRouter } from "next/navigation"
 import { useSetRecoilState } from "recoil"
 import { CatEvent } from "@/repository/v1.0.0/cat/cat"
 import Button from "@/lib/button"
@@ -10,13 +9,14 @@ import { sendGAEvent } from "@next/third-parties/google"
 import SignUpPro from "@/repository/v1.0.0/user/sign_up_for_pro"
 import { errorPopupState } from "@/recoil/error_popup"
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup"
+import { useLoadingRouter } from "@/hooks/use_loading_router"
 
 export default function UpdateTime() {
     const update_age = new UpdateAge()
     const sign_up_pro = new SignUpPro()
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
     const setErrorPopup = useSetRecoilState(errorPopupState)
     const raiseErrorPopup = useRaiseErrorPopup()
 
@@ -39,7 +39,7 @@ export default function UpdateTime() {
         if (!response.success)
             raiseErrorPopup(response.message);
         const event = response.data as CatEvent;
-        if (event === "disease" || event === "neutering") router.push(`my-cat/event/${event}`)
+        if (event === "disease" || event === "neutering") router(`my-cat/event/${event}`)
         else if (event === "suggest_pro") setErrorPopup({
             open: true,
             title: "고양이와 더 친해지고 싶으신가요?",

@@ -7,12 +7,13 @@ import Popup from "@/lib/popup"
 import AdoptCat from "@/repository/v1.0.0/cat/adopt_cat"
 import { CatSex, CatType } from "@/repository/v1.0.0/cat/cat"
 import { sendGAEvent } from "@next/third-parties/google"
-import { useRouter } from "next/navigation"
 import { useState } from "react"
 import size from "@/lib/size"
-import { useRecoilState } from "recoil"
+import { useSetRecoilState } from "recoil"
 import { errorPopupState } from "@/recoil/error_popup"
 import { useRaiseErrorPopup } from "@/hooks/use_raise_error_popup"
+import { loadingState } from "@/recoil/loading"
+import { useLoadingRouter } from "@/hooks/use_loading_router"
 
 type CatData = {
     name: string,
@@ -24,15 +25,16 @@ export default function InputCatData() {
     const adopt_cat = new AdoptCat()
 
 
-    const router = useRouter()
+    const router = useLoadingRouter()
     const [personalityPopup, setPersonalityPopup] = useState<boolean>(false)
     const [catData, setCatData] = useState<CatData>({
         name: "",
         color: "",
         sex: "",
     })
-    const [errorPopup, setErrorPopup] = useRecoilState(errorPopupState)
+    const setErrorPopup = useSetRecoilState(errorPopupState)
     const raiseErrorPopup = useRaiseErrorPopup();
+    const setLoading = useSetRecoilState(loadingState)
 
 
     const setName = (name: CatData["name"]) => setCatData({ ...catData, name })
@@ -54,42 +56,45 @@ export default function InputCatData() {
 
 
     const adoptCat = async () => {
-        const verifyRes = await adopt_cat.verifyInput(
-            catData.name,
-            catData.color as CatType,
-            catData.sex as CatSex
-        )
-        if (!verifyRes.success) {
-            raiseErrorPopup(verifyRes.message)
-            return
+        try {
+            setLoading(true)
+            const verifyRes = await adopt_cat.verifyInput(
+                catData.name,
+                catData.color as CatType,
+                catData.sex as CatSex
+            )
+            if (!verifyRes.success) {
+                raiseErrorPopup(verifyRes.message)
+                return
+            }
+            sendGAEvent({ event: 'adopt_cat', value: 'adopt_cat' })
+            const verification = await adopt_cat.verifyInput(
+                catData.name,
+                catData.color as CatType,
+                catData.sex as CatSex
+            )
+            if (!verification.success) {
+                raiseErrorPopup(verification.message)
+                return
+            }
+            const response = await adopt_cat.adopt(
+                catData.name,
+                catData.color as CatType,
+                catData.sex as CatSex
+            )
+            if (!response.success) {
+                raiseErrorPopup(response.message)
+                return
+            }
+            setErrorPopup({
+                open: true,
+                title: `${catData.name} 입양에 성공했어요.`,
+                children: `아기 ${catData.name}(이)가 기다리고 있어요!`,
+                onClose: () => router('/my-cat')
+            })
+        } finally {
+            setLoading(false)
         }
-
-
-        sendGAEvent({ event: 'adopt_cat', value: 'adopt_cat' })
-        const verification = await adopt_cat.verifyInput(
-            catData.name,
-            catData.color as CatType,
-            catData.sex as CatSex
-        )
-        if (!verification.success) {
-            raiseErrorPopup(verification.message)
-            return
-        }
-        const response = await adopt_cat.adopt(
-            catData.name,
-            catData.color as CatType,
-            catData.sex as CatSex
-        )
-        if (!response.success) {
-            raiseErrorPopup(response.message)
-            return
-        }
-        setErrorPopup({
-            open: true,
-            title: `${catData.name} 입양에 성공했어요.`,
-            children: `아기 ${catData.name}(이)가 기다리고 있어요!`,
-            onClose: () => router.push('/my-cat')
-        })
     }
 
     return (
