@@ -1,6 +1,6 @@
 const url = {
     "production": "https://www.becoming-zipsa.com",
-    "test": "https://stardenburdenhardenbart-git-development-tae-eun-kims-projects.vercel.app",
+    "test": "https://becoming-zipsa-development.vercel.app",
     "development": "http://localhost:3000",
     "local": "http://172.30.1.69:3000"
 }
