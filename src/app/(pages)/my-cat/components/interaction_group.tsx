@@ -83,7 +83,12 @@ export default function InteractionGroup() {
     const sendChat = async (message: string) => {
         try {
             setChatLoading(true)
-            sendGAEvent({ event: 'cat_chat', value: message })
+            sendGAEvent({
+                category: 'cat',
+                event: 'chat_with_cat',
+                label: message,
+                value: 1
+            })
             setChat([{ role: "user", content: message }, ...chat]) // 여기까지 맞음
             const response = await cat_with_chat.chat(
                 message
