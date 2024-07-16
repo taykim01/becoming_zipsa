@@ -117,7 +117,12 @@ export default function InteractionGroup() {
     const catAction = async (action: CatActionTypes) => {
         try {
             setLoading(true)
-            sendGAEvent({ event: 'cat_action', value: action })
+            sendGAEvent({
+                category: 'cat',
+                event: 'action_to_cat',
+                label: action,
+                value: 1
+            })
             const response = await actions_to_cat.applyAction(action)
             const catFeeling = response.data.catFeelingRes
             const catResponse = response.data.catResponse
