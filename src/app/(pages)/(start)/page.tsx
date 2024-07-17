@@ -2,6 +2,7 @@ import Container from "@/lib/container"
 import Components from "./components"
 import Image from "next/image"
 import Images from "@/lib/images"
+import Button from "@/lib/button"
 
 export default function Page() {
     return (

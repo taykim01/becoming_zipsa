@@ -1,6 +1,6 @@
 {
   "name": "becoming-zipsa",
-  "version": "1.0.5.B",
+  "version": "1.0.6",
   "private": true,
   "scripts": {
     "dev": "next dev",
